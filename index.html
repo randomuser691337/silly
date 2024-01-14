@@ -4,11 +4,30 @@
 <head>
     <title>WebDesk</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/code/core.css">
+    <link rel="stylesheet" href="./assets/core.css">
 </head>
 
 <body>
-    <div class="setup"></div>
+    <div class="setup">
+        <div id="setup1" style="max-width: 250px;">
+            <p class="h2">Welcome to WebDesk!</p>
+            <p>In just a few steps, you'll be ready to go.</p>
+            <p class="smt">- Select "Migrate" if you want to copy data</p>
+            <p class="smt">- Select "Let's Go" to get started (normal)</p>
+            <button class="b1" onclick="fesw('setup1', 'mig');">Migrate</button><button class="b1">Let's go!</button>
+            <p class="rsmt" style="margin-top: 4px;">0.0.9 - Jan 14, 2024</p>
+        </div>
+        <div id="mig" style="max-width: 320px; display: none;">
+            <p class="h2">Migration Assistant</p>
+            <p class="smt">- Open the WebDesk you want to copy from, then login</p>
+            <p class="smt">- Go to your Apps and open Migration Assistant</p>
+            <p class="smt">- Enter the pairing code that Migration Assistant gives you</p>
+            <input class="i1" id="mcode" placeholder="Enter code here..."></input>
+            <button class="b1" onclick="fesw('mig', 'setup1');">Back</button><button class="b1">Done!</button>
+        </div>
+    </div>
 </body>
 
 </html>
+<script src="./assets/code/jq.js"></script>
+<script src="./assets/code/core.js"></script>

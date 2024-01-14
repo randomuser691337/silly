@@ -1,0 +1,113 @@
+:root {
+    --background: #000;
+    --accent: 75, 75, 230;
+    --lightdark: #1a1a1a;
+    --bordercolor: #2a2a3a;
+    --rad1: 12px;
+    --rad2: 8px;
+    --fz1: 16px;
+    --fz2: 14px;
+    --fz3: 12px;
+    --fontc: #fff;
+    --fontc2: #aaa;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url(./fonts/Poppins-Regular.ttf);
+}
+
+@font-face {
+    font-family: 'PoppinsB';
+    src: url(./fonts/Poppins-Bold.ttf);
+}
+
+@font-face {
+    font-family: 'PoppinsM';
+    src: url(./fonts/Poppins-Medium.ttf);
+}
+
+
+body {
+    padding: 0px;
+    margin: 0px;
+    background-color: var(--background);
+    font-family: 'Poppins', Arial;
+    font-size: var(--fz1);
+    color: var(--fontc);
+    text-align: center;
+}
+
+.setup {
+    position: fixed;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    padding: 10px;
+    border: 2px solid var(--bordercolor);
+    background-color: var(--lightdark);
+    border-radius: var(--rad1);
+}
+
+p {
+    margin: 0px;
+    padding: 0px;
+    margin-bottom: 2px;
+}
+
+.smt {
+    font-size: var(--fz2);
+    color: var(--fontc2);
+}
+
+.rsmt {
+    font-size: var(--fz3);
+    color: var(--fontc2);
+    padding: 0px;
+    margin: 0px;
+}
+
+.h2 {
+    font-size: 22px;
+    font-family: 'PoppinsM', Arial;
+}
+
+.b1 {
+    padding: 4px 7px;
+    border-radius: var(--rad2);
+    border: 2px solid rgba(var(--accent));
+    background-color: rgba(var(--accent));
+    font-size: var(--fz1);
+    color: var(--fontc);
+    font-family: 'PoppinsM', Arial;
+    margin: 1px;
+    transition: 0.05s;
+    cursor: pointer;
+}
+
+.b1:hover {
+    background-color: rgba(var(--accent), 0.7);
+}
+
+.b1:active {
+    transform: scale(0.92);
+}
+
+.i1 {
+    padding: 4px 7px;
+    border-radius: var(--rad2);
+    border: 2px solid rgba(var(--accent));
+    background-color: rgba(var(--accent), 0.7);
+    font-size: var(--fz1);
+    color: var(--fontc);
+    width: 100%;
+    box-sizing: border-box;
+    font-family: 'PoppinsM', Arial;
+    margin-bottom: 2px;
+    transition: 0.05s;
+    outline: none;
+}
+
+.i1:focus {
+    background-color: rgba(var(--accent), 0.5);
+}
