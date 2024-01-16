@@ -2,6 +2,7 @@
     --background: #000;
     --accent: 75, 75, 230;
     --lightdark: #1a1a1a;
+    --lightdarkb: #2a2a2a;
     --bordercolor: #2a2a3a;
     --rad1: 12px;
     --rad2: 8px;
@@ -44,7 +45,7 @@ body {
     left: 50%;
     top: 50%;
     padding: 10px;
-    border: 2px solid var(--bordercolor);
+    border: 3px solid var(--bordercolor);
     background-color: var(--lightdark);
     border-radius: var(--rad1);
 }
@@ -93,6 +94,26 @@ p {
     transform: scale(0.92);
 }
 
+.winb {
+    border-radius: var(--rad2);
+    border: 1px solid rgba(var(--accent));
+    background-color: rgba(var(--accent));
+    font-size: var(--fz2);
+    color: var(--fontc);
+    font-family: 'PoppinsM', Arial;
+    margin: 1px;
+    transition: 0.05s;
+    cursor: pointer;
+}
+
+.winb:hover {
+    background-color: rgba(var(--accent), 0.7);
+}
+
+.winb:active {
+    transform: scale(0.92);
+}
+
 .i1 {
     padding: 4px 7px;
     border-radius: var(--rad2);
@@ -103,11 +124,159 @@ p {
     width: 100%;
     box-sizing: border-box;
     font-family: 'PoppinsM', Arial;
-    margin-bottom: 2px;
+    margin-bottom: 3px;
     transition: 0.05s;
     outline: none;
 }
 
 .i1:focus {
     background-color: rgba(var(--accent), 0.5);
+}
+
+.window {
+    width: auto;
+    height: auto;
+    max-width: 85%;
+    max-height: 87%;
+    background-color: var(--lightdark);
+    border: 3px solid var(--bordercolor);
+    border-radius: var(--rad1);
+    position: absolute;
+    display: none;
+    animation: yeah 0.25s;
+}
+
+@keyframes yeah {
+    0% {transform: scale(0.7); opacity: 0%;}
+    100% {transform: scale(1.0); opacity: 100%;}
+}
+
+.title-bar {
+    color: white;
+    padding: 6px;
+    border-bottom: 3px solid var(--bordercolor);
+    cursor: move;
+}
+
+.content {
+    padding: 8px;
+}
+
+.thingy {
+    border-radius: var(--rad2);
+    padding: 3px 5px;
+    border: 0px;
+    font-size: var(--fz1);
+    font-family: 'PoppinsM', Arial;
+    cursor: pointer;
+    transition: 0.05s;
+    margin-bottom: 3px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.thingy:hover {
+    opacity: 0.75;
+}
+
+.red {
+    background-color: #a11;
+}
+
+.green {
+    background-color: #1a1;
+}
+
+#menubar {
+    position: fixed;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    background-color: var(--lightdark);
+    border-radius: 16px;
+    padding: 3px;
+    text-align: left;
+    box-shadow: 0px 0px 30px 15px rgba(0, 0, 0, 0.12);
+    display: none;
+    border: 2px solid var(--bordercolor);
+}
+
+button {
+    font-family: 'PoppinsM', Arial;
+    font-size: var(--fz1);
+}
+
+.right {
+    position: fixed;
+    text-align: right !important;
+    padding: 4px;
+    right: 8px;
+    color: var(--font);
+}
+
+#mainmenu {
+    position: fixed;
+    left: 50%; top: 50%;
+    width: 80%; height: 80%;
+    padding: 12px;
+    border-radius: var(--rad1);
+    background-color: var(--lightdark);
+    border: 3px solid var(--bordercolor);
+    transform: translate(-50%, -50%);
+    display: none;
+}
+
+#mainbtn {
+    position: fixed;
+    left: 50%; bottom: 4px;
+    transform: translate(-50%);
+    border-radius: var(--rad2);
+    background-color: rgba(var(--accent), 1.0);
+    border: 2px solid var(--lightdarkb);
+    transition: 0.05s;
+    cursor: pointer;
+}
+
+#mainbtn:active {
+    background-color: rgba(var(--accent), 0.7);
+}
+
+.line {
+    position: static;
+    box-sizing: border-box;
+    padding: 1px;
+    background-color: rgba(var(--accent), 0.25);
+    margin-top: 2px;
+    margin-bottom: 2px;
+    width: 100%;
+    border-radius: 50px;
+}
+
+a {
+    color: var(--font);
+    transition: 0.05s;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+a:hover {
+    opacity: 0.7;
+}
+
+a:active {
+    opacity: 0.4;
+}
+
+.fullbg {
+    position: fixed;
+    z-index: -1;
+    left: 0px; right: 0px; top: 0px; bottom: 0px;
+    background-color: rgba(var(--accent), 0.25);
+}
+
+.embed {
+    border-radius: 9px;
+    border: 2px solid var(--lightdark);
+    width: 100%;
+    box-sizing: border-box;
 }

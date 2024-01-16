@@ -8,26 +8,88 @@
 </head>
 
 <body>
-    <div class="setup">
+    <div class="fullbg"></div>
+    <div class="setup" id="setup">
         <div id="setup1" style="max-width: 250px;">
             <p class="h2">Welcome to WebDesk!</p>
             <p>In just a few steps, you'll be ready to go.</p>
             <p class="smt">- Select "Migrate" if you want to copy data</p>
             <p class="smt">- Select "Let's Go" to get started (normal)</p>
-            <button class="b1" onclick="fesw('setup1', 'mig');">Migrate</button><button class="b1">Let's go!</button>
+            <button class="b1" onclick="fesw('setup1', 'mig');">Migrate</button><button class="b1"
+                onclick="fesw('setup1', 'setup2');">Let's go!</button>
             <p class="rsmt" style="margin-top: 4px;">0.0.9 - Jan 14, 2024</p>
         </div>
+        <div id="setup2" style="display: none; max-width: 320px;">
+            <p class="h2">User Setup</p>
+            <p>Enter a username and select your preferences.</p>
+            <input type="text" id="username" class="i1" placeholder="Enter a new username">
+            <p class="smt">Select the options below to toggle them (green is on, red is off)</p>
+            <button class="thingy green" onclick="setchk('sendcrashs', 'yescrd', 'nocrd');" id="sendcrashs">Allow
+                sending crash details to the dev</button>
+            <button class="thingy red" onclick="setchk('senderrors', 'yeserrd', 'noerrd');" id="senderrors">Allow
+                sending error details to the dev</button>
+            <button class="b1" onclick="finishsetup();">Done!</button>
+        </div>
+        <div id="setup3" style="display: none; max-width: 320px;">
+            <p class="h2">Setup is done!</p>
+            <p>Finishing up a few things...</p>
+            <button class="b1" onclick="window.location.reload();">Reload</button>
+        </div>
         <div id="mig" style="max-width: 320px; display: none;">
-            <p class="h2">Migration Assistant</p>
+            <p class="h2" id="lobotomy">Migration Assistant</p>
             <p class="smt">- Open the WebDesk you want to copy from, then login</p>
             <p class="smt">- Go to your Apps and open Migration Assistant</p>
-            <p class="smt">- Enter the pairing code that Migration Assistant gives you</p>
-            <input class="i1" id="mcode" placeholder="Enter code here..."></input>
-            <button class="b1" onclick="fesw('mig', 'setup1');">Back</button><button class="b1">Done!</button>
+            <p class="smt">- Enter the code "<span id="codemig" style="color: #fff;"></span>" into the Assistant</p>
+            <button class="b1" onclick="fesw('mig', 'setup1');">Back</button>
+        </div>
+        <div id="mprog" style="max-width: 320px; display: none;">
+            <p class="h2">Migration Assistant</p>
+            <p>WebDesk is migrating, please wait...</p>
+        </div>
+        <div id="mdone" style="max-width: 300px; display: none;">
+            <p class="h2">Migration Assistant</p>
+            <p>Migration complete.</p>
+            <p>Click "Done" to reboot into your WebDesk.</p>
+            <button class="b1" onclick="reboot();">Done</button>
         </div>
     </div>
+    <div class="window" id="migration" style="width: 350px;">
+        <div class="title-bar" id="titleBar">Migration Assistant <button class="winb"
+                onclick="hidef('migration');">Close</button></div>
+        <div class="content">
+            <p>Enter the ID of the other WebDesk.</p>
+            <p>Do not enter any other person's ID, as your data will go to them!</p>
+            <input type="text" id="peerIdInput" class="i1" placeholder="Other peer's ID">
+            <button id="connectButton" class="b1">Connect</button>
+        </div>
+    </div>
+    <!--Desktop nav-->
+    <button id="mainbtn" onclick="toggle('mainmenu');"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="16"
+            viewBox="0 0 24 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" class="lucide lucide-more-horizontal">
+            <circle cx="12" cy="10" r="1"></circle>
+            <circle cx="19" cy="10" r="1"></circle>
+            <circle cx="5" cy="10" r="1"></circle>
+        </svg> <span class="time">Time</span></button>
+    <div id="mainmenu">
+        <p>Hello, <span class="user"></span>!</p>
+        <button class="b1" onclick="opapp('migration');">Migration Assistant</button>
+    </div>
+    <!--End of desktop nav-->
+    <script src="./assets/code/jq.js"></script>
+    <script src="./assets/code/idb.js"></script>
+    <script src="./assets/code/core.js"></script>
+    <script src="./assets/code/ui.js"></script>
+    <script src="./assets/code/peer.js"></script>
+    <script src="./assets/code/mico.js"></script>
+    <script>
+        window.onload = async function () {
+            const setup = await readvar('setupdone');
+            if (setup == "y") {
+                finishsetup();
+            }
+        }
+    </script>
 </body>
 
 </html>
-<script src="./assets/code/jq.js"></script>
-<script src="./assets/code/core.js"></script>
