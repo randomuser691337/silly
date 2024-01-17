@@ -3,12 +3,12 @@
 
 <head>
     <title>WebDesk</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="stylesheet" href="./assets/core.css">
 </head>
 
 <body>
-    <div class="fullbg"></div>
+    <div class="fullbg">
     <div class="setup" id="setup">
         <div id="setup1" style="max-width: 250px;">
             <p class="h2">Welcome to WebDesk!</p>
@@ -42,9 +42,10 @@
             <p class="smt">- Enter the code "<span id="codemig" style="color: #fff;"></span>" into the Assistant</p>
             <button class="b1" onclick="fesw('mig', 'setup1');">Back</button>
         </div>
-        <div id="mprog" style="max-width: 320px; display: none;">
-            <p class="h2">Migration Assistant</p>
-            <p>WebDesk is migrating, please wait...</p>
+        <div id="load" style="max-width: 320px; display: none;">
+            <p class="h2">Loading...</p>
+            <p>If this gets stuck or takes too long, reload.</p>
+            <button class="b1">Recovery</button><button class="b1" onclick="reboot();">Reload</button>
         </div>
         <div id="mdone" style="max-width: 300px; display: none;">
             <p class="h2">Migration Assistant</p>
@@ -53,6 +54,7 @@
             <button class="b1" onclick="reboot();">Done</button>
         </div>
     </div>
+    <!--Migration Assistant-->
     <div class="window" id="migration" style="width: 350px;">
         <div class="title-bar" id="titleBar">Migration Assistant <button class="winb"
                 onclick="hidef('migration');">Close</button></div>
@@ -60,7 +62,31 @@
             <p>Enter the ID of the other WebDesk.</p>
             <p>Do not enter any other person's ID, as your data will go to them!</p>
             <input type="text" id="peerIdInput" class="i1" placeholder="Other peer's ID">
-            <button id="connectButton" class="b1">Connect</button>
+            <button
+                onclick="mkw(`<p>If migration won't start</p><p>- Try reloading this WebDesk, then reopen Migration Assistant and try again.</p><p>-Make sure you're on the same network as the other WebDesk.</p>`, 'Migration Assistant', '350px');"
+                class="b1">Not working?</button><button id="connectButton" class="b1">Connect</button>
+        </div>
+        <div class="content" style="display: none" id="migrationdontclose">
+            <p>Sending data to other WebDesk...</p>
+            <p>The other WebDesk will let you know when migration is done.</p>
+            <p>When it's done, close this window.</p>
+        </div>
+    </div>
+    <!--End of Migration Assistant-->
+    <!--Settings-->
+    <div class="window" id="settings" style="width: auto;">
+        <div class="title-bar" id="titleBar">Settings <button class="winb" onclick="hidef('settings');">Close</button>
+        </div>
+        <div class="content">
+            <div id="settingsmain">
+                <button class="b1" onclick="fesw('settingsmain', 'settingsappear');">Appearance</button><button
+                    class="b1">General</button>
+            </div>
+            <div id="settingsappear" style="display: none;">
+                <p>Taskbutton position</p>
+                <button class="winb">Left</button><button class="winb">Middle</button><button
+                    class="winb">Right</button>
+            </div>
         </div>
     </div>
     <!--Desktop nav-->
@@ -73,9 +99,10 @@
         </svg> <span class="time">Time</span></button>
     <div id="mainmenu">
         <p>Hello, <span class="user"></span>!</p>
-        <button class="b1" onclick="opapp('migration');">Migration Assistant</button>
+        <button class="b1" onclick="opapp('migration');">Migration Assistant</button><button class="b1"
+            onclick="opapp('settings');">Settings</button>
     </div>
-    <!--End of desktop nav-->
+    <!--End of desktop nav--></div>
     <script src="./assets/code/jq.js"></script>
     <script src="./assets/code/idb.js"></script>
     <script src="./assets/code/core.js"></script>

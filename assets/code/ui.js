@@ -14,12 +14,13 @@ function mkw(content, title, width) {
     windowContainer.appendChild(titleBar);
     windowContainer.appendChild(contentContainer);
     document.body.appendChild(windowContainer);
-    centerel(windowId);makeDraggable(windowContainer);
+    centerel(windowId);winrec(windowContainer);
     return windowId;
 }
 function opapp(d1) {
     const dr1 = document.getElementById(d1);
     $(dr1).fadeIn(200); centerel(d1);
+    hidef('mainmenu');
 }
 function fesw(d1, d2) {
     const dr1 = document.getElementById(d1);
