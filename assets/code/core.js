@@ -102,12 +102,19 @@ function setchk(id, act1, act2) {
 
 function desktop(name) {
     showf('mainbtn'); dest('setup');
+    masschange('user', name);
+}
+
+async function nametime(el) {
+    const elID = document.getElementById(el).value;
+    await writevar('name', elID)
 }
 
 async function finishsetup() {
     fesw('setup2', 'setup3');
     await writevar('setupdone', 'y');
-    desktop();
+    const hai = await readvar('name');
+    desktop(hai);
 }
 
 function reboot() {

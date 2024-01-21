@@ -119,11 +119,9 @@ async function burnitall() {
         await eraseall();
         console.log('[OK] All data has been destroyed.');
         mkw('<p>Erase in progress...</p><button class="b1" onclick="window.location.reload();">Reload</button>', 'Erase Assistant', '200px');
-        tolayer1('killerase' + NTName);
     } catch (error) {
         console.log('[CRT] Erase failed! Details: ' + error);
-        mkw('<p>Failed to finish erase</p><p>This is a severe error. Please open Inspector and send a screenshot of this error and the contents of the console to <a href="https://discord.gg/5F7rvssBTJ", target="_blank">this discord server.</a></p><button class="b1" onclick="window.location.reload();">Exit (a probably broken) Container</button><button class="b1" onclick="window.location.reload();">Reload</button>', 'Reset Error', '450px');
-        panic()
+        mkw('<p>Erase may have failed! Reload, chances are that it succeded.</p><button class="b1" onclick="window.location.reload();">Reload</button>', 'Reset Error', '450px');
     }
 }
 

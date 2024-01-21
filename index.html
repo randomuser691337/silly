@@ -28,7 +28,7 @@
                 sending crash details to the dev</button>
             <button class="thingy red" onclick="setchk('senderrors', 'yeserrd', 'noerrd');" id="senderrors">Allow
                 sending error details to the dev</button>
-            <button class="b1" onclick="finishsetup();">Done!</button>
+            <button class="b1" onclick="finishsetup();nametime('username');">Done!</button>
         </div>
         <div id="setup3" style="display: none; max-width: 320px;">
             <p class="h2">Setup is done!</p>
@@ -79,13 +79,18 @@
         </div>
         <div class="content">
             <div id="settingsmain">
-                <button class="b1" onclick="fesw('settingsmain', 'settingsappear');">Appearance</button><button
-                    class="b1">General</button>
+                <button class="b1" onclick="fesw('settingsmain', 'settingsappear');">Appearance</button><button class="b1" onclick="fesw('settingsmain', 'settingspriv');">Data & Privacy</button>
             </div>
             <div id="settingsappear" style="display: none;">
                 <p>Taskbutton position</p>
                 <button class="winb">Left</button><button class="winb">Middle</button><button
                     class="winb">Right</button>
+                <p><button class="winb" onclick="fesw('settingsappear', 'settingsmain');">Back</button></p>
+            </div>
+            <div id="settingspriv" style="display: none;">
+                <p>Data & Privacy</p>
+                <button class="b1" onclick="mkw(`<p>Warning: Erasing WebDesk will delete all of it's data. Select 'Close' to stop, or 'OK' to continue.</p><button class='b1' onclick='burnitall();'>OK</button>`, 'Erase Assistant', '275px');">Erase This WebDesk</button>
+                <p><button class="winb" onclick="fesw('settingspriv', 'settingsmain');">Back</button></p>
             </div>
         </div>
     </div>
@@ -113,7 +118,8 @@
         window.onload = async function () {
             const setup = await readvar('setupdone');
             if (setup == "y") {
-                finishsetup();
+                hewwo = await readvar('name');
+                desktop(hewwo);
             }
         }
     </script>

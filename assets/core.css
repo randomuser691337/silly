@@ -45,7 +45,7 @@ body {
     left: 50%;
     top: 50%;
     padding: 10px;
-    border: 3px solid var(--bordercolor);
+    border: 2px solid var(--bordercolor);
     background-color: var(--lightdark);
     border-radius: var(--rad1);
 }
@@ -124,7 +124,7 @@ p {
     width: 100%;
     box-sizing: border-box;
     font-family: 'PoppinsM', Arial;
-    margin-bottom: 3px;
+    margin-bottom: 2px;
     transition: 0.05s;
     outline: none;
 }
@@ -139,7 +139,7 @@ p {
     max-width: 85%;
     max-height: 87%;
     background-color: var(--lightdark);
-    border: 3px solid var(--bordercolor);
+    border: 2px solid var(--bordercolor);
     border-radius: var(--rad1);
     position: absolute;
     display: none;
@@ -154,7 +154,7 @@ p {
 .title-bar {
     color: white;
     padding: 6px;
-    border-bottom: 3px solid var(--bordercolor);
+    border-bottom: 2px solid var(--bordercolor);
     cursor: move;
 }
 
@@ -164,13 +164,13 @@ p {
 
 .thingy {
     border-radius: var(--rad2);
-    padding: 3px 5px;
+    padding: 2px 5px;
     border: 0px;
     font-size: var(--fz1);
     font-family: 'PoppinsM', Arial;
     cursor: pointer;
     transition: 0.05s;
-    margin-bottom: 3px;
+    margin-bottom: 2px;
     width: 100%;
     box-sizing: border-box;
 }
@@ -199,7 +199,7 @@ button {
     padding: 12px;
     border-radius: var(--rad1);
     background-color: var(--lightdark);
-    border: 3px solid var(--bordercolor);
+    border: 2px solid var(--bordercolor);
     transform: translate(-50%, -50%);
     display: none;
     z-index: 4;
@@ -209,13 +209,15 @@ button {
     position: fixed;
     left: 50%; bottom: 4px;
     transform: translate(-50%);
-    border-radius: var(--rad2);
+    border-radius: var(--rad1);
     background-color: rgba(var(--accent), 1.0);
     border: 2px solid var(--lightdarkb);
     transition: 0.05s;
     cursor: pointer;
     display: none;
+    padding: 4px 6px;
     z-index: 4;
+    color: var(--fontc);
 }
 
 #mainbtn:active {
