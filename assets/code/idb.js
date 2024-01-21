@@ -103,12 +103,14 @@ async function deletevar(varName) {
     }
 }
 
-async function eraseall() {
+async function eraseall(hai2) {
     try {
         const db = await initDB();
-        // we dont leave the shell behind no more (erase everything)
         indexedDB.deleteDatabase(NTName);
         console.log('[OK] Erased container successfully.');
+        hai3 = document.getElementById(hai2);
+        dest(hai3);
+        mkw('<p>Erase completed.</p><button class="b1" onclick="window.location.reload();">Reload</button>', 'Erase Assistant', '200px');
     } catch (error) {
         console.error(error);
     }
@@ -116,9 +118,9 @@ async function eraseall() {
 
 async function burnitall() {
     try {
-        await eraseall();
+        const hai = stm('<p>Erase in progress...</p><button class="b1" onclick="window.location.reload();">Reload</button>', 'Erase Assistant', '200px');
+        await eraseall(hai);
         console.log('[OK] All data has been destroyed.');
-        mkw('<p>Erase in progress...</p><button class="b1" onclick="window.location.reload();">Reload</button>', 'Erase Assistant', '200px');
     } catch (error) {
         console.log('[CRT] Erase failed! Details: ' + error);
         mkw('<p>Erase may have failed! Reload, chances are that it succeded.</p><button class="b1" onclick="window.location.reload();">Reload</button>', 'Reset Error', '450px');

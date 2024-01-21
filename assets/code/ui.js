@@ -1,9 +1,10 @@
-function mkw(content, title, width) {
+function mkw(content, title, width, m) {
     const windowId = gen(6);
     const windowContainer = document.createElement('div');
     windowContainer.className = 'window';
     windowContainer.id = windowId;
     windowContainer.style.display = "block";
+    windowContainer.style.zIndex = 2;
     windowContainer.style.width = width;
     const titleBar = document.createElement('div');
     titleBar.className = 'title-bar';
@@ -13,31 +14,36 @@ function mkw(content, title, width) {
     contentContainer.innerHTML = content;
     windowContainer.appendChild(titleBar);
     windowContainer.appendChild(contentContainer);
-    document.body.appendChild(windowContainer);
+    if (m === "s") {
+        document.body.appendChild(windowContainer);
+    } else {
+        document.getElementById('nest').appendChild(windowContainer);
+    }
     centerel(windowId);winrec(windowContainer);
     return windowId;
 }
 function opapp(d1) {
     const dr1 = document.getElementById(d1);
-    $(dr1).fadeIn(200); centerel(d1);
+    $(dr1).fadeIn(150); centerel(d1);
+    dr1.style.zIndex = 2;
     hidef('mainmenu');
 }
 function fesw(d1, d2) {
     const dr1 = document.getElementById(d1);
     const dr2 = document.getElementById(d2);
-    $(dr1).fadeOut(200, function () { $(dr2).fadeIn(200); });
+    $(dr1).fadeOut(150, function () { $(dr2).fadeIn(150); });
 }
 function hidef(d1) {
     const dr1 = document.getElementById(d1);
-    $(dr1).fadeOut(200);
+    $(dr1).fadeOut(150);
 }
 function showf(d1) {
     const dr1 = document.getElementById(d1);
-    $(dr1).fadeIn(200);
+    $(dr1).fadeIn(150);
 }
 function dest(d1) {
     const dr1 = document.getElementById(d1);
-    $(dr1).fadeOut(200, function () { dr1.remove });
+    $(dr1).fadeOut(170, function () { dr1.remove });
 }
 function toggle(elementId, time3) {
     var element = document.getElementById(elementId);

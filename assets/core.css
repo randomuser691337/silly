@@ -156,6 +156,7 @@ p {
     padding: 6px;
     border-bottom: 2px solid var(--bordercolor);
     cursor: move;
+    user-select: none;
 }
 
 .content {
@@ -220,6 +221,11 @@ button {
     color: var(--fontc);
 }
 
+@keyframes mainbtn {
+    0% {bottom: -15px; transform: scale(0.6);}
+    100% {bottom: 4px; transform: scale(1.0);}
+}
+
 #mainbtn:active {
     background-color: rgba(var(--accent), 0.7);
 }
@@ -262,4 +268,11 @@ a:active {
     border: 2px solid var(--lightdark);
     width: 100%;
     box-sizing: border-box;
+}
+
+.b2 {
+    width: 100% !important;
+    box-sizing: border-box; 
+    margin: 0px;
+    margin-top: 2px;
 }

@@ -8,16 +8,16 @@
 </head>
 
 <body>
-    <div class="fullbg">
+    <div class="fullbg" id="nest">
     <div class="setup" id="setup">
-        <div id="setup1" style="max-width: 250px;">
+        <div id="setup1" style="max-width: 250px; display: none;">
             <p class="h2">Welcome to WebDesk!</p>
             <p>In just a few steps, you'll be ready to go.</p>
             <p class="smt">- Select "Migrate" if you want to copy data</p>
             <p class="smt">- Select "Let's Go" to get started (normal)</p>
             <button class="b1" onclick="fesw('setup1', 'mig');">Migrate</button><button class="b1"
                 onclick="fesw('setup1', 'setup2');">Let's go!</button>
-            <p class="rsmt" style="margin-top: 4px;">0.0.9 - Jan 14, 2024</p>
+            <p class="rsmt" style="margin-top: 4px;">0.0.9 - Jan 21, 2024</p>
         </div>
         <div id="setup2" style="display: none; max-width: 320px;">
             <p class="h2">User Setup</p>
@@ -35,14 +35,14 @@
             <p>Finishing up a few things...</p>
             <button class="b1" onclick="window.location.reload();">Reload</button>
         </div>
-        <div id="mig" style="max-width: 320px; display: none;">
+        <div id="mig" style="max-width: 330px; display: none;">
             <p class="h2" id="lobotomy">Migration Assistant</p>
-            <p class="smt">- Open the WebDesk you want to copy from, then login</p>
-            <p class="smt">- Go to your Apps and open Migration Assistant</p>
-            <p class="smt">- Enter the code "<span id="codemig" style="color: #fff;"></span>" into the Assistant</p>
+            <p>Note: Safari can have issues migrating.</p>
+            <p class="smt">- Go to your Everything Menu and open Migration Assistant on the other WebDesk.</p>
+            <p class="smt">- Enter the code "<span id="codemig" style="color: #fff;"></span>" into the Assistant.</p>
             <button class="b1" onclick="fesw('mig', 'setup1');">Back</button>
         </div>
-        <div id="load" style="max-width: 320px; display: none;">
+        <div id="load" style="max-width: 320px;">
             <p class="h2">Loading...</p>
             <p>If this gets stuck or takes too long, reload.</p>
             <button class="b1">Recovery</button><button class="b1" onclick="reboot();">Reload</button>
@@ -63,7 +63,7 @@
             <p>Do not enter any other person's ID, as your data will go to them!</p>
             <input type="text" id="peerIdInput" class="i1" placeholder="Other peer's ID">
             <button
-                onclick="mkw(`<p>If migration won't start</p><p>- Try reloading this WebDesk, then reopen Migration Assistant and try again.</p><p>-Make sure you're on the same network as the other WebDesk.</p>`, 'Migration Assistant', '350px');"
+                onclick="mkw(`<p>If migration won't start</p><p>- Try reloading this WebDesk, then reopen Migration Assistant and try again.</p><p>- Make sure you're on the same network as the other WebDesk.</p>`, 'Migration Assistant', '350px');"
                 class="b1">Not working?</button><button id="connectButton" class="b1">Connect</button>
         </div>
         <div class="content" style="display: none" id="migrationdontclose">
@@ -74,12 +74,12 @@
     </div>
     <!--End of Migration Assistant-->
     <!--Settings-->
-    <div class="window" id="settings" style="width: auto;">
+    <div class="window" id="settings" style="width: 260px;">
         <div class="title-bar" id="titleBar">Settings <button class="winb" onclick="hidef('settings');">Close</button>
         </div>
         <div class="content">
             <div id="settingsmain">
-                <button class="b1" onclick="fesw('settingsmain', 'settingsappear');">Appearance</button><button class="b1" onclick="fesw('settingsmain', 'settingspriv');">Data & Privacy</button>
+                <button class="b1 b2" onclick="fesw('settingsmain', 'settingsappear');">Appearance</button><button class="b1 b2" onclick="fesw('settingsmain', 'settingspriv');">Data & Privacy</button>
             </div>
             <div id="settingsappear" style="display: none;">
                 <p>Taskbutton position</p>
@@ -94,6 +94,7 @@
             </div>
         </div>
     </div>
+    <!--End of settings-->
     <!--Desktop nav-->
     <button id="mainbtn" onclick="toggle('mainmenu');"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="16"
             viewBox="0 0 24 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -120,6 +121,8 @@
             if (setup == "y") {
                 hewwo = await readvar('name');
                 desktop(hewwo);
+            } else {
+                fesw('load', 'setup1');
             }
         }
     </script>

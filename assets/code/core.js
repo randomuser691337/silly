@@ -1,4 +1,5 @@
-/* there are probably lots of bugs, if you feel like it, kill them all and let me know! */
+
+/* if you find any bugs, feel free to submit a pull request idk how github/git works lmao TwT*/
 function winrec(element) {
     let offsetX, offsetY, isDragging = false;
 
@@ -23,12 +24,20 @@ function winrec(element) {
         element.style.zIndex = 2; // Bring the clicked window to the front
 
         element.classList.add('dragging');
+
+        // Prevent default touch behavior only if the target is not an input element
+        if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+            e.preventDefault();
+        }
     }
 
     function duringDrag(e) {
         if (isDragging) {
             element.style.left = e.clientX - offsetX + 'px';
             element.style.top = e.clientY - offsetY + 'px';
+
+            // Prevent default touch behavior
+            e.preventDefault();
         }
     }
 
@@ -103,6 +112,14 @@ function setchk(id, act1, act2) {
 function desktop(name) {
     showf('mainbtn'); dest('setup');
     masschange('user', name);
+    dest('setup');
+    showf('mainmenu');
+}
+
+function stm(winc, winn, wins) {
+   dest('nest');
+   const ret = mkw(winc, winn, wins, 's');
+   return ret;
 }
 
 async function nametime(el) {
