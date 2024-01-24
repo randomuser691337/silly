@@ -173,8 +173,5 @@ function updateClock() {
     }
 }
 
-// Initial call to display the clock immediately
 updateClock();
-
-// Set up an interval to update the clock every second
 setInterval(updateClock, 1000);

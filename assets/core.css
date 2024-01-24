@@ -1,9 +1,9 @@
 :root {
     --background: #000;
-    --accent: 75, 75, 230;
+    --accent: 40, 75, 230;
     --lightdark: #1a1a1a;
     --lightdarkb: #2a2a2a;
-    --bordercolor: #2a2a3a;
+    --bordercolor: #3a3a3a;
     --rad1: 12px;
     --rad2: 7px;
     --fz1: 16px;
@@ -147,8 +147,15 @@ p {
 }
 
 @keyframes yeah {
-    0% {transform: scale(0.7); opacity: 0%;}
-    100% {transform: scale(1.0); opacity: 100%;}
+    0% {
+        transform: scale(0.7);
+        opacity: 0%;
+    }
+
+    100% {
+        transform: scale(1.0);
+        opacity: 100%;
+    }
 }
 
 .title-bar {
@@ -157,6 +164,7 @@ p {
     border-bottom: 2px solid var(--bordercolor);
     cursor: move;
     user-select: none;
+    background-color: rgba(var(--accent), 0.07);
 }
 
 .content {
@@ -195,8 +203,10 @@ button {
 
 #mainmenu {
     position: fixed;
-    left: 50%; top: 50%;
-    width: 80%; height: 80%;
+    left: 50%;
+    top: 50%;
+    width: 80%;
+    height: 80%;
     padding: 12px;
     border-radius: var(--rad1);
     background-color: var(--lightdark);
@@ -206,10 +216,22 @@ button {
     z-index: 4;
 }
 
+.cent {
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.left {
+    left: 4px;
+}
+
+.right {
+    right: 4px;
+}
+
 #mainbtn {
     position: fixed;
-    left: 50%; bottom: 4px;
-    transform: translate(-50%);
+    bottom: 4px;
     border-radius: var(--rad1);
     background-color: rgba(var(--accent), 1.0);
     border: 2px solid var(--lightdarkb);
@@ -222,8 +244,15 @@ button {
 }
 
 @keyframes mainbtn {
-    0% {bottom: -15px; transform: scale(0.6);}
-    100% {bottom: 4px; transform: scale(1.0);}
+    0% {
+        bottom: -15px;
+        transform: scale(0.6);
+    }
+
+    100% {
+        bottom: 4px;
+        transform: scale(1.0);
+    }
 }
 
 #mainbtn:active {
@@ -259,7 +288,10 @@ a:active {
 .fullbg {
     position: fixed;
     z-index: -1;
-    left: 0px; right: 0px; top: 0px; bottom: 0px;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
     background-color: rgba(var(--accent), 0.25);
 }
 
@@ -272,7 +304,15 @@ a:active {
 
 .b2 {
     width: 100% !important;
-    box-sizing: border-box; 
+    box-sizing: border-box;
     margin: 0px;
     margin-top: 2px;
+}
+
+#videl {
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: none;
 }

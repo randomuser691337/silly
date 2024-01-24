@@ -9,106 +9,131 @@
 
 <body>
     <div class="fullbg" id="nest">
-    <div class="setup" id="setup">
-        <div id="setup1" style="max-width: 250px; display: none;">
-            <p class="h2">Welcome to WebDesk!</p>
-            <p>In just a few steps, you'll be ready to go.</p>
-            <p class="smt">- Select "Migrate" if you want to copy data</p>
-            <p class="smt">- Select "Let's Go" to get started (normal)</p>
-            <button class="b1" onclick="fesw('setup1', 'mig');">Migrate</button><button class="b1"
-                onclick="fesw('setup1', 'setup2');">Let's go!</button>
-            <p class="rsmt" style="margin-top: 4px;">0.0.9 - Jan 21, 2024</p>
-        </div>
-        <div id="setup2" style="display: none; max-width: 320px;">
-            <p class="h2">User Setup</p>
-            <p>Enter a username and select your preferences.</p>
-            <input type="text" id="username" class="i1" placeholder="Enter a new username">
-            <p class="smt">Select the options below to toggle them (green is on, red is off)</p>
-            <button class="thingy green" onclick="setchk('sendcrashs', 'yescrd', 'nocrd');" id="sendcrashs">Allow
-                sending crash details to the dev</button>
-            <button class="thingy red" onclick="setchk('senderrors', 'yeserrd', 'noerrd');" id="senderrors">Allow
-                sending error details to the dev</button>
-            <button class="b1" onclick="finishsetup();nametime('username');">Done!</button>
-        </div>
-        <div id="setup3" style="display: none; max-width: 320px;">
-            <p class="h2">Setup is done!</p>
-            <p>Finishing up a few things...</p>
-            <button class="b1" onclick="window.location.reload();">Reload</button>
-        </div>
-        <div id="mig" style="max-width: 330px; display: none;">
-            <p class="h2" id="lobotomy">Migration Assistant</p>
-            <p>Note: Safari can have issues migrating.</p>
-            <p class="smt">- Go to your Everything Menu and open Migration Assistant on the other WebDesk.</p>
-            <p class="smt">- Enter the code "<span id="codemig" style="color: #fff;"></span>" into the Assistant.</p>
-            <button class="b1" onclick="fesw('mig', 'setup1');">Back</button>
-        </div>
-        <div id="load" style="max-width: 320px;">
-            <p class="h2">Loading...</p>
-            <p>If this gets stuck or takes too long, reload.</p>
-            <button class="b1">Recovery</button><button class="b1" onclick="reboot();">Reload</button>
-        </div>
-        <div id="mdone" style="max-width: 300px; display: none;">
-            <p class="h2">Migration Assistant</p>
-            <p>Migration complete.</p>
-            <p>Click "Done" to reboot into your WebDesk.</p>
-            <button class="b1" onclick="reboot();">Done</button>
-        </div>
-    </div>
-    <!--Migration Assistant-->
-    <div class="window" id="migration" style="width: 350px;">
-        <div class="title-bar" id="titleBar">Migration Assistant <button class="winb"
-                onclick="hidef('migration');">Close</button></div>
-        <div class="content">
-            <p>Enter the ID of the other WebDesk.</p>
-            <p>Do not enter any other person's ID, as your data will go to them!</p>
-            <input type="text" id="peerIdInput" class="i1" placeholder="Other peer's ID">
-            <button
-                onclick="mkw(`<p>If migration won't start</p><p>- Try reloading this WebDesk, then reopen Migration Assistant and try again.</p><p>- Make sure you're on the same network as the other WebDesk.</p>`, 'Migration Assistant', '350px');"
-                class="b1">Not working?</button><button id="connectButton" class="b1">Connect</button>
-        </div>
-        <div class="content" style="display: none" id="migrationdontclose">
-            <p>Sending data to other WebDesk...</p>
-            <p>The other WebDesk will let you know when migration is done.</p>
-            <p>When it's done, close this window.</p>
-        </div>
-    </div>
-    <!--End of Migration Assistant-->
-    <!--Settings-->
-    <div class="window" id="settings" style="width: 260px;">
-        <div class="title-bar" id="titleBar">Settings <button class="winb" onclick="hidef('settings');">Close</button>
-        </div>
-        <div class="content">
-            <div id="settingsmain">
-                <button class="b1 b2" onclick="fesw('settingsmain', 'settingsappear');">Appearance</button><button class="b1 b2" onclick="fesw('settingsmain', 'settingspriv');">Data & Privacy</button>
+        <div class="setup" id="setup">
+            <div id="setup1" style="max-width: 250px; display: none;">
+                <p class="h2">Welcome to WebDesk!</p>
+                <p>In just a few steps, you'll be ready to go.</p>
+                <p class="smt">- Select "Migrate" if you want to copy data</p>
+                <p class="smt">- Select "Let's Go" to get started (normal)</p>
+                <button class="b1" onclick="fesw('setup1', 'mig');">Migrate</button><button class="b1"
+                    onclick="fesw('setup1', 'setup2');">Let's go!</button>
+                <p class="rsmt" style="margin-top: 4px;">0.0.9 - Jan 21, 2024</p>
             </div>
-            <div id="settingsappear" style="display: none;">
-                <p>Taskbutton position</p>
-                <button class="winb">Left</button><button class="winb">Middle</button><button
-                    class="winb">Right</button>
-                <p><button class="winb" onclick="fesw('settingsappear', 'settingsmain');">Back</button></p>
+            <div id="setup2" style="display: none; max-width: 320px;">
+                <p class="h2">User Setup</p>
+                <p>Enter a username and select your preferences.</p>
+                <input type="text" id="username" class="i1" placeholder="Enter a new username">
+                <p class="smt">Select the options below to toggle them (green is on, red is off)</p>
+                <button class="thingy green" onclick="setchk('sendcrashs', 'yescrd', 'nocrd');" id="sendcrashs">Allow
+                    sending crash details to the dev</button>
+                <button class="thingy red" onclick="setchk('senderrors', 'yeserrd', 'noerrd');" id="senderrors">Allow
+                    sending error details to the dev</button>
+                <button class="b1" onclick="finishsetup();nametime('username');">Done!</button>
             </div>
-            <div id="settingspriv" style="display: none;">
-                <p>Data & Privacy</p>
-                <button class="b1" onclick="mkw(`<p>Warning: Erasing WebDesk will delete all of it's data. Select 'Close' to stop, or 'OK' to continue.</p><button class='b1' onclick='burnitall();'>OK</button>`, 'Erase Assistant', '275px');">Erase This WebDesk</button>
-                <p><button class="winb" onclick="fesw('settingspriv', 'settingsmain');">Back</button></p>
+            <div id="setup3" style="display: none; max-width: 320px;">
+                <p class="h2">Setup is done!</p>
+                <p>Finishing up a few things...</p>
+                <button class="b1" onclick="window.location.reload();">Reload</button>
+            </div>
+            <div id="mig" style="max-width: 330px; display: none;">
+                <p class="h2" id="lobotomy">Migration Assistant</p>
+                <p>Note: Safari can have issues migrating.</p>
+                <p class="smt">- Go to your Everything Menu and open Migration Assistant on the other WebDesk.</p>
+                <p class="smt">- Enter the code "<span id="codemig" style="color: #fff;"></span>" into the Assistant.
+                </p>
+                <button class="b1" onclick="fesw('mig', 'setup1');">Back</button>
+            </div>
+            <div id="load" style="max-width: 320px;">
+                <p class="h2">Loading...</p>
+                <p>If this gets stuck or takes too long, reload.</p>
+                <button class="b1">Recovery</button><button class="b1" onclick="reboot();">Reload</button>
+            </div>
+            <div id="mdone" style="max-width: 300px; display: none;">
+                <p class="h2">Migration Assistant</p>
+                <p>Migration complete.</p>
+                <p>Click "Done" to reboot into your WebDesk.</p>
+                <button class="b1" onclick="reboot();">Done</button>
             </div>
         </div>
+        <!--Migration Assistant-->
+        <div class="window" id="migration" style="width: 350px;">
+            <div class="title-bar" id="titleBar">Migration Assistant <button class="winb"
+                    onclick="hidef('migration');">Close</button></div>
+            <div class="content">
+                <p>Enter the ID of the other WebDesk.</p>
+                <p>Do not enter any other person's ID, as your data will go to them!</p>
+                <input type="text" id="peerIdInput" class="i1" placeholder="Other peer's ID">
+                <button
+                    onclick="mkw(`<p>If migration won't start</p><p>- Try reloading this WebDesk, then reopen Migration Assistant and try again.</p><p>- Make sure you're on the same network as the other WebDesk.</p>`, 'Migration Assistant', '350px');"
+                    class="b1">Not working?</button><button id="connectButton" class="b1">Connect</button>
+            </div>
+            <div class="content" style="display: none" id="migrationdontclose">
+                <p>Sending data to other WebDesk...</p>
+                <p>The other WebDesk will let you know when migration is done.</p>
+                <p>When it's done, close this window.</p>
+            </div>
+        </div>
+        <!--End of Migration Assistant-->
+        <!--Settings-->
+        <div class="window" id="settings" style="width: 260px;">
+            <div class="title-bar" id="titleBar">Settings <button class="winb"
+                    onclick="hidef('settings');">Close</button>
+            </div>
+            <div class="content">
+                <div id="settingsmain">
+                    <button class="b1 b2" onclick="fesw('settingsmain', 'settingsappear');">Appearance</button><button
+                        class="b1 b2" onclick="fesw('settingsmain', 'settingspriv');">Data & Privacy</button>
+                </div>
+                <div id="settingsappear" style="display: none;">
+                    <p>Taskbutton position</p>
+                    <button class="winb">Left</button><button class="winb">Middle</button><button
+                        class="winb">Right</button>
+                    <p><button class="winb" onclick="fesw('settingsappear', 'settingsmain');">Back</button></p>
+                </div>
+                <div id="settingspriv" style="display: none;">
+                    <p>Data & Privacy</p>
+                    <button class="b1"
+                        onclick="mkw(`<p>Warning: Erasing WebDesk will delete all of it's data. Select 'Close' to stop, or 'OK' to continue.</p><button class='b1' onclick='burnitall();'>OK</button>`, 'Erase Assistant', '275px');">Erase
+                        This WebDesk</button>
+                    <p><button class="winb" onclick="fesw('settingspriv', 'settingsmain');">Back</button></p>
+                </div>
+            </div>
+        </div>
+        <!--End of settings-->
+        <!--Camera-->
+        <div class="window" id="camera" style="width: 260px;">
+            <div class="title-bar" id="titleBar">Camera <button class="winb" onclick="hidef('camera');">Close</button>
+            </div>
+            <div class="content">
+                <div id="enablecam">
+                    <p>WebDesk needs camera permission to open this app.</p>
+                    <p>Note: Safari/Firefox may have issues.</p>
+                    <button class="b1" onclick="stcam();fesw('enablecam', 'cameraitself');">Grant</button>
+                </div>
+                <div id="cameraitself" style="display: none;">
+                    <video autoplay="true" id="videl"></video>
+                    <button class="b1 b2" onclick="snap();">Take Picture</button>
+                </div>
+            </div>
+            <script src="./assets/apps/camera.js"></script>
+        </div>
+        <!--Camera-->
+        <!--Desktop nav-->
+        <button id="mainbtn" class="cent" onclick="toggle('mainmenu');"><svg xmlns="http://www.w3.org/2000/svg"
+                width="24" height="16" viewBox="0 0 24 16" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-more-horizontal">
+                <circle cx="12" cy="10" r="1"></circle>
+                <circle cx="19" cy="10" r="1"></circle>
+                <circle cx="5" cy="10" r="1"></circle>
+            </svg> <span class="time">Time</span></button>
+        <div id="mainmenu">
+            <p>Hello, <span class="user"></span>!</p>
+            <button class="b1" onclick="opapp('migration');">Migration Assistant</button><button class="b1"
+                onclick="opapp('settings');">Settings</button><button class="b1"
+                onclick="opapp('camera');">Camera</button>
+        </div>
+        <!--End of desktop nav-->
     </div>
-    <!--End of settings-->
-    <!--Desktop nav-->
-    <button id="mainbtn" onclick="toggle('mainmenu');"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="16"
-            viewBox="0 0 24 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round" class="lucide lucide-more-horizontal">
-            <circle cx="12" cy="10" r="1"></circle>
-            <circle cx="19" cy="10" r="1"></circle>
-            <circle cx="5" cy="10" r="1"></circle>
-        </svg> <span class="time">Time</span></button>
-    <div id="mainmenu">
-        <p>Hello, <span class="user"></span>!</p>
-        <button class="b1" onclick="opapp('migration');">Migration Assistant</button><button class="b1"
-            onclick="opapp('settings');">Settings</button>
-    </div>
-    <!--End of desktop nav--></div>
     <script src="./assets/code/jq.js"></script>
     <script src="./assets/code/idb.js"></script>
     <script src="./assets/code/core.js"></script>
@@ -119,7 +144,7 @@
         window.onload = async function () {
             const setup = await readvar('setupdone');
             if (setup == "y") {
-                hewwo = await readvar('name');
+                const hewwo = await readvar('name');
                 desktop(hewwo);
             } else {
                 fesw('load', 'setup1');
