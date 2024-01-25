@@ -1,4 +1,4 @@
-function mkw(content, title, width, m) {
+function mkw(content, title, width, m, height) {
     const windowId = gen(6);
     const windowContainer = document.createElement('div');
     windowContainer.className = 'window';
@@ -6,6 +6,9 @@ function mkw(content, title, width, m) {
     windowContainer.style.display = "block";
     windowContainer.style.zIndex = 2;
     windowContainer.style.width = width;
+    if (height) {
+        windowContainer.style.height = height;
+    }
     const titleBar = document.createElement('div');
     titleBar.className = 'title-bar';
     titleBar.innerHTML = title + ` <button class="winb" onclick="dest('${windowId}');">Close</button>`;
@@ -72,20 +75,21 @@ function embed(src, name, width, height) {
     const embed = `<embed class="embed" id="${random}" src="${src}", height="${height}"></embed>`
     mkw(embed, name, width, './assets/img/browse.svg');
 }
+function redir(url) {
+    const ye = `<p>You're about to be redirected to ${url}.</p>
+    <p>Select "Close" to cancel, or "Accept" to continue.</p>
+    <a class="b1" href="${url}" target="_blank">Accept</a>`
+    mkw(ye, 'Redirect', '300px');
+}
 function about(value) {
     const about = `<img style="border: none; width: 100px; height: 100px;" src="./assets/img/favicon.png"></img>
-        <p>Edited Dec 19, 2023</p>
-        <p>Container: <span class="containername bold">undefined</span></p>
-        <a onclick="embed('https://randomuser691337.vercel.app', 'About Embed', '520px', '340px');">Developer's Site</a>`;
-    const conmgr = `
-        <img style="border: none; width: 100px; height: 100px; border-radius: 15px;" src="./assets/img/multi.svg"></img>
-        <p>Container Manager 2.0</p>
-        <p>Edited Dec 19, 2023</p>
-        <a onclick="embed('https://randomuser691337.vercel.app', 'About Embed', '520px', '340px');">Developer's Site</a>`;
+        <p>Version: <span class="ver">one sec</span></p>
+        <p>Last edited: <span class="lastedit">one sec</span></p>
+        <a onclick="embed('https://meower.xyz', 'About Embed', '520px', '340px');">Developer's Site</a> <a onclick="doc('./assets/code/creds.txt', 'WebDesk Credits', '420px', 'auto');">Creds</a>`;
     if (value === undefined) {
         mkw(about, `WebDesk ${ver}`, '240px', './assets/img/favicon.png');
-    } else if (value === "conmgr") {
-        mkw(conmgr, 'About', '220px', './assets/img/multi.svg');
     }
     masschange('containername', dbName);
+    masschange('ver', ver);
+    masschange('lastedit', lastedit);
 }

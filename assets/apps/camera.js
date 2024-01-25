@@ -11,6 +11,17 @@ function stcam() {
     }
 }
 
+function nocam() {
+    var video = document.querySelector("#videl");
+    var tracks = video.srcObject.getTracks();
+
+    tracks.forEach(function (track) {
+        track.stop();
+    });
+
+    video.srcObject = null;
+}
+
 function snap() {
     var video = document.querySelector("#videl");
     var canvas = document.createElement('canvas');

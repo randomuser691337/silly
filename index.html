@@ -10,25 +10,28 @@
 <body>
     <div class="fullbg" id="nest">
         <div class="setup" id="setup">
-            <div id="setup1" style="max-width: 250px; display: none;">
+            <div id="setup1" style="max-width: 330px; display: none;">
                 <p class="h2">Welcome to WebDesk!</p>
                 <p>In just a few steps, you'll be ready to go.</p>
                 <p class="smt">- Select "Migrate" if you want to copy data</p>
                 <p class="smt">- Select "Let's Go" to get started (normal)</p>
-                <button class="b1" onclick="fesw('setup1', 'mig');">Migrate</button><button class="b1"
+                <p class="smt">- Select "Guest" to skip setup or debug</p>
+                <button class="b1" onclick="guestmode();">Guest</button><button class="b1"
+                    onclick="fesw('setup1', 'mig');">Migrate</button><button class="b1"
                     onclick="fesw('setup1', 'setup2');">Let's go!</button>
-                <p class="rsmt" style="margin-top: 4px;">0.0.9 - Jan 21, 2024</p>
+                <p class="rsmt" style="margin-top: 4px;"><span class="ver"></span> - <span class="lastedit"></span></p>
             </div>
             <div id="setup2" style="display: none; max-width: 320px;">
                 <p class="h2">User Setup</p>
                 <p>Enter a username and select your preferences.</p>
-                <input type="text" id="username" class="i1" placeholder="Enter a new username">
+                <input type="text" id="username" class="i1" placeholder="Enter a new username" autocomplete="off">
                 <p class="smt">Select the options below to toggle them (green is on, red is off)</p>
                 <button class="thingy green" onclick="setchk('sendcrashs', 'yescrd', 'nocrd');" id="sendcrashs">Allow
                     sending crash details to the dev</button>
                 <button class="thingy red" onclick="setchk('senderrors', 'yeserrd', 'noerrd');" id="senderrors">Allow
                     sending error details to the dev</button>
-                <button class="b1" onclick="finishsetup();nametime('username');">Done!</button>
+                <button class="b1" onclick="fesw('setup2', 'setup1');">Back</button><button class="b1"
+                    onclick="finishsetup();nametime('username');">Done!</button>
             </div>
             <div id="setup3" style="display: none; max-width: 320px;">
                 <p class="h2">Setup is done!</p>
@@ -93,7 +96,7 @@
                 <div id="settingspriv" style="display: none;">
                     <p>Data & Privacy</p>
                     <button class="b1"
-                        onclick="mkw(`<p>Warning: Erasing WebDesk will delete all of it's data. Select 'Close' to stop, or 'OK' to continue.</p><button class='b1' onclick='burnitall();'>OK</button>`, 'Erase Assistant', '275px');">Erase
+                        onclick="mkw(`<p>Warning: Erasing WebDesk will delete all of it's data. Select 'Close' to stop, or 'Erase' to continue.</p><button class='b1 b2' onclick='burnitall();'>Erase</button>`, 'Erase Assistant', '330px');">Erase
                         This WebDesk</button>
                     <p><button class="winb" onclick="fesw('settingspriv', 'settingsmain');">Back</button></p>
                 </div>
@@ -102,7 +105,8 @@
         <!--End of settings-->
         <!--Camera-->
         <div class="window" id="camera" style="width: 260px;">
-            <div class="title-bar" id="titleBar">Camera <button class="winb" onclick="hidef('camera');">Close</button>
+            <div class="title-bar" id="titleBar">Camera <button class="winb"
+                    onclick="hidef('camera');nocam();fesw('cameraitself', 'enablecam');">Close</button>
             </div>
             <div class="content">
                 <div id="enablecam">
@@ -112,12 +116,30 @@
                 </div>
                 <div id="cameraitself" style="display: none;">
                     <video autoplay="true" id="videl"></video>
-                    <button class="b1 b2" onclick="snap();">Take Picture</button>
+                    <button class="b1" onclick="nocam();fesw('cameraitself', 'enablecam');">Back</button><button
+                        class="b1" onclick="snap();">Take Picture</button>
                 </div>
             </div>
             <script src="./assets/apps/camera.js"></script>
         </div>
-        <!--Camera-->
+        <!--End of camera-->
+        <!--Terminal-->
+        <div id="terminal" class="window resizeh" name="Terminal" style="width: 300px;">
+            <div class="title-bar">Terminal <button class="winb" onclick="hidef('terminal');">Close</button><button
+                    class="winb" id="run" onclick="document.getElementById('terminalbox').value = '';">Clear</button>
+            </div>
+            <div class="content">
+                <input id="terminalbox" placeholder="Run any JS function" class="i1">
+                <button class="b1" onclick="executeCode();" style="margin-bottom: 1px;">Execute</button>
+                <script>
+                    function executeCode() {
+                        var code = document.getElementById("terminalbox").value;
+                        eval(code);
+                    }
+                </script>
+            </div>
+        </div>
+        <!--End of terminal-->
         <!--Desktop nav-->
         <button id="mainbtn" class="cent" onclick="toggle('mainmenu');"><svg xmlns="http://www.w3.org/2000/svg"
                 width="24" height="16" viewBox="0 0 24 16" fill="none" stroke="currentColor" stroke-width="2"
@@ -128,9 +150,18 @@
             </svg> <span class="time">Time</span></button>
         <div id="mainmenu">
             <p>Hello, <span class="user"></span>!</p>
-            <button class="b1" onclick="opapp('migration');">Migration Assistant</button><button class="b1"
-                onclick="opapp('settings');">Settings</button><button class="b1"
-                onclick="opapp('camera');">Camera</button>
+            <p class="h2">Apps</p>
+            <div class="padmenu">
+                <button class="b1" onclick="opapp('migration');">Migration Assistant</button><button class="b1"
+                    onclick="opapp('settings');">Settings</button><button class="b1"
+                    onclick="opapp('camera');">Camera</button><button class="b1"
+                    onclick="opapp('terminal');">Terminal</button>
+            </div>
+            <p class="h2">WebDesk</p>
+            <div class="padmenu">
+                <button class="b1 b2" onclick="about();">About WebDesk</button>
+                <button class="b1 b2" onclick="reboot();">Reboot</button>
+            </div>
         </div>
         <!--End of desktop nav-->
     </div>
@@ -141,14 +172,18 @@
     <script src="./assets/code/peer.js"></script>
     <script src="./assets/code/mico.js"></script>
     <script>
-        window.onload = async function () {
+        document.onreadystatechange = async function () {
             const setup = await readvar('setupdone');
             if (setup == "y") {
                 const hewwo = await readvar('name');
                 desktop(hewwo);
+            } else if (setup == "guest") {
+                burnitall('Guest Mode');
             } else {
                 fesw('load', 'setup1');
             }
+            masschange('ver', ver);
+            masschange('lastedit', lastedit);
         }
     </script>
 </body>

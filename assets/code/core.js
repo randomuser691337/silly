@@ -1,5 +1,7 @@
 
 /* if you find any bugs, feel free to submit a pull request idk how github/git works lmao TwT*/
+var ver = "0.0.9";
+var lastedit = "Jan 25, 2024";
 function winrec(element) {
     let offsetX, offsetY, isDragging = false;
 
@@ -68,6 +70,12 @@ draggableWindows.forEach(function (element) {
     winrec(element);
 });
 
+async function guestmode() {
+    mkw(`<p>You're in Guest Mode.</p><p>Upon reload/restart, WebDesk will auto-erase.</p>`, 'Setup Assistant', '320px');
+    desktop('Guest');
+    await writevar('setupdone', 'guest');
+}
+
 function gen(length) {
     if (length <= 0) {
         console.error('Length should be greater than 0');
@@ -117,9 +125,9 @@ function desktop(name) {
 }
 
 function stm(winc, winn, wins) {
-   dest('nest');
-   const ret = mkw(winc, winn, wins, 's');
-   return ret;
+    dest('nest');
+    const ret = mkw(winc, winn, wins, 's');
+    return ret;
 }
 
 async function nametime(el) {
@@ -151,6 +159,16 @@ function centerel(el) {
 
     element.style.left = `${leftPosition}px`;
     element.style.top = `${topPosition}px`;
+}
+function doc(path, title, width, height) {
+    fetch(path)
+        .then(response => response.text())
+        .then(data => {
+            mkw(data, title, width, undefined, height)
+        })
+        .catch(error => {
+            mkw(`<p>Couldn't load doc; check console.</p>`, 'Document Error', '270px');
+        });
 }
 
 function updateClock() {

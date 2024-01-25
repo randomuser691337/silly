@@ -28,6 +28,13 @@
     src: url(./fonts/Poppins-Medium.ttf);
 }
 
+.bold {
+    font-family: "PoppinsB";
+}
+
+.med {
+    font-family: "PoppinsM";
+}
 
 body {
     padding: 0px;
@@ -48,6 +55,7 @@ body {
     border: 2px solid var(--bordercolor);
     background-color: var(--lightdark);
     border-radius: var(--rad1);
+    max-width: 85% !important;
 }
 
 p {
@@ -205,8 +213,10 @@ button {
     position: fixed;
     left: 50%;
     top: 50%;
-    width: 80%;
-    height: 80%;
+    width: auto;
+    max-width: 80%;
+    height: auto;
+    max-height: 80%;
     padding: 12px;
     border-radius: var(--rad1);
     background-color: var(--lightdark);
@@ -313,6 +323,24 @@ a:active {
     box-sizing: border-box;
     width: 100%;
     height: auto;
-    border-radius: 8px;
+    border-radius: 9px;
     border: none;
+}
+
+.acb {
+    width: 12px;
+    height: 12px;
+    border-radius: 12px;
+    margin: 1px;
+    border: none;
+    cursor: pointer;
+    background-color: #1a1a1a;
+}
+
+.padmenu {
+    padding: 9px;
+    border-radius: 9px;
+    background-color: var(--lightdarkb);
+    width: 100%;
+    box-sizing: border-box;
 }
