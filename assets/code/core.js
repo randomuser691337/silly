@@ -195,6 +195,12 @@ function updateClock() {
     }
 }
 
+function browsergo() {
+    const id1 = document.getElementById('browserlink').value;
+    const id2 = document.getElementById('browserframe');
+    id2.src = id1;
+}
+
 function cleantop() {
     hidef("mainmenu");
     mkw(`<p>This will close all windows, regardless of status.</p><p>Click 'Close' to cancel, or 'Clean Desktop' to continue.<button class='b1 b2' onclick="hidef('mainmenu'); sall('wc');">Clean Desktop</button></p>`, "WebDesk", "320px");

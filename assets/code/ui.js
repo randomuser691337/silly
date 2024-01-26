@@ -84,7 +84,7 @@ function redir(url) {
     const ye = `<p>You're about to be redirected to ${url}.</p>
     <p>Select "Close" to cancel, or "Accept" to continue.</p>
     <a class="b1" href="${url}" target="_blank">Accept</a>`
-    mkw(ye, 'Redirect', '300px');
+    mkw(ye, 'Redirect', 'auto');
 }
 function about(value) {
     const about = `<img style="border: none; width: 100px; height: 100px;" src="./assets/img/favicon.png"></img>

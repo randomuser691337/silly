@@ -324,6 +324,7 @@ a:active {
 
 .b2 {
     width: 100% !important;
+    height: 100%;
     box-sizing: border-box;
     margin: 0px;
     margin-top: 2px;

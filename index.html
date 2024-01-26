@@ -162,8 +162,9 @@
         </div>
         <!--End of terminal-->
         <!--Weather-->
-        <div id="weather" class="window resizeh" name="Terminal" style="width: 300px;">
-            <div class="title-bar">Weather <button class="winb wc" onclick="hidef('weather');">Close</button><button class="winb wc" onclick="reboot();">Restart</button>
+        <div id="weather" class="window resizeh" name="Browser" style="width: 300px;">
+            <div class="title-bar">Weather <button class="winb wc" onclick="hidef('weather');">Close</button><button
+                    class="winb wc" onclick="reboot();">Restart</button>
             </div>
             <div class="content" id="weathers1">
                 <p>1. Input your city first.</p>
@@ -176,6 +177,39 @@
             <div class="content" id="weathers2" style="display: none;">
                 <p class="weathera"></p>
                 <button class="b1" onclick="fesw('weathers2', 'weathers1');">Reconfigure</button>
+            </div>
+        </div>
+        <!--End of weather-->
+        <!--Browser-->
+        <div id="browser" class="window resizeh" name="Browser" style="width: 700px;">
+            <div class="title-bar">Browser <button class="winb wc" onclick="hidef('browser');">Close</button><button
+                    class="winb wc" onclick="browsergo();">Go!</button>
+            </div>
+            <div class="content">
+                <div id="browser1">
+                    <p>Please install <a
+                            href="https://chromewebstore.google.com/detail/allow-x-frame-options/jfjdfokifdlmbkbncmcfbcobggohdnif">this
+                            small extension</a> on Chrome to be able to view most pages (x-frame-options).</p>
+                    <p>This extension removes restrictions on sites that block embedding (what WebDesk browser uses.)
+                    </p>
+                    <p>When installed, make sure to turn it on! Without this, most sites won't work.</p>
+                    <button onclick="fesw('browser1', 'browser2');" class="b1">No, continue anyways</button><button
+                        class="b1"
+                        onclick="redir('https://chromewebstore.google.com/detail/allow-x-frame-options/jfjdfokifdlmbkbncmcfbcobggohdnif');">Install
+                        Extension</button>
+                </div>
+                <div id="browser2" style="display: none;">
+                    <input class="i1" placeholder="Link here, then select 'Go!'" id="browserlink">
+                    <iframe class="embed" height="400px" ; src="https://google.com" id="browserframe"></iframe>
+                </div>
+                <div id="browser3" style="display: none;">
+                    <p>Please enable the extension by:</p>
+                    <p>- Opening the Extension menu</p>
+                    <p>- Clicking "Allow X-Frame Options"</p>
+                    <p>- Clicking "Toggle ON/OFF"</p>
+                    <p>When you're done, reboot to apply to WebDesk.</p>
+                    <button class="b1" onclick="reboot();">Reload</button>
+                </div>
             </div>
         </div>
         <!--End of weather-->
@@ -198,7 +232,8 @@
                         onclick="opapp('settings');">Settings</button><button class="b1"
                         onclick="opapp('camera');">Camera</button><button class="b1"
                         onclick="opapp('terminal');">Terminal</button><button class="b1"
-                        onclick="opapp('weather');">Weather</button>
+                        onclick="opapp('weather');">Weather</button><button class="b1"
+                        onclick="opapp('browser');">Browser</button>
                 </div>
                 <p class="h2">WebDesk</p>
                 <div class="padmenu">
