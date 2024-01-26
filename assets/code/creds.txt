@@ -2,5 +2,5 @@
 <p class="med">People or things that helped me do this.</p>
 <p><a class="med" onclick="embed('https://rowlit.xyz', `Rowlit's site`, '500px', '550px');">Rowlit:</a> Code for the camera, albeit I modified it.</p>
 <p><a class="med" onclick="redir('https://chat.openai.com');">ChatGPT:</a> Literally half of this entire thing.</p>
-<p><a class="med" onclick="redir('https://bard.google.com');">ChatGPT:</a> For helping when ChatGPT isn't there.</p>
+<p><a class="med" onclick="redir('https://bard.google.com');">Bard:</a> For helping when ChatGPT isn't there.</p>
 <p><a onclick="embed('https://meower.xyz', `Developer's site`, '500px', '340px');">Myself:</a> For making this whole thing.</p>

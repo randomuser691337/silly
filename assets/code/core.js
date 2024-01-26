@@ -88,6 +88,10 @@ function gen(length) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function prr(val) {
+    mkw(`<p>Please reboot to ${val}</p><button class="b1 b2" onclick="reboot();">Reboot</button>`, 'WebDesk', '270px');
+}
+
 async function yescrd() {
     await writevar('crd', 'y');
 }
@@ -136,7 +140,7 @@ async function nametime(el) {
 }
 
 async function finishsetup() {
-    fesw('setup2', 'setup3');
+    fesw('setup3', 'setup4');
     await writevar('setupdone', 'y');
     const hai = await readvar('name');
     desktop(hai);
@@ -189,6 +193,11 @@ function updateClock() {
     for (let i = 0; i < elements.length; i++) {
         elements[i].innerText = formattedTime;
     }
+}
+
+function cleantop() {
+    hidef("mainmenu");
+    mkw("<p>This will close all windows, regardless of status.</p><p>Click 'Close' to cancel, or 'Clean Desktop' to continue.<button class='b1 b2' onclick=\"hidef('mainmenu'); sall('wc');\">Clean Desktop</button></p>", "WebDesk", "320px");
 }
 
 updateClock();

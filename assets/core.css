@@ -1,6 +1,6 @@
 :root {
     --background: #000;
-    --accent: 40, 75, 230;
+    --accent: 40, 70, 235;
     --lightdark: #1a1a1a;
     --lightdarkb: #2a2a2a;
     --bordercolor: #3a3a3a;
@@ -80,6 +80,12 @@ p {
     font-size: 22px;
     font-family: 'PoppinsM', Arial;
 }
+
+.h3 {
+    font-size: 19px;
+    font-family: 'PoppinsM', Arial;
+}
+
 
 .b1 {
     padding: 4px 7px;
@@ -165,14 +171,16 @@ p {
         opacity: 100%;
     }
 }
-
 .title-bar {
     color: white;
     padding: 6px;
     border-bottom: 2px solid var(--bordercolor);
     cursor: move;
     user-select: none;
-    background-color: rgba(var(--accent), 0.07);
+    background-color: rgba(var(--accent), 0.05);
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    transition: 0.1s;
 }
 
 .content {
@@ -217,7 +225,7 @@ button {
     max-width: 80%;
     height: auto;
     max-height: 80%;
-    padding: 12px;
+    padding: 4px;
     border-radius: var(--rad1);
     background-color: var(--lightdark);
     border: 2px solid var(--bordercolor);
@@ -302,7 +310,9 @@ a:active {
     right: 0px;
     top: 0px;
     bottom: 0px;
-    background-color: rgba(var(--accent), 0.25);
+    background-color: rgba(var(--accent), 0.20);
+    transition: 0.1s;
+
 }
 
 .embed {
@@ -319,6 +329,10 @@ a:active {
     margin-top: 2px;
 }
 
+.fucku {
+    margin-top: 2px;
+}
+
 #videl {
     box-sizing: border-box;
     width: 100%;
@@ -328,18 +342,23 @@ a:active {
 }
 
 .acb {
-    width: 12px;
-    height: 12px;
-    border-radius: 12px;
+    width: 20px;
+    height: 20px;
+    border-radius: 8px;
     margin: 1px;
+    margin-top: 4px;
     border: none;
     cursor: pointer;
     background-color: #1a1a1a;
 }
 
+.acb:active {
+    opacity: 0.6;
+}
+
 .padmenu {
     padding: 9px;
-    border-radius: 9px;
+    border-radius: 8px;
     background-color: var(--lightdarkb);
     width: 100%;
     box-sizing: border-box;

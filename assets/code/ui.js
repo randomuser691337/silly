@@ -11,7 +11,7 @@ function mkw(content, title, width, m, height) {
     }
     const titleBar = document.createElement('div');
     titleBar.className = 'title-bar';
-    titleBar.innerHTML = title + ` <button class="winb" onclick="dest('${windowId}');">Close</button>`;
+    titleBar.innerHTML = title + ` <button class="winb wc" onclick="dest('${windowId}');">Close</button>`;
     const contentContainer = document.createElement('div');
     contentContainer.className = 'content';
     contentContainer.innerHTML = content;
@@ -22,7 +22,7 @@ function mkw(content, title, width, m, height) {
     } else {
         document.getElementById('nest').appendChild(windowContainer);
     }
-    centerel(windowId);winrec(windowContainer);
+    centerel(windowId); winrec(windowContainer);
     return windowId;
 }
 function opapp(d1) {
@@ -44,15 +44,20 @@ function showf(d1) {
     const dr1 = document.getElementById(d1);
     $(dr1).fadeIn(150);
 }
-function chacc(clr1, clr2) {
-    
+function changevar(varName, varValue) {
+    const root = document.documentElement;
+    root.style.setProperty(`--${varName}`, `${varValue}`);
+    writevar(varName, varValue);
+}
+function chacc(clr1) {
+    changevar('accent', clr1);
 }
 function dest(d1) {
     const dr1 = document.getElementById(d1);
     $(dr1).fadeOut(170, function () { dr1.remove });
 }
 function clis(elid, cl) {
-    
+
 }
 function toggle(elementId, time3) {
     var element = document.getElementById(elementId);
@@ -89,7 +94,21 @@ function about(value) {
     if (value === undefined) {
         mkw(about, `WebDesk ${ver}`, '240px', './assets/img/favicon.png');
     }
-    masschange('containername', dbName);
+
     masschange('ver', ver);
     masschange('lastedit', lastedit);
+}
+function update(src, time) {
+    // silly easter egg corrupted android reference
+    mkw(`Updating ${src}, <span style="color: #ff2222;">DO NOT REBOOT!</span>`, 'Flashing (DO NOT REBOOT!)', '300px');
+    setTimeout(function () {
+        document.body.style.background = "#000";
+        document.body.innerHTML = `<img id="sillypenguin" src="./assets/img/tux.png"></img>`;
+    }, time)
+}
+function sall(className) {
+    var buttons = document.getElementsByClassName(className);
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].click();
+    }
 }

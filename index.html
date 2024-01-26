@@ -31,9 +31,21 @@
                 <button class="thingy red" onclick="setchk('senderrors', 'yeserrd', 'noerrd');" id="senderrors">Allow
                     sending error details to the dev</button>
                 <button class="b1" onclick="fesw('setup2', 'setup1');">Back</button><button class="b1"
-                    onclick="finishsetup();nametime('username');">Done!</button>
+                    onclick="fesw('setup2', 'setup3');">Done!</button>
             </div>
-            <div id="setup3" style="display: none; max-width: 320px;">
+            <div id="setup3" style="display: none; max-width: 230px;">
+                <p class="h2">Personalize</p>
+                <p>Accent color</p>
+                <button class="acb" style="background: rgb(210, 30, 30);" onclick="chacc('210, 30, 30');"></button>
+                <button class="acb" style="background: rgb(210, 120, 30);" onclick="chacc('210, 120, 30');"></button>
+                <button class="acb" style="background: rgb(210, 180, 20);" onclick="chacc('210, 180, 20');"></button>
+                <button class="acb" style="background: rgb(50, 160, 20);" onclick="chacc('50, 160, 20');"></button>
+                <button class="acb" style="background: rgb(40, 70, 235);" onclick="chacc('40, 70, 235');"></button>
+                <button class="acb" style="background: rgb(120, 60, 235);" onclick="chacc('120, 60, 235');"></button>
+                <p><button class="b1" onclick="fesw('setup3', 'setup2');">Back</button><button class="b1"
+                        onclick="finishsetup();nametime('username');">Done!</button></p>
+            </div>
+            <div id="setup4" style="display: none; max-width: 320px;">
                 <p class="h2">Setup is done!</p>
                 <p>Finishing up a few things...</p>
                 <button class="b1" onclick="window.location.reload();">Reload</button>
@@ -60,7 +72,7 @@
         </div>
         <!--Migration Assistant-->
         <div class="window" id="migration" style="width: 350px;">
-            <div class="title-bar" id="titleBar">Migration Assistant <button class="winb"
+            <div class="title-bar" id="titleBar">Migration Assistant <button class="winb wc"
                     onclick="hidef('migration');">Close</button></div>
             <div class="content">
                 <p>Enter the ID of the other WebDesk.</p>
@@ -79,7 +91,7 @@
         <!--End of Migration Assistant-->
         <!--Settings-->
         <div class="window" id="settings" style="width: 260px;">
-            <div class="title-bar" id="titleBar">Settings <button class="winb"
+            <div class="title-bar" id="titleBar">Settings <button class="winb wc"
                     onclick="hidef('settings');">Close</button>
             </div>
             <div class="content">
@@ -88,9 +100,17 @@
                         class="b1 b2" onclick="fesw('settingsmain', 'settingspriv');">Data & Privacy</button>
                 </div>
                 <div id="settingsappear" style="display: none;">
-                    <p>Taskbutton position</p>
-                    <button class="winb">Left</button><button class="winb">Middle</button><button
-                        class="winb">Right</button>
+                    <p style="margin: 0px !important;">Accent color</p>
+                    <button class="acb" style="background: rgb(210, 30, 30);" onclick="chacc('210, 30, 30');"></button>
+                    <button class="acb" style="background: rgb(210, 120, 30);"
+                        onclick="chacc('210, 120, 30');"></button>
+                    <button class="acb" style="background: rgb(210, 180, 20);"
+                        onclick="chacc('210, 180, 20');"></button>
+                    <button class="acb" style="background: rgb(50, 160, 20);" onclick="chacc('50, 160, 20');"></button>
+                    <button class="acb" style="background: rgb(40, 70, 235);" onclick="chacc('40, 70, 235');"></button>
+                    <button class="acb" style="background: rgb(120, 60, 235);"
+                        onclick="chacc('120, 60, 235');"></button>
+                    <p>Other</p>
                     <p><button class="winb" onclick="fesw('settingsappear', 'settingsmain');">Back</button></p>
                 </div>
                 <div id="settingspriv" style="display: none;">
@@ -105,7 +125,7 @@
         <!--End of settings-->
         <!--Camera-->
         <div class="window" id="camera" style="width: 260px;">
-            <div class="title-bar" id="titleBar">Camera <button class="winb"
+            <div class="title-bar" id="titleBar">Camera <button class="winb wc"
                     onclick="hidef('camera');nocam();fesw('cameraitself', 'enablecam');">Close</button>
             </div>
             <div class="content">
@@ -125,7 +145,7 @@
         <!--End of camera-->
         <!--Terminal-->
         <div id="terminal" class="window resizeh" name="Terminal" style="width: 300px;">
-            <div class="title-bar">Terminal <button class="winb" onclick="hidef('terminal');">Close</button><button
+            <div class="title-bar">Terminal <button class="winb wc" onclick="hidef('terminal');">Close</button><button
                     class="winb" id="run" onclick="document.getElementById('terminalbox').value = '';">Clear</button>
             </div>
             <div class="content">
@@ -140,6 +160,24 @@
             </div>
         </div>
         <!--End of terminal-->
+        <!--Weather-->
+        <div id="weather" class="window resizeh" name="Terminal" style="width: 300px;">
+            <div class="title-bar">Weather <button class="winb wc" onclick="hidef('weather');">Close</button><button class="winb wc" onclick="reboot();">Restart</button>
+            </div>
+            <div class="content" id="weathers1">
+                <p>1. Input your city first.</p>
+                <input id="weathercity" placeholder="Enter a city here" class="i1">
+                <p>2. Select the unit you use.</p>
+                <button class="b1" onclick="getWeather('weathercity', 'imperial');">Fahrenheit</button><button
+                    class="b1" onclick="getWeather('weathercity', 'metric');">Celsius</button>
+                <script src="./assets/apps/weather.js"></script>
+            </div>
+            <div class="content" id="weathers2" style="display: none;">
+                <p class="weathera"></p>
+                <button class="b1" onclick="fesw('weathers2', 'weathers1');">Reconfigure</button>
+            </div>
+        </div>
+        <!--End of weather-->
         <!--Desktop nav-->
         <button id="mainbtn" class="cent" onclick="toggle('mainmenu');"><svg xmlns="http://www.w3.org/2000/svg"
                 width="24" height="16" viewBox="0 0 24 16" fill="none" stroke="currentColor" stroke-width="2"
@@ -149,18 +187,25 @@
                 <circle cx="5" cy="10" r="1"></circle>
             </svg> <span class="time">Time</span></button>
         <div id="mainmenu">
-            <p>Hello, <span class="user"></span>!</p>
-            <p class="h2">Apps</p>
-            <div class="padmenu">
-                <button class="b1" onclick="opapp('migration');">Migration Assistant</button><button class="b1"
-                    onclick="opapp('settings');">Settings</button><button class="b1"
-                    onclick="opapp('camera');">Camera</button><button class="b1"
-                    onclick="opapp('terminal');">Terminal</button>
-            </div>
-            <p class="h2">WebDesk</p>
-            <div class="padmenu">
-                <button class="b1 b2" onclick="about();">About WebDesk</button>
-                <button class="b1 b2" onclick="reboot();">Reboot</button>
+            <div class="content"
+                style="padding: 6px; border-radius: var(--rad2); background-color: rgba(var(--accent), 0.08);">
+                <p class="h3"><span class="greet">Welcome to WebDesk</span>, <span class="user"></span>!</p>
+                <p class="smt weather" onclick="opapp('weather');">Select to set up weather</p>
+                <p class="h2">Apps</p>
+                <div class="padmenu">
+                    <button class="b1" onclick="opapp('migration');">Migration Assistant</button><button class="b1"
+                        onclick="opapp('settings');">Settings</button><button class="b1"
+                        onclick="opapp('camera');">Camera</button><button class="b1"
+                        onclick="opapp('terminal');">Terminal</button><button class="b1"
+                        onclick="opapp('weather');">Weather</button>
+                </div>
+                <p class="h2">WebDesk</p>
+                <div class="padmenu">
+                    <button class="b1 b2" onclick="about();hidef('mainmenu');">About WebDesk</button>
+                    <button class="b1 b2" onclick="reboot();">Reboot</button>
+                    <button class="b1 fucku" onclick="cleantop();">Clean Desktop</button><button class="b1 fucku"
+                        onclick="hidef('mainmenu');">Close</button>
+                </div>
             </div>
         </div>
         <!--End of desktop nav-->
@@ -174,13 +219,23 @@
     <script>
         document.onreadystatechange = async function () {
             const setup = await readvar('setupdone');
+            const wd = await readvar('wd');
+            const accent = await readvar('accent');
             if (setup == "y") {
                 const hewwo = await readvar('name');
-                desktop(hewwo);
+                desktop(hewwo); masschange('greet', 'Hi there');
             } else if (setup == "guest") {
                 burnitall('Guest Mode');
             } else {
                 fesw('load', 'setup1');
+            }
+            if (accent) {
+                chacc(accent);
+            }
+            if (wd) {
+                const w1 = await readvar('city');
+                const w2 = await readvar('unit');
+                getWeather(w1, w2);
             }
             masschange('ver', ver);
             masschange('lastedit', lastedit);
