@@ -9,7 +9,7 @@ function getWeather2(city2, system, bypass) {
         city = city2;
     }
     const apiKey = 'b1b534c96a287b05ee3d72fa79800ce1';
-    const apiUrl = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=${system}&appid=${apiKey}`;
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=${system}&appid=${apiKey}`;
 
     fetch(apiUrl)
         .then(response => {
