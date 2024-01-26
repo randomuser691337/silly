@@ -221,8 +221,8 @@ button {
     position: fixed;
     left: 50%;
     top: 50%;
-    width: auto;
-    width: 82%;
+    width: 450px;
+    max-width: 85%;
     height: auto;
     max-height: 80%;
     padding: 4px;
