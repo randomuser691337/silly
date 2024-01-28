@@ -25,6 +25,24 @@ function mkw(content, title, width, m, height) {
     centerel(windowId); winrec(windowContainer);
     return windowId;
 }
+
+function wal(content, btn1) {
+    const windowId = gen(6);
+    const windowContainer = document.createElement('div');
+    windowContainer.className = 'window';
+    windowContainer.id = windowId;
+    windowContainer.style.display = "block";
+    windowContainer.style.zIndex = 2;
+    windowContainer.style.width = '300px';
+    windowContainer.style.height = 'auto';
+    const titleBar = document.createElement('div');
+    titleBar.className = 'title-bar';
+    titleBar.innerHTML = content + `<p><button class="b1 wc" onclick="dest('${windowId}');">Close</button><button class="b1 wc" onclick="dest('${windowId}');${btn1}">Okay</button></p>`;
+    windowContainer.appendChild(titleBar);
+    document.getElementById('nest').appendChild(windowContainer);
+    centerel(windowId); winrec(windowContainer);
+}
+
 function opapp(d1) {
     const dr1 = document.getElementById(d1);
     $(dr1).fadeIn(150); centerel(d1);
@@ -80,11 +98,10 @@ function embed(src, name, width, height) {
     const embed = `<embed class="embed" id="${random}" src="${src}", height="${height}"></embed>`
     mkw(embed, name, width, './assets/img/browse.svg');
 }
-function redir(url) {
-    const ye = `<p>You're about to be redirected to ${url}.</p>
-    <p>Select "Close" to cancel, or "Accept" to continue.</p>
-    <a class="b1" href="${url}" target="_blank">Accept</a>`
-    mkw(ye, 'Redirect', 'auto');
+function redir(url2) {
+    const ye = `<p>You're about to be redirected to ${url2}.</p>
+    <p>Select "Close" to cancel, or "Accept" to continue.</p>`
+    wal(ye, `golink('${url2}');`);
 }
 function about(value) {
     const about = `<img style="border: none; width: 100px; height: 100px;" src="./assets/img/favicon.png"></img>

@@ -70,6 +70,10 @@ draggableWindows.forEach(function (element) {
     winrec(element);
 });
 
+function golink(url) {
+    window.open(url, '_blank');
+}
+
 async function guestmode() {
     mkw(`<p>You're in Guest Mode.</p><p>Upon reload/restart, WebDesk will auto-erase.</p>`, 'Setup Assistant', '320px');
     desktop('Guest');
@@ -201,10 +205,36 @@ function browsergo() {
     id2.src = id1;
 }
 
+async function resizew(elemID, name1, name2) {
+    const element = document.getElementById(elemID);
+    let rafId = null;
+    let resizeStarted = false;
+    
+    function onResize() {
+      if (!resizeStarted) {
+        resizeStarted = true;
+      }
+      
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
+  
+      rafId = requestAnimationFrame(function() {
+        const resizeW = element.offsetWidth;
+        const resizeH = element.offsetHeight;
+        writevar(name1, resizeW);
+        writevar(name2, resizeH);
+        resizeStarted = false;
+      });
+    }
+  
+    window.addEventListener('resize', onResize);
+  }
+  
+
 function cleantop() {
     hidef("mainmenu");
     mkw(`<p>This will close all windows, regardless of status.</p><p>Click 'Close' to cancel, or 'Clean Desktop' to continue.<button class='b1 b2' onclick="hidef('mainmenu'); sall('wc');">Clean Desktop</button></p>`, "WebDesk", "320px");
 }
-
 updateClock();
 setInterval(updateClock, 1000);

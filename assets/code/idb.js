@@ -75,21 +75,28 @@ async function readvar(varName) {
 }
 
 // Write a variable to the database
-async function writevar(varName, value) {
+async function writevar(varName, value, op) {
     try {
         const db = await initDB();
         const transaction = db.transaction('settings', 'readwrite');
         const objectStore = transaction.objectStore('settings');
-        objectStore.put({ name: varName, value });
-        transaction.onerror = (event) => {
+        const request = objectStore.put({ name: varName, value });
+
+        request.onerror = (event) => {
             console.error("[ERR] Error writing variable: " + event.target.errorCode);
+        };
+
+        transaction.oncomplete = function () {
+            if (op == "r") {
+                reboot();
+            }
         };
     } catch (error) {
         console.error(error);
     }
 }
 
-async function deletevar(varName) {
+async function delvar(varName) {
     try {
         const db = await initDB();
         const transaction = db.transaction('settings', 'readwrite');

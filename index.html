@@ -182,21 +182,27 @@
         <!--End of weather-->
         <!--Browser-->
         <div id="browser" class="window resizeh" name="Browser" style="width: 700px;">
-            <div class="title-bar">Browser <button class="winb wc" onclick="hidef('browser');">Close</button><button
+            <div class="title-bar">Browser <button class="winb wc" onclick="hidef('browser');">Close</button><button class="winb wc" onclick="fesw('browser2', 'browser1');">Pages error out</button><button
                     class="winb wc" onclick="browsergo();">Go!</button>
             </div>
+            <script>
+                async function browser() {
+                    const bsd = await readvar('brsetup');
+                    if (bsd == "t") {
+                        fesw('browser1', 'browser2');
+                    }
+                }
+            </script>
             <div class="content">
                 <div id="browser1">
-                    <p>Please install <a
-                            href="https://chromewebstore.google.com/detail/allow-x-frame-options/jfjdfokifdlmbkbncmcfbcobggohdnif">this
-                            small extension</a> on Chrome to be able to view most pages (x-frame-options).</p>
-                    <p>This extension removes restrictions on sites that block embedding (what WebDesk browser uses.)
-                    </p>
-                    <p>When installed, make sure to turn it on! Without this, most sites won't work.</p>
-                    <button onclick="fesw('browser1', 'browser2');" class="b1">No, continue anyways</button><button
-                        class="b1"
-                        onclick="redir('https://chromewebstore.google.com/detail/allow-x-frame-options/jfjdfokifdlmbkbncmcfbcobggohdnif');">Install
-                        Extension</button>
+                    <p>To view most websites, you'll need to add a small tool to your Chrome/Edge browser.</p>
+                    <p>This tool helps WebDesk load websites that normally don't let you view them in a certain way.</p>
+                    <p>After you add it, come back here! You'll be shown how to enable it (it's easy).</p>
+                    <button onclick="fesw('browser1', 'browser2');" class="b1">No, I'll continue without the
+                        tool</button>
+                    <button class="b1"
+                        onclick="fesw('browser1', 'browser3'); redir(`https://chromewebstore.google.com/detail/allow-x-frame-options/jfjdfokifdlmbkbncmcfbcobggohdnif`);">Add
+                        Tool</button>
                 </div>
                 <div id="browser2" style="display: none;">
                     <input class="i1" placeholder="Link here, then select 'Go!'" id="browserlink">
@@ -204,15 +210,17 @@
                 </div>
                 <div id="browser3" style="display: none;">
                     <p>Please enable the extension by:</p>
-                    <p>- Opening the Extension menu</p>
-                    <p>- Clicking "Allow X-Frame Options"</p>
-                    <p>- Clicking "Toggle ON/OFF"</p>
-                    <p>When you're done, reboot to apply to WebDesk.</p>
-                    <button class="b1" onclick="reboot();">Reload</button>
+                    <p>- Opening the Extension menu (the puzzle piece in your URL bar)</p>
+                    <p>- Clicking "Allow X-Frame Options" (in the menu you opened)</p>
+                    <p>- Clicking "Toggle ON/OFF" (bottom left corner)</p>
+                    <p>When you're done, reboot to apply to WebDesk. Browser will auto-open.</p>
+                    <button class="b1" onclick="fesw('browser3', 'browser1');">Back</button><button class="b1"
+                        onclick="writevar('auto-open', 'browser'); writevar('brsetup', 't', 'r');">All
+                        done!</button>
                 </div>
             </div>
         </div>
-        <!--End of weather-->
+        <!--End of browser-->
         <!--Desktop nav-->
         <button id="mainbtn" class="cent" onclick="toggle('mainmenu');"><svg xmlns="http://www.w3.org/2000/svg"
                 width="24" height="16" viewBox="0 0 24 16" fill="none" stroke="currentColor" stroke-width="2"
@@ -257,6 +265,7 @@
             const setup = await readvar('setupdone');
             const wd = await readvar('wd');
             const accent = await readvar('accent');
+            const ao = await readvar('auto-open');
             if (setup == "y") {
                 const hewwo = await readvar('name');
                 desktop(hewwo); masschange('greet', 'Hi there');
@@ -273,8 +282,14 @@
                 const w2 = await readvar('unit');
                 getWeather(w1, w2);
             }
+            if (ao) {
+                opapp(ao);
+                delvar('auto-open');
+            }
             masschange('ver', ver);
             masschange('lastedit', lastedit);
+            // applications
+            browser();
         }
     </script>
 </body>
