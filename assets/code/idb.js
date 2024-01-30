@@ -53,44 +53,71 @@ function initDB() {
 
 // Read a variable from the database
 async function readvar(varName) {
-    try {
-        const db = await initDB();
-        const transaction = db.transaction('settings', 'readonly');
-        const objectStore = transaction.objectStore('settings');
-        const request = objectStore.get(varName);
+    if (panic == true) { console.log('Rejected FS action: Panic!'); return; } else {
+        try {
+            const db = await initDB();
+            const transaction = db.transaction('settings', 'readonly');
+            const objectStore = transaction.objectStore('settings');
+            const request = objectStore.get(varName);
 
-        return new Promise((resolve, reject) => {
-            request.onsuccess = (event) => {
-                resolve(event.target.result ? event.target.result.value : undefined);
-            };
+            return new Promise((resolve, reject) => {
+                request.onsuccess = (event) => {
+                    resolve(event.target.result ? event.target.result.value : undefined);
+                };
 
-            request.onerror = (event) => {
-                reject("[ERR] Error reading variable: " + event.target.errorCode);
-            };
-        });
-    } catch (error) {
-        console.error(error);
-        return undefined;
+                request.onerror = (event) => {
+                    reject("[ERR] Error reading variable: " + event.target.errorCode);
+                };
+            });
+        } catch (error) {
+            console.error(error);
+            return undefined;
+        }
     }
 }
 
+// was an actual security attempt, now it's just security theater lmao
+
+var cleartowr = false;
+
 // Write a variable to the database
-async function writevar(varName, value, op) {
+async function writevar(name, val, o) {
+    const words = ["whatever"];
+    for (const wordToDetect of words) {
+        if (name === wordToDetect) {
+            mkw(`<p>You can't write to there.</p>`);
+            cleartowr = false;
+        } else {
+            cleartowr = true;
+            writevarok(name, val, o);
+        }
+    }
+}
+
+async function writevarok(varName, value, op) {
     try {
-        const db = await initDB();
-        const transaction = db.transaction('settings', 'readwrite');
-        const objectStore = transaction.objectStore('settings');
-        const request = objectStore.put({ name: varName, value });
+        if (panic == true) {
+            console.log('Rejected FS action: Panic!'); return; 
+        } else if (cleartowr == false) {
+            panic('<p>Panic: Values tampered with.</p>');
+            return;
+        } else {
+            cleartowr = false;
+            const db = await initDB();
+            const transaction = db.transaction('settings', 'readwrite');
+            const objectStore = transaction.objectStore('settings');
+            const request = objectStore.put({ name: varName, value });
 
-        request.onerror = (event) => {
-            console.error("[ERR] Error writing variable: " + event.target.errorCode);
-        };
+            request.onerror = (event) => {
+                console.error("[ERR] Error writing variable: " + event.target.errorCode);
+            };
 
-        transaction.oncomplete = function () {
-            if (op == "r") {
-                reboot();
-            }
-        };
+            transaction.oncomplete = function () {
+                if (op == "r") {
+                    reboot();
+                }
+            };
+        }
     } catch (error) {
         console.error(error);
     }
@@ -98,13 +125,15 @@ async function writevar(varName, value, op) {
 
 async function delvar(varName) {
     try {
-        const db = await initDB();
-        const transaction = db.transaction('settings', 'readwrite');
-        const objectStore = transaction.objectStore('settings');
-        objectStore.delete(varName);
-        transaction.onerror = (event) => {
-            console.error("[ERR] Error deleting variable: " + event.target.errorCode);
-        };
+        if (panic == true) { console.log('Rejected FS action: Panic!'); } else {
+            const db = await initDB();
+            const transaction = db.transaction('settings', 'readwrite');
+            const objectStore = transaction.objectStore('settings');
+            objectStore.delete(varName);
+            transaction.onerror = (event) => {
+                console.error("[ERR] Error deleting variable: " + event.target.errorCode);
+            };
+        }
     } catch (error) {
         console.error(error);
     }
@@ -112,6 +141,7 @@ async function delvar(varName) {
 
 async function eraseall() {
     try {
+        if (panic == true) { console.log('Rejected FS action: Panic!'); return; }
         const db = await initDB();
         indexedDB.deleteDatabase(NTName);
         console.log('[OK] Erased container successfully.');
@@ -141,44 +171,48 @@ let backupDataVariable; // Variable to store the backup data
 
 // Function to backup variables to a variable
 async function backupdb() {
-    try {
-        const db = await initDB();
-        const transaction = db.transaction('settings', 'readonly');
-        const objectStore = transaction.objectStore('settings');
-        const request = objectStore.getAll();
+    if (panic == true) { console.log('Rejected FS action: Panic!'); return; } else {
+        try {
+            const db = await initDB();
+            const transaction = db.transaction('settings', 'readonly');
+            const objectStore = transaction.objectStore('settings');
+            const request = objectStore.getAll();
 
-        request.onsuccess = (event) => {
-            const variables = event.target.result;
-            backupDataVariable = JSON.stringify(variables); // Store backup data in a variable
-        };
+            request.onsuccess = (event) => {
+                const variables = event.target.result;
+                backupDataVariable = JSON.stringify(variables); // Store backup data in a variable
+            };
 
-        request.onerror = (event) => {
-            console.error("[ERR] Error fetching variables: " + event.target.errorCode);
-        };
-    } catch (error) {
-        console.error(error);
+            request.onerror = (event) => {
+                console.error("[ERR] Error fetching variables: " + event.target.errorCode);
+            };
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
 
 // Function to restore variables from a variable
 async function restoredb() {
-    try {
-        const variables = JSON.parse(backupDataVariable);
+    if (panic == true) { console.log('Rejected FS action: Panic!'); return; } else {
+        try {
+            const variables = JSON.parse(backupDataVariable);
 
-        const db = await initDB();
-        const transaction = db.transaction('settings', 'readwrite');
-        const objectStore = transaction.objectStore('settings');
+            const db = await initDB();
+            const transaction = db.transaction('settings', 'readwrite');
+            const objectStore = transaction.objectStore('settings');
 
-        // Clear existing variables before restoring
-        objectStore.clear();
+            // Clear existing variables before restoring
+            objectStore.clear();
 
-        // Restore variables from the backup
-        for (const variable of variables) {
-            objectStore.put(variable);
+            // Restore variables from the backup
+            for (const variable of variables) {
+                objectStore.put(variable);
+            }
+
+            fesw('mig', 'mdone');
+        } catch (error) {
+            console.error(error);
         }
-
-        fesw('mig', 'mdone');
-    } catch (error) {
-        console.error(error);
     }
 }

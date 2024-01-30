@@ -69,6 +69,10 @@ p {
     color: var(--fontc2);
 }
 
+input:placeholder {
+    color: var(--fontc);
+}
+
 .rsmt {
     font-size: var(--fz3);
     color: var(--fontc2);
@@ -181,6 +185,11 @@ p {
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
     transition: 0.1s;
+}
+
+.title-bar:active {
+    transition: 0.05s;
+    background-color: rgba(var(--accent), 0.00);
 }
 
 .content {

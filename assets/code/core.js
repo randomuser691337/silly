@@ -74,6 +74,10 @@ function golink(url) {
     window.open(url, '_blank');
 }
 
+async function nameutil(cont) {
+    mkw(`${cont}<p><input class="i1" placeholder="Username here" id="seconduserbox"></input><button class="b1" onclick="nametime('seconduserbox', 'y');">Set name & reload</button></p>`, 'WebDesk Login Manager', '270px');
+}
+
 async function guestmode() {
     mkw(`<p>You're in Guest Mode.</p><p>Upon reload/restart, WebDesk will auto-erase.</p>`, 'Setup Assistant', '320px');
     desktop('Guest');
@@ -138,9 +142,19 @@ function stm(winc, winn, wins) {
     return ret;
 }
 
-async function nametime(el) {
+async function nametime(el, reb) {
     const elID = document.getElementById(el).value;
-    await writevar('name', elID)
+    console.log(el);
+    console.log(elID);
+    if (elID === "") {
+        mkw(`<p>Please type a username.</p>`, 'Error Message', '200px');
+    } else {
+        if (reb === "y") {
+            await writevar('name', elID, 'r');
+        } else {
+            await writevar('name', elID);
+        }
+    }
 }
 
 async function finishsetup() {
@@ -209,28 +223,36 @@ async function resizew(elemID, name1, name2) {
     const element = document.getElementById(elemID);
     let rafId = null;
     let resizeStarted = false;
-    
+
     function onResize() {
-      if (!resizeStarted) {
-        resizeStarted = true;
-      }
-      
-      if (rafId !== null) {
-        cancelAnimationFrame(rafId);
-      }
-  
-      rafId = requestAnimationFrame(function() {
-        const resizeW = element.offsetWidth;
-        const resizeH = element.offsetHeight;
-        writevar(name1, resizeW);
-        writevar(name2, resizeH);
-        resizeStarted = false;
-      });
+        if (!resizeStarted) {
+            resizeStarted = true;
+        }
+
+        if (rafId !== null) {
+            cancelAnimationFrame(rafId);
+        }
+
+        rafId = requestAnimationFrame(function () {
+            const resizeW = element.offsetWidth;
+            const resizeH = element.offsetHeight;
+            writevar(name1, resizeW);
+            writevar(name2, resizeH);
+            resizeStarted = false;
+        });
     }
-  
+
     window.addEventListener('resize', onResize);
-  }
-  
+}
+
+function detectWordAndReturn(wordToDetect, arrayOfWords) {
+    for (const word of arrayOfWords) {
+        if (word === wordToDetect) {
+            mkw(`You're possibly writing to a system variable.`)
+        }
+    }
+}
+
 
 function cleantop() {
     hidef("mainmenu");

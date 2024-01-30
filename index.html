@@ -6,6 +6,12 @@
     <link rel="shortcut icon" href="./assets/img/favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="stylesheet" href="./assets/core.css">
+    <script>var panic = false;
+        function panic(cont) {
+            writevar('panic', cont, 'r');
+            panic = true;
+            console.log('Panicking: ' + cont);
+        }</script>
 </head>
 
 <body>
@@ -182,44 +188,66 @@
         <!--End of weather-->
         <!--Browser-->
         <div id="browser" class="window resizeh" name="Browser" style="width: 700px;">
-            <div class="title-bar">Browser <button class="winb wc" onclick="hidef('browser');">Close</button><button class="winb wc" onclick="fesw('browser2', 'browser1');">Pages error out</button><button
-                    class="winb wc" onclick="browsergo();">Go!</button>
+            <div class="title-bar">Browser
+                <button class="winb wc" onclick="hidef('browser');">Close</button><button class="winb"
+                    onclick="fesw('browser2', 'browser1');">Page Error</button><button class="winb"
+                    onclick="browsergo();">Go!</button><button class="winb" onclick="browseback();">Back</button><button
+                    class="winb" onclick="browseforward();">Forward</button>
             </div>
-            <script>
-                async function browser() {
-                    const bsd = await readvar('brsetup');
-                    if (bsd == "t") {
-                        fesw('browser1', 'browser2');
-                    }
-                }
-            </script>
             <div class="content">
-                <div id="browser1">
+                <div id="browser1" style="display: none;">
                     <p>To view most websites, you'll need to add a small tool to your Chrome/Edge browser.</p>
                     <p>This tool helps WebDesk load websites that normally don't let you view them in a certain way.</p>
                     <p>After you add it, come back here! You'll be shown how to enable it (it's easy).</p>
-                    <button onclick="fesw('browser1', 'browser2');" class="b1">No, I'll continue without the
-                        tool</button>
-                    <button class="b1"
-                        onclick="fesw('browser1', 'browser3'); redir(`https://chromewebstore.google.com/detail/allow-x-frame-options/jfjdfokifdlmbkbncmcfbcobggohdnif`);">Add
-                        Tool</button>
+                    <button onclick="fesw('browser1', 'browser2');" class="b1">Back</button><button class="b1"
+                        onclick="fesw('browser1', 'browser3');">Add Tool</button>
                 </div>
-                <div id="browser2" style="display: none;">
+                <div id="browser2">
                     <input class="i1" placeholder="Link here, then select 'Go!'" id="browserlink">
-                    <iframe class="embed" height="400px" ; src="https://google.com" id="browserframe"></iframe>
+                    <embed class="embed" height="400px" src="./assets/browser.html" id="browserframe"></embed>
                 </div>
                 <div id="browser3" style="display: none;">
                     <p>Please enable the extension by:</p>
+                    <p>- Installing the extension by <a
+                            onclick="redir(`https://chromewebstore.google.com/detail/allow-x-frame-options/jfjdfokifdlmbkbncmcfbcobggohdnif`);">selecting
+                            this</a> (works on anything Chrome-base)</p>
                     <p>- Opening the Extension menu (the puzzle piece in your URL bar)</p>
                     <p>- Clicking "Allow X-Frame Options" (in the menu you opened)</p>
                     <p>- Clicking "Toggle ON/OFF" (bottom left corner)</p>
                     <p>When you're done, reboot to apply to WebDesk. Browser will auto-open.</p>
-                    <button class="b1" onclick="fesw('browser3', 'browser1');">Back</button><button class="b1"
-                        onclick="writevar('auto-open', 'browser'); writevar('brsetup', 't', 'r');">All
+                    <button class="b1" onclick="fesw('browser3', 'browser1');">Back</button>
+                    <button class="b1" onclick="writevar('auto-open', 'browser'); writevar('brsetup', 't', 'r');">All
                         done!</button>
                 </div>
             </div>
         </div>
+        <script>
+            var iframe = document.getElementById("browserframe");
+            var visitedUrls = [];
+            var currentIndex = -1;
+
+            function browseback() {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    iframe.src = visitedUrls[currentIndex];
+                }
+            }
+
+            function browseforward() {
+                if (currentIndex < visitedUrls.length - 1) {
+                    currentIndex++;
+                    iframe.src = visitedUrls[currentIndex];
+                }
+            }
+
+            iframe.addEventListener("load", function () {
+                if (currentIndex === -1 || iframe.src !== visitedUrls[currentIndex]) {
+                    visitedUrls.splice(currentIndex + 1);
+                    visitedUrls.push(iframe.src);
+                    currentIndex++;
+                }
+            });
+        </script>
         <!--End of browser-->
         <!--Desktop nav-->
         <button id="mainbtn" class="cent" onclick="toggle('mainmenu');"><svg xmlns="http://www.w3.org/2000/svg"
@@ -261,14 +289,26 @@
     <script src="./assets/code/peer.js"></script>
     <script src="./assets/code/mico.js"></script>
     <script>
+        let started = false;
         document.onreadystatechange = async function () {
+            if (started === true) {
+                console.log('Rejected doc.onreadychange (shortened)');
+                return;
+            }
+            started = true;
             const setup = await readvar('setupdone');
             const wd = await readvar('wd');
             const accent = await readvar('accent');
             const ao = await readvar('auto-open');
+            const bl = await readvar('bootload');
             if (setup == "y") {
                 const hewwo = await readvar('name');
-                desktop(hewwo); masschange('greet', 'Hi there');
+                if (hewwo == "" || hewwo == undefined) {
+                    dest('setup');
+                    nameutil(`<p>You didn't set a name during setup.</p><p>Please set one now!</p>`);
+                } else {
+                    desktop(hewwo); masschange('greet', 'Hi there');
+                }
             } else if (setup == "guest") {
                 burnitall('Guest Mode');
             } else {
@@ -286,10 +326,12 @@
                 opapp(ao);
                 delvar('auto-open');
             }
+            if (bl) {
+                eval(bl);
+            }
             masschange('ver', ver);
             masschange('lastedit', lastedit);
-            // applications
-            browser();
+            // applications here
         }
     </script>
 </body>
