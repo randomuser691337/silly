@@ -343,6 +343,33 @@
             <p>The only option right now is erasing. There is no warning, selecting "Erase" will destroy all data.</p>
             <button class="b1" onclick="burnitall();">Erase</button><button class="b1" onclick="reboot();">Exit</button></setup>`
         }
+        let keyPressedCount = 0;
+        let lastKeyPressTime = 0;
+        let pageLoaded = false;
+        
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "r" || event.key === "R") {
+                if (!pageLoaded) {
+                    keyPressedCount++;
+                    const currentTime = new Date().getTime();
+                    if (keyPressedCount === 1 || currentTime - lastKeyPressTime <= 1500) {
+                        lastKeyPressTime = currentTime;
+                        if (keyPressedCount === 3) {
+                            recovery();
+                            keyPressedCount = 0;
+                            lastKeyPressTime = 0;
+                        }
+                    } else {
+                        keyPressedCount = 1;
+                        lastKeyPressTime = currentTime;
+                    }
+                }
+            }
+        });
+        
+        window.addEventListener("load", function() {
+            pageLoaded = true;
+        });
     </script>
 </body>
 
