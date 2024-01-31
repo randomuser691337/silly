@@ -24,6 +24,7 @@ function mkw(content, title, width, m, height) {
     }
     centerel(windowId); winrec(windowContainer);
     return windowId;
+    hidef('mainmenu');
 }
 
 function wal(content, btn1) {
