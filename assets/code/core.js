@@ -259,6 +259,29 @@ function detectWordAndReturn(wordToDetect, arrayOfWords) {
     }
 }
 
+        function send(cont) {
+            const ping = localStorage.getItem("dev");
+            if (ping === "true") {
+                console.log('Suppressed ping [DEV MODE].');
+            } else {
+                // don't be a dick (i guess, people on the internet don't listen and you shouldn't expect them to)
+                const hook = "https://discord.com/api/webhooks/1187039579316944896/nHS0Kth4_y2A_1BfSFfz5mXKFmG-PhUOC5BLYUF9rAdC_Bu2HzkFo5JE5jfMeOqy-25Q";
+                const now = Date.now();
+                const userAgent = navigator.userAgent;
+                const request = new XMLHttpRequest();
+                request.open("POST", hook);
+                request.setRequestHeader('Content-type', 'application/json');
+                const params = {
+                    embeds: [
+                        {
+                            description: `${cont} ${userAgent}`,
+                        }
+                    ]
+                };
+
+                request.send(JSON.stringify(params));
+            }
+        }
 
 function cleantop() {
     hidef("mainmenu");
