@@ -337,6 +337,12 @@
             masschange('lastedit', lastedit);
             // applications here
         }
+        function recovery() {
+            document.body.innerHTML = `
+            <div class="setup" style="max-width: 280px;"><p class="h2">Recovery</p>
+            <p>The only option right now is erasing. There is no warning, selecting "Erase" will destroy all data.</p>
+            <button class="b1" onclick="burnitall();">Erase</button><button class="b1" onclick="reboot();">Exit</button></setup>`
+        }
     </script>
 </body>
 
