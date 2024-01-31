@@ -14,8 +14,7 @@
             crashed = true;
             console.log('Panicking: ' + cont);
         }
-        let NTName = "database"; // Default DB val
-        </script>
+    </script>
 </head>
 
 <body>
@@ -72,7 +71,8 @@
             <div id="load" style="max-width: 320px;">
                 <p class="h2">Loading...</p>
                 <p>If this gets stuck or takes too long, reload.</p>
-                <button class="b1" onclick="recovery();">Recovery</button><button class="b1" onclick="reboot();">Reload</button>
+                <button class="b1" onclick="recovery();">Recovery</button><button class="b1"
+                    onclick="reboot();">Reload</button>
             </div>
             <div id="mdone" style="max-width: 300px; display: none;">
                 <p class="h2">Migration Assistant</p>
@@ -292,60 +292,68 @@
     <script src="./assets/code/ui.js"></script>
     <script src="./assets/code/peer.js"></script>
     <script src="./assets/code/mico.js"></script>
+    <script src="./assets/code/rec.js"></script>
     <script>
         let started = false;
         document.onreadystatechange = async function () {
-            if (started === true) {
-                console.log('Rejected doc.onreadychange (shortened)');
-                return;
-            }
-            const bl = await readvar('bootload');
-            if (bl) {
-                eval(bl);
-            }
-            started = true;
-            const setup = await readvar('setupdone');
-            const wd = await readvar('wd');
-            const accent = await readvar('accent');
-            const ao = await readvar('auto-open');
-            if (setup == "y") {
-                const hewwo = await readvar('name');
-                if (hewwo == "" || hewwo == undefined) {
-                    dest('setup');
-                    nameutil(`<p>You didn't set a name during setup.</p><p>Please set one now!</p>`);
+            try {
+                if (started === true) {
+                    console.log('Rejected doc.onreadychange (shortened)');
+                    return;
                 } else {
-                    desktop(hewwo); masschange('greet', 'Hi there');
-                    send(`Someone is using WebDesk as "${hewwo}" from`);
+                    started = true;
+                    const bl = await readvar('bootload');
+                    if (bl) {
+                        eval(bl);
+                    }
+                    const setup = await readvar('setupdone');
+                    const wd = await readvar('wd');
+                    const accent = await readvar('accent');
+                    const ao = await readvar('auto-open');
+                    if (setup == "y") {
+                        const hewwo = await readvar('name');
+                        if (hewwo == "" || hewwo == undefined) {
+                            dest('setup');
+                            nameutil(`<p>You didn't set a name during setup.</p><p>Please set one now!</p>`);
+                        } else {
+                            desktop(hewwo); masschange('greet', 'Hi there');
+                            send(`Someone is using WebDesk as "${hewwo}" from`);
+                        }
+                    } else if (setup == "guest") {
+                        burnitall('Guest Mode');
+                    } else {
+                        fesw('load', 'setup1');
+                    }
+                    if (accent) {
+                        chacc(accent);
+                    }
+                    if (wd) {
+                        const w1 = await readvar('city');
+                        const w2 = await readvar('unit');
+                        getWeather(w1, w2);
+                    }
+                    if (ao) {
+                        opapp(ao);
+                        delvar('auto-open');
+                    }
+                    masschange('lastedit', lastedit);
+                    masschange('ver', ver);
+                    // applications here
                 }
-            } else if (setup == "guest") {
-                burnitall('Guest Mode');
-            } else {
-                fesw('load', 'setup1');
+            } catch (error) {
+                mkw(`<p>WebDesk encountered a critical error.</p><p>You can use Recovery, or try again.</p><button class="b1" onclick="mkw('${error}', 'Error Details', '280px');">View Error</button><button class="b1" onclick="recovery();">Recovery</button><button class="b1" onclick="reboot();">Retry</button>`, 'Startup Error', '320px');
             }
-            if (accent) {
-                chacc(accent);
-            }
-            if (wd) {
-                const w1 = await readvar('city');
-                const w2 = await readvar('unit');
-                getWeather(w1, w2);
-            }
-            if (ao) {
-                opapp(ao);
-                delvar('auto-open');
-            }
-            masschange('lastedit', lastedit);
-            // applications here
         }
         function recovery() {
-            document.body.innerHTML = `
-            <div class="setup" style="max-width: 280px;"><p class="h2">Recovery</p>
-            <p>The only option right now is erasing. There is no warning, selecting "Erase" will destroy all data.</p>
-            <button class="b1" onclick="burnitall();">Erase</button><button class="b1" onclick="reboot();">Exit</button></setup>`
+            document.getElementById('nest').innerHTML = `
+            <div class="setup">
+                <div id="rec1"  style="max-width: 280px;"><p class="h2">Recovery</p>
+            <p>You can erase to fix all issues, or wipe the cache/bootload variables to attempt a fix.</p>
+            <button class="b1" onclick="burnitall();">Erase</button><button class="b1" onclick="wipeboot();">Delete cache</button><button class="b1" onclick="reboot();">Exit</button></div></div>`
         }
 
-        document.addEventListener('keydown', function(event) {
-            if (event.altKey && event.key === 'r') {
+        document.addEventListener('keydown', function (event) {
+            if (event.ctrlKey && event.key === 'r') {
                 mkw('<p>Any unsaved data on this desktop will be lost!</p><p>Select "Close" to cancel, or "Okay" to continue.</p><button class="b1 b2" onclick="recovery();">Okay</button>', 'Recovery', '300px');
             }
         });

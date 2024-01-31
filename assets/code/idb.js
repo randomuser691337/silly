@@ -3,6 +3,7 @@
 
 const DB_NAME = "WebDeskStore";
 const STORE_NAME = "WebDeskDB";
+let NTName = "database"; // Default value
 
 // Check if the "db" URL parameter is present
 const urlParams = new URLSearchParams(window.location.search);
