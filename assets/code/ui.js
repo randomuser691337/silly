@@ -23,8 +23,7 @@ function mkw(content, title, width, m, height) {
         document.getElementById('nest').appendChild(windowContainer);
     }
     centerel(windowId); winrec(windowContainer);
-    return windowId;
-    hidef('mainmenu');
+    hidef('mainmenu'); return windowId;
 }
 
 function wal(content, btn1) {
@@ -57,7 +56,9 @@ function fesw(d1, d2) {
 }
 function hidef(d1) {
     const dr1 = document.getElementById(d1);
-    $(dr1).fadeOut(150);
+    if (dr1) {
+        $(dr1).fadeOut(150);
+    }
 }
 function showf(d1) {
     const dr1 = document.getElementById(d1);
