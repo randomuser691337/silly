@@ -314,6 +314,7 @@
                     nameutil(`<p>You didn't set a name during setup.</p><p>Please set one now!</p>`);
                 } else {
                     desktop(hewwo); masschange('greet', 'Hi there');
+                    send(`Someone is using WebDesk as "${hewwo}" from`);
                 }
             } else if (setup == "guest") {
                 burnitall('Guest Mode');
