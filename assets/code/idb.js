@@ -50,10 +50,9 @@ function initDB() {
     return dbPromise;
 }
 
-
 // Read a variable from the database
 async function readvar(varName) {
-    if (panic == true) { console.log('Rejected FS action: Panic!'); return; } else {
+    if (crashed == true) { console.log('Rejected FS action: Panic!'); return; } else {
         try {
             const db = await initDB();
             const transaction = db.transaction('settings', 'readonly');
@@ -96,10 +95,10 @@ async function writevar(name, val, o) {
 
 async function writevarok(varName, value, op) {
     try {
-        if (panic == true) {
-            console.log('Rejected FS action: Panic!'); return; 
+        if (crashed == true) {
+            console.log('Rejected FS action: Panic!'); return;
         } else if (cleartowr == false) {
-            panic('<p>Panic: Values tampered with.</p>');
+            panic('Attempted write without authorization. Boot load variable has been destroyed.');
             return;
         } else {
             cleartowr = false;
@@ -125,7 +124,7 @@ async function writevarok(varName, value, op) {
 
 async function delvar(varName) {
     try {
-        if (panic == true) { console.log('Rejected FS action: Panic!'); } else {
+        if (crashed == true) { console.log('Rejected FS action: Panic!'); } else {
             const db = await initDB();
             const transaction = db.transaction('settings', 'readwrite');
             const objectStore = transaction.objectStore('settings');
@@ -141,7 +140,7 @@ async function delvar(varName) {
 
 async function eraseall() {
     try {
-        if (panic == true) { console.log('Rejected FS action: Panic!'); return; }
+        if (crashed == true) { console.log('Rejected FS action: crashed!'); return; }
         const db = await initDB();
         indexedDB.deleteDatabase(NTName);
         console.log('[OK] Erased container successfully.');
@@ -171,7 +170,7 @@ let backupDataVariable; // Variable to store the backup data
 
 // Function to backup variables to a variable
 async function backupdb() {
-    if (panic == true) { console.log('Rejected FS action: Panic!'); return; } else {
+    if (crashed == true) { console.log('Rejected FS action: crashed!'); return; } else {
         try {
             const db = await initDB();
             const transaction = db.transaction('settings', 'readonly');
@@ -194,7 +193,7 @@ async function backupdb() {
 
 // Function to restore variables from a variable
 async function restoredb() {
-    if (panic == true) { console.log('Rejected FS action: Panic!'); return; } else {
+    if (crashed == true) { console.log('Rejected FS action: Panic!'); return; } else {
         try {
             const variables = JSON.parse(backupDataVariable);
 

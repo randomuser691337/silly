@@ -129,11 +129,17 @@ function setchk(id, act1, act2) {
     }
 }
 
-function desktop(name) {
+async function desktop(name) {
     showf('mainbtn'); dest('setup');
     masschange('user', name);
     dest('setup');
-    showf('mainmenu');
+    const pan = await readvar('panic');
+    if (pan) {
+        mkw(`<p>WebDesk crashed. Details:</p><p>${pan}</p>`, 'WebDesk Desktop', '300px');
+        await delvar('panic');
+    } else {
+        showf('mainmenu');
+    }
 }
 
 function stm(winc, winn, wins) {

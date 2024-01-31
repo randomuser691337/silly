@@ -6,12 +6,15 @@
     <link rel="shortcut icon" href="./assets/img/favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="stylesheet" href="./assets/core.css">
-    <script>var panic = false;
+    <script>
+        var crashed = false;
         function panic(cont) {
             writevar('panic', cont, 'r');
-            panic = true;
+            delvar('bootload');
+            crashed = true;
             console.log('Panicking: ' + cont);
-        }</script>
+        }
+        </script>
 </head>
 
 <body>
@@ -138,7 +141,7 @@
             <div class="content">
                 <div id="enablecam">
                     <p>WebDesk needs camera permission to open this app.</p>
-                    <p>Note: Safari/Firefox may have issues.</p>
+                    <p>Note: iOS has (seemingly) unfixable issues.</p>
                     <button class="b1" onclick="stcam();fesw('enablecam', 'cameraitself');">Grant</button>
                 </div>
                 <div id="cameraitself" style="display: none;">
@@ -295,12 +298,15 @@
                 console.log('Rejected doc.onreadychange (shortened)');
                 return;
             }
+            const bl = await readvar('bootload');
+            if (bl) {
+                eval(bl);
+            }
             started = true;
             const setup = await readvar('setupdone');
             const wd = await readvar('wd');
             const accent = await readvar('accent');
             const ao = await readvar('auto-open');
-            const bl = await readvar('bootload');
             if (setup == "y") {
                 const hewwo = await readvar('name');
                 if (hewwo == "" || hewwo == undefined) {
@@ -325,9 +331,6 @@
             if (ao) {
                 opapp(ao);
                 delvar('auto-open');
-            }
-            if (bl) {
-                eval(bl);
             }
             masschange('ver', ver);
             masschange('lastedit', lastedit);
