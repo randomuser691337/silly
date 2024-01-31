@@ -1,7 +1,7 @@
 
 /* if you find any bugs, feel free to submit a pull request idk how github/git works lmao TwT*/
 var ver = "0.0.9";
-var lastedit = "Jan 25, 2024";
+var lastedit = "Jan 30, 2024";
 function winrec(element) {
     let offsetX, offsetY, isDragging = false;
 
