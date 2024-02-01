@@ -207,6 +207,7 @@ input:placeholder {
     margin-bottom: 2px;
     width: 100%;
     box-sizing: border-box;
+    color: var(--fontc)
 }
 
 .thingy:hover {

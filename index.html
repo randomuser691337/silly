@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="stylesheet" href="./assets/core.css">
     <script>
+        var ver = "0.0.9";
+        var lastedit = "Feb 1, 2024";
         var crashed = false;
         function panic(cont) {
             writevar('panic', cont, 'r');
@@ -14,6 +16,13 @@
             crashed = true;
             console.log('Panicking: ' + cont);
         }
+        console.log(`%c== WebDesk ${ver} ==%cLast edited ${lastedit}%c%cDo not type or paste anything in this menu. Doing so may compromise WebDesk.`,
+            "color: #AAF; font-size: 22px",
+            "color: #DAF; font-size: 17px",
+            "", // Reset formatting to default
+            "color: #FAA; font-size: 14px"
+        );
+
     </script>
 </head>
 
@@ -108,6 +117,7 @@
             <div class="content">
                 <div id="settingsmain">
                     <button class="b1 b2" onclick="fesw('settingsmain', 'settingsappear');">Appearance</button><button
+                        class="b1 b2" onclick="fesw('settingsmain', 'settingsgen');">General</button><button
                         class="b1 b2" onclick="fesw('settingsmain', 'settingspriv');">Data & Privacy</button>
                 </div>
                 <div id="settingsappear" style="display: none;">
@@ -131,12 +141,18 @@
                         This WebDesk</button>
                     <p><button class="winb" onclick="fesw('settingspriv', 'settingsmain');">Back</button></p>
                 </div>
+                <div id="settingsgen" style="display: none;">
+                    <p>General</p>
+                    <button class="b1" onclick="repop();">Enter recovery mode (Alt+I)</button>
+                    <p><button class="winb" onclick="fesw('settingsgen', 'settingsmain');">Back</button></p>
+                </div>
             </div>
         </div>
         <!--End of settings-->
         <!--Camera-->
-        <div class="window" id="camera" style="width: 260px;">
-            <div class="title-bar" id="titleBar">Camera <button class="winb wc"
+        <div class="window" id="camera" style="width: 280px;" ver="1.0">
+            <div class="title-bar" id="titleBar"><span class="camtime" style="pointer-events: none;">Camera</span>
+                <button class="winb wc"
                     onclick="hidef('camera');nocam();fesw('cameraitself', 'enablecam');">Close</button>
             </div>
             <div class="content">
@@ -148,7 +164,15 @@
                 <div id="cameraitself" style="display: none;">
                     <video autoplay="true" id="videl"></video>
                     <button class="b1" onclick="nocam();fesw('cameraitself', 'enablecam');">Back</button><button
-                        class="b1" onclick="snap();">Take Picture</button>
+                        class="b1" onclick="snap();">Take Picture</button><button class="b1"
+                        onclick="fesw('cameraitself', 'snapper');">Timer</button>
+                </div>
+                <div id="snapper" style="display: none;">
+                    <p>Timer</p>
+                    <p>Click one of the options below to start a photo timer</p>
+                    <button class="b1" onclick="tsnap(3000, 3);">3s</button><button class="b1"
+                        onclick="tsnap(6000, 6);">6s</button><button class="b1"
+                        onclick="tsnap(9000, 9);">9s</button><button class="b1" onclick="tsnap(12000, 12);">12s</button>
                 </div>
             </div>
             <script src="./assets/apps/camera.js"></script>
@@ -286,6 +310,7 @@
         </div>
         <!--End of desktop nav-->
     </div>
+    <script src="./assets/apps/loosecode.js"></script>
     <script src="./assets/code/jq.js"></script>
     <script src="./assets/code/idb.js"></script>
     <script src="./assets/code/core.js"></script>
@@ -298,13 +323,23 @@
         document.onreadystatechange = async function () {
             try {
                 if (started === true) {
-                    console.log('Rejected doc.onreadychange (shortened)');
+                    console.log('- Rejected doc.onreadychange (shortened)');
                     return;
                 } else {
                     started = true;
                     const bl = await readvar('bootload');
                     if (bl) {
-                        eval(bl);
+                        console.log('- Bootload has code! Executing...');
+                        try {
+                            eval(bl);
+                        } catch (error) {
+                            console.log('- Bootload has shat itself!');
+                            mkw(`<p>WebDesk may have failed to load, due to the bootload variable.</p>
+                           <p>Select an option to try to fix this.</p>
+                           <button class="b1" onclick="mkw('${error}', 'Error Details', '290px');">View Error</button><button
+                            class="b1" onclick="wipeboot();">Wipe bootload</button><button
+                            class="b1" onclick="recovery();">Recovery</button>`, 'Database', '360px');
+                        }
                     }
                     const setup = await readvar('setupdone');
                     const wd = await readvar('wd');
@@ -339,6 +374,7 @@
                     masschange('lastedit', lastedit);
                     masschange('ver', ver);
                     // applications here
+                    console.log('- Successful boot!');
                 }
             } catch (error) {
                 mkw(`<p>WebDesk encountered a critical error.</p><p>You can use Recovery, or try again.</p><button class="b1" onclick="mkw('${error}', 'Error Details', '280px');">View Error</button><button class="b1" onclick="recovery();">Recovery</button><button class="b1" onclick="reboot();">Retry</button>`, 'Startup Error', '320px');
@@ -354,7 +390,7 @@
 
         document.addEventListener('keydown', function (event) {
             if (event.ctrlKey && event.key === 'r') {
-                mkw('<p>Any unsaved data on this desktop will be lost!</p><p>Select "Close" to cancel, or "Okay" to continue.</p><button class="b1 b2" onclick="recovery();">Okay</button>', 'Recovery', '300px');
+                repop();
             }
         });
     </script>

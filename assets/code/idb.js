@@ -12,7 +12,7 @@ const dbParam = urlParams.get("db");
 if (dbParam) {
     NTName = dbParam;
 } else {
-    console.log(`[NTE] In the database utility or WebDesk doesn't have a db variable defined.`);
+    console.log(`- No database variable defined (?db=)`);
 }
 // Open IndexedDB
 // Initialize the IndexedDB
@@ -166,9 +166,8 @@ async function burnitall(er) {
     }
 }
 
-let backupDataVariable; // Variable to store the backup data
+let backupDataVariable;
 
-// Function to backup variables to a variable
 async function backupdb() {
     if (crashed == true) { console.log('Rejected FS action: crashed!'); return; } else {
         try {
@@ -191,9 +190,8 @@ async function backupdb() {
     }
 }
 
-// Function to restore variables from a variable
 async function restoredb() {
-    if (crashed == true) { console.log('Rejected FS action: Panic!'); return; } else {
+    if (crashed == true) { console.log('Can not finish restore: Panic!'); return; } else {
         try {
             const variables = JSON.parse(backupDataVariable);
 

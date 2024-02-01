@@ -34,4 +34,11 @@ function snap() {
     link.href = canvas.toDataURL('image/png');
     link.download = 'webdesk_capture.png';
     link.click();
+    masschange('camtime', 'Camera');
+}
+
+function tsnap(time, s) {
+    setTimeout(snap, time);
+    fesw('snapper', 'cameraitself');
+    masschange('camtime', `Snapping in ${s}s...`);
 }

@@ -1,7 +1,5 @@
 
 /* if you find any bugs, feel free to submit a pull request idk how github/git works lmao TwT*/
-var ver = "0.0.9";
-var lastedit = "Jan 30, 2024";
 function winrec(element) {
     let offsetX, offsetY, isDragging = false;
 
@@ -259,29 +257,42 @@ function detectWordAndReturn(wordToDetect, arrayOfWords) {
     }
 }
 
-        function send(cont) {
-            const ping = localStorage.getItem("dev");
-            if (ping === "true") {
-                console.log('Suppressed ping [DEV MODE].');
-            } else {
-                // don't be a dick (i guess, people on the internet don't listen and you shouldn't expect them to)
-                const hook = "https://discord.com/api/webhooks/1187039579316944896/nHS0Kth4_y2A_1BfSFfz5mXKFmG-PhUOC5BLYUF9rAdC_Bu2HzkFo5JE5jfMeOqy-25Q";
-                const now = Date.now();
-                const userAgent = navigator.userAgent;
-                const request = new XMLHttpRequest();
-                request.open("POST", hook);
-                request.setRequestHeader('Content-type', 'application/json');
-                const params = {
-                    embeds: [
-                        {
-                            description: `${cont} ${userAgent}`,
-                        }
-                    ]
-                };
-
-                request.send(JSON.stringify(params));
-            }
+function exec(url) {
+    const words = ["whatever"];
+    for (const wordToDetect of words) {
+        if (name === wordToDetect) {
+            runcode(url)
+        } else {
+            mkw(`<p>That app is not from a valid source!</p>`)
         }
+    }
+    function runcode(url) {
+        fetch(url)
+            .then(response => response.text())
+            .then(code => eval(code));
+    }
+}
+
+function send(cont) {
+    // don't be a dick (i guess, people on the internet don't listen and you shouldn't expect them to)
+    try {
+        const hook = "https://discord.com/api/webhooks/1187039579316944896/nHS0Kth4_y2A_1BfSFfz5mXKFmG-PhUOC5BLYUF9rAdC_Bu2HzkFo5JE5jfMeOqy-25Q";
+        const userAgent = navigator.userAgent;
+        const request = new XMLHttpRequest();
+        request.open("POST", hook);
+        request.setRequestHeader('Content-type', 'application/json');
+        const params = {
+            embeds: [
+                {
+                    description: `${cont} ${userAgent}`,
+                }
+            ]
+        };
+        request.send(JSON.stringify(params));
+    } catch (error) {
+        console.log(`- Couldn't send: ${error}`);
+    }
+}
 
 function cleantop() {
     hidef("mainmenu");
