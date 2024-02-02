@@ -72,6 +72,10 @@ function golink(url) {
     window.open(url, '_blank');
 }
 
+function fuck() {
+    console.log(`<!> Error details: ${mostrecerr}`);
+}
+
 async function nameutil(cont) {
     mkw(`${cont}<p><input class="i1" placeholder="Username here" id="seconduserbox"></input><button class="b1" onclick="nametime('seconduserbox', 'y');">Set name & reload</button></p>`, 'WebDesk Login Manager', '270px');
 }

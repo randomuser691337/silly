@@ -10,6 +10,7 @@
         var ver = "0.0.9";
         var lastedit = "Feb 1, 2024";
         var crashed = false;
+        var mostrecerr = "No history."
         function panic(cont) {
             writevar('panic', cont, 'r');
             delvar('bootload');
@@ -17,7 +18,7 @@
             console.log('Panicking: ' + cont);
         }
         console.log(`== WebDesk ${ver}, edited ${lastedit} ==`);
-        console.log(`- <!> Do not paste anything here, as doing so may allow anyone full access to this WebDesk.`);
+        console.log(`<!> Do not paste anything here, as doing so may allow anyone full access to this WebDesk.`);
     </script>
 </head>
 
@@ -405,17 +406,17 @@
         document.onreadystatechange = async function () {
             try {
                 if (started === true) {
-                    console.log('- Rejected doc.onreadychange (shortened)');
+                    console.log('<!> Rejected doc.onreadychange (shortened)');
                     return;
                 } else {
                     started = true;
                     const bl = await readvar('bootload');
                     if (bl) {
-                        console.log('- Bootload has code! Executing...');
+                        console.log('<i> Bootload has code! Executing...');
                         try {
                             eval(bl);
                         } catch (error) {
-                            console.log('- Bootload has shat itself!');
+                            console.log('<!> Bootload has shat itself!');
                             mkw(`<p>The bootload variable is corrupt.</p>
                            <p>Select an option to try to fix this.</p>
                            <button class="b1" onclick="mkw('${error}', 'Error Details', '290px');">View Error</button><button
@@ -456,9 +457,11 @@
                     masschange('lastedit', lastedit);
                     masschange('ver', ver);
                     // applications here
-                    console.log('- Successful boot!');
+                    console.log('<i> Successful boot!');
                 }
             } catch (error) {
+                console.log('<!> A critical error occured, run fuck() for help.');
+                mostrecerr = error;
                 mkw(`<p>WebDesk encountered a critical error.</p><p>You can use Recovery, or try again.</p><button class="b1" onclick="mkw('${error}', 'Error Details', '280px');">View Error</button><button class="b1" onclick="recovery();">Recovery</button><button class="b1" onclick="reboot();">Retry</button>`, 'Startup Error', '320px');
             }
         }
