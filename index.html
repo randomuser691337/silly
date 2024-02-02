@@ -58,7 +58,8 @@
                 <button class="acb" style="background: rgb(40, 70, 235);" onclick="chacc('40, 70, 235');"></button>
                 <button class="acb" style="background: rgb(120, 60, 235);" onclick="chacc('120, 60, 235');"></button>
                 <p>Appearance</p>
-                <button class="b1 light" onclick="appear('l');">Light</button><button class="b1 dark" onclick="appear();">Dark</button>
+                <button class="b1 light" onclick="appear('l');">Light</button><button class="b1 dark"
+                    onclick="appear();">Dark</button>
                 <p><button class="b1" onclick="fesw('setup3', 'setup2');">Back</button><button class="b1"
                         onclick="finishsetup();nametime('username');">Done!</button></p>
             </div>
@@ -130,7 +131,8 @@
                     <button class="acb" style="background: rgb(120, 60, 235);"
                         onclick="chacc('120, 60, 235');"></button>
                     <p>Appearance</p>
-                    <button class="b1 light" onclick="appear('l');">Light</button><button class="b1 dark" onclick="appear();">Dark</button>
+                    <button class="b1 light" onclick="appear('l');">Light</button><button class="b1 dark"
+                        onclick="appear();">Dark</button>
                     <p>Other</p>
                     <p><button class="winb" onclick="fesw('settingsappear', 'settingsmain');">Back</button></p>
                 </div>
@@ -432,6 +434,7 @@
                     const wd = await readvar('wd');
                     const accent = await readvar('accent');
                     const ao = await readvar('auto-open');
+                    const appear = await readvar('appear');
                     if (setup == "y") {
                         const hewwo = await readvar('name');
                         if (hewwo == "" || hewwo == undefined) {
@@ -453,6 +456,9 @@
                         const w1 = await readvar('city');
                         const w2 = await readvar('unit');
                         getWeather(w1, w2);
+                    }
+                    if (appear && appear === "l") {
+                        appear('l');
                     }
                     if (ao) {
                         opapp(ao);
