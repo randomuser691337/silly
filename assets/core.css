@@ -400,7 +400,6 @@ a:active {
 .dark {
     background-color: rgb(40, 40, 40, 1.0);
     color: #fff;
-    margin-left: 2px;
 }
 
 .dark:hover {
