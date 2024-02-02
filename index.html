@@ -145,7 +145,7 @@
                 </div>
                 <div id="settingsgen" style="display: none;">
                     <p>General</p>
-                    <button class="b1" onclick="repop();">Enter recovery mode (Alt+I)</button>
+                    <button class="b1" onclick="repop();">Enter recovery mode (Ctrl+Alt+R)</button>
                     <p><button class="winb" onclick="fesw('settingsgen', 'settingsmain');">Back</button></p>
                 </div>
             </div>
@@ -484,7 +484,7 @@
         }
 
         document.addEventListener('keydown', function (event) {
-            if (event.ctrlKey && event.key === 'r') {
+            if (event.ctrlKey && event.altKey && event.key === 'r') {
                 e.preventDefault();
                 repop();
             }
