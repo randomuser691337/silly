@@ -12,7 +12,7 @@ const dbParam = urlParams.get("db");
 if (dbParam) {
     NTName = dbParam;
 } else {
-    console.log(`- No database variable defined (?db=)`);
+    console.log(`<i> No database variable defined (?db=)`);
 }
 // Open IndexedDB
 // Initialize the IndexedDB
@@ -28,8 +28,9 @@ function initDB() {
             const request = indexedDB.open(NTName, 1);
 
             request.onerror = (event) => {
-                reject("[CRT] Error opening the database: " + event.target.errorCode);
-                panic('Database could not be opened, crash!');
+                reject(`<!> Couldn't open IDB! Run fuck() for details.`);
+                mostrecerr = event.target.errorCode;
+                panic(`Coudn't open IDB, which is a critical part of WebDesk.`);
             };
 
             request.onsuccess = (event) => {
