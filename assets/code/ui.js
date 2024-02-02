@@ -131,3 +131,13 @@ function sall(className) {
         buttons[i].click();
     }
 }
+function appear(mode) {
+   if (mode === "l") {
+    changevar('background', '#fff');
+    changevar('lightdark', '#fff');
+    changevar('lightdarkb', '#e4e4e4');
+    changevar('fontc', '#000');
+    changevar('fontc2', "#333");
+    changevar('bordercolor', "#d4d4d4");
+   }
+}

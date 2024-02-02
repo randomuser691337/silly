@@ -94,18 +94,19 @@ input:placeholder {
 .b1 {
     padding: 4px 7px;
     border-radius: var(--rad2);
-    border: 2px solid rgba(var(--accent));
-    background-color: rgba(var(--accent));
+    background-color: rgba(var(--accent), 0.3);
     font-size: var(--fz1);
     color: var(--fontc);
     font-family: 'PoppinsM', Arial;
     margin: 1px;
     transition: 0.05s;
     cursor: pointer;
+    border: 2px solid transparent;
 }
 
 .b1:hover {
-    background-color: rgba(var(--accent), 0.7);
+    border: 2px solid rgba(var(--accent));
+    background-color: rgba(var(--accent), 0.5);
 }
 
 .b1:active {
@@ -175,8 +176,9 @@ input:placeholder {
         opacity: 100%;
     }
 }
+
 .title-bar {
-    color: white;
+    color: var(--fontc);
     padding: 6px;
     border-bottom: 2px solid var(--bordercolor);
     cursor: move;
@@ -374,4 +376,8 @@ a:active {
     background-color: var(--lightdarkb);
     width: 100%;
     box-sizing: border-box;
+}
+
+::placeholder {
+    color: var(--fontc2);
 }
