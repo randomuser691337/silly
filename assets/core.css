@@ -234,7 +234,7 @@ button {
     position: fixed;
     left: 50%;
     top: 50%;
-    width: 550px;
+    width: 520px;
     max-width: 85%;
     height: auto;
     max-height: 80%;
@@ -272,6 +272,7 @@ button {
     padding: 4px 6px;
     z-index: 4;
     color: var(--fontc);
+    border: none;
     animation: mainbtn 1s;
 }
 
