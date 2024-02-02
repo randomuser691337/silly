@@ -266,7 +266,6 @@ button {
     bottom: 4px;
     border-radius: var(--rad1);
     background-color: rgba(var(--accent), 0.4);
-    border: 2px solid var(--lightdarkb);
     transition: 0.05s;
     cursor: pointer;
     display: none;
