@@ -386,7 +386,7 @@ a:active {
 
 .light {
     background-color: rgb(240, 240, 240, 1.0);
-    color: #000;
+    color: #000 !important;
 }
 
 .light:active {
@@ -395,7 +395,7 @@ a:active {
 
 .dark {
     background-color: rgb(40, 40, 40, 1.0);
-    color: #fff;
+    color: #fff !important;
     margin-left: 2px;
 }
 
