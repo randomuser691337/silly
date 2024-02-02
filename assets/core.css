@@ -106,7 +106,7 @@ input:placeholder {
 
 .b1:hover {
     border: 2px solid rgba(var(--accent));
-    background-color: rgba(var(--accent), 0.5);
+    background-color: rgba(var(--accent), 0.4);
 }
 
 .b1:active {
@@ -180,7 +180,7 @@ input:placeholder {
 
 .title-bar {
     color: var(--fontc);
-    padding: 6px;
+    padding: 5px;
     border-bottom: 2px solid var(--bordercolor);
     cursor: move;
     user-select: none;
