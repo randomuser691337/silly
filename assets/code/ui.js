@@ -132,12 +132,19 @@ function sall(className) {
     }
 }
 function appear(mode) {
-   if (mode === "l") {
-    changevar('background', '#fff');
-    changevar('lightdark', '#fff');
-    changevar('lightdarkb', '#e4e4e4');
-    changevar('fontc', '#000');
-    changevar('fontc2', "#333");
-    changevar('bordercolor', "#d4d4d4");
-   }
+    if (mode === "l") {
+        changevar('background', '#fff');
+        changevar('lightdark', '#fff');
+        changevar('lightdarkb', '#e4e4e4');
+        changevar('fontc', '#000');
+        changevar('fontc2', "#333");
+        changevar('bordercolor', "#d4d4d4");
+    } else {
+        changevar('background', '#000');
+        changevar('lightdark', '#1a1a1a');
+        changevar('lightdarkb', '#2a2a2a');
+        changevar('fontc', '#fff');
+        changevar('fontc2', "#aaa");
+        changevar('bordercolor', "#3a3a3a");
+    }
 }
