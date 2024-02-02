@@ -22,7 +22,6 @@
             "", // Reset formatting to default
             "color: #FAA; font-size: 14px"
         );
-
     </script>
 </head>
 
@@ -277,6 +276,90 @@
             });
         </script>
         <!--End of browser-->
+        <!--Calculator-->
+        <div id="calculator" class="window">
+      <div class="title-bar">Calculator
+        <button class="winb wc" onclick="hidef('calculator');">Quit</button><button class="winb wc" id="clrcmd" onclick="clr();">Clear</button>
+      </div>
+      <div class="content">
+        <div id="calculator2" style="text-align: center;">
+          <script type="text/javascript">
+            function dis(val) {
+              document.getElementById("result").value += val;
+            }
+
+            function solve() {
+              let x = document.getElementById("result").value;
+              let y = eval(x);
+              document.getElementById("result").value = y;
+            }
+
+            function clr() {
+              document.getElementById("result").value = "";
+            }
+          </script>
+          <style>
+            input[type="button"] {
+              color: var(--font);
+              width: 55px;
+              height: 55px;
+              transition: .1s;
+              font-size: 16px;
+              font-family: 'Poppins', sans-serif;
+              background-color: transparent;
+              border-radius: 6px;
+              cursor: pointer;
+              border: none;
+            }
+
+            input[type="button"]:hover {
+              color: rgba(var(--accent));
+              border-radius: 7px;
+            }
+
+            input[type="button"]:active {
+              color: rgba(var(--accent), .60);
+              border-radius: 7px;
+            }
+
+            #result {
+              box-sizing: border-box;
+              font-size: 16px;
+              font-family: 'Poppins', sans-serif;
+              border: none;
+              background-color: transparent;
+              border-radius: 6px;
+              outline: none;
+              color: var(--font);
+              text-align: center;
+              width: 210px;
+            }
+          </style>
+          <p><input class="calctext txttop txtbtm" type="text" id="result" placeholder="Type an equation..." onfocus="this.blur();"></p>
+          <p><input type="button" value="1" onclick="dis('1')">
+            <input type="button" value="2" onclick="dis('2')">
+            <input type="button" value="3" onclick="dis('3')">
+            <input type="button" value=":|:" onclick="dis('/')">
+          </p>
+          <p><input type="button" value="4" onclick="dis('4')">
+            <input type="button" value="5" onclick="dis('5')">
+            <input type="button" value="6" onclick="dis('6')">
+            <input type="button" value="-" onclick="dis('-')">
+          </p>
+          <p><input type="button" value="7" onclick="dis('7')">
+            <input type="button" value="8" onclick="dis('8')">
+            <input type="button" value="9" onclick="dis('9')">
+            <input type="button" value="+" onclick="dis('+')">
+          </p>
+          <p><input type="button" value="." onclick="dis('.')">
+            <input type="button" value="0" onclick="dis('0')">
+            <input type="button" value="=" onclick="solve()">
+            <input type="button" value="x" onclick="dis('*')">
+          </p>
+        </div>
+      </div>
+    </div>
+        <!--End of calculator-->
         <!--Desktop nav-->
         <button id="mainbtn" class="cent" onclick="toggle('mainmenu');"><svg xmlns="http://www.w3.org/2000/svg"
                 width="24" height="16" viewBox="0 0 24 16" fill="none" stroke="currentColor" stroke-width="2"
