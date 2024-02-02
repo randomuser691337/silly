@@ -131,7 +131,7 @@ function sall(className) {
         buttons[i].click();
     }
 }
-function appear(mode) {
+async function appear(mode) {
     if (mode === "l") {
         changevar('background', '#fff');
         changevar('lightdark', '#fff');
@@ -139,6 +139,7 @@ function appear(mode) {
         changevar('fontc', '#000');
         changevar('fontc2', "#333");
         changevar('bordercolor', "#d4d4d4");
+        await writevar('appear', 'l');
     } else {
         changevar('background', '#000');
         changevar('lightdark', '#1a1a1a');
@@ -146,5 +147,6 @@ function appear(mode) {
         changevar('fontc', '#fff');
         changevar('fontc2', "#aaa");
         changevar('bordercolor', "#3a3a3a");
+        await writevar('appear', 'd');
     }
 }
