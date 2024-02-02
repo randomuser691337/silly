@@ -383,3 +383,29 @@ a:active {
 ::placeholder {
     color: var(--fontc2);
 }
+
+.light {
+    background-color: rgb(255, 255, 255, 1.0);
+    color: #000;
+}
+
+.light:hover {
+    background-color: rgb(255, 255, 255, 0.8);
+}
+
+.light:active {
+    background-color: rgb(255, 255, 255, 0.6);
+}
+
+.dark {
+    background-color: rgb(40, 40, 40, 1.0);
+    color: #fff;
+}
+
+.dark:hover {
+    background-color: rgb(40, 40, 40, 0.8);
+}
+
+.dark:active {
+    background-color: rgb(40, 40, 40, 0.6);
+}
