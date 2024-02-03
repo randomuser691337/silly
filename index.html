@@ -501,10 +501,12 @@
         }
         function recovery() {
             document.getElementById('nest').innerHTML = `
-            <div class="setup">
-                <div id="rec1"  style="max-width: 280px;"><p class="h2">Recovery</p>
+            <div class="window" style="width: 280px;">
+                <div class="title-bar">Recovery <button class="winb" onclick="reboot();">Exit</button></div>
+                <div class="content"><p class="h2">Recovery</p>
             <p>You can erase to fix all issues, or wipe the cache/bootload variables to attempt a fix.</p>
-            <button class="b1" onclick="burnitall();">Erase</button><button class="b1" onclick="wipeboot();">Delete cache</button><button class="b1" onclick="reboot();">Exit</button></div></div>`
+            <button class="b1" onclick="burnitall();">Erase</button><button class="b1" onclick="wipeboot();">Delete cache</button>
+            </div></div>`
         }
 
         document.addEventListener('keydown', function (event) {
