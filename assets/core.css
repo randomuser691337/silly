@@ -396,7 +396,7 @@ a:active {
 }
 
 .light:hover {
-    background-color: rgb(255, 255, 255, 0.8);
+    background-color: rgb(255, 255, 255, 1.0);
 }
 
 .light:active {
@@ -409,7 +409,7 @@ a:active {
 }
 
 .dark:hover {
-    background-color: rgb(40, 40, 40, 0.8);
+    background-color: rgb(40, 40, 40, 1.0);
 }
 
 .dark:active {

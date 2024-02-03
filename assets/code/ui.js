@@ -138,7 +138,7 @@ async function appear(mode) {
         changevar('lightdarkb', '#e4e4e4');
         changevar('fontc', '#000');
         changevar('fontc2', "#333");
-        changevar('bordercolor', "#d4d4d4");
+        changevar('bordercolor', "#f0f0f0");
         await writevar('appear', 'l');
     } else {
         changevar('background', '#000');
