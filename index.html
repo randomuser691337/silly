@@ -501,12 +501,13 @@
         }
         function recovery() {
             document.getElementById('nest').innerHTML = `
-            <div class="window" style="width: 280px;">
+            <div class="window" id="recovery();" style="width: 280px;">
                 <div class="title-bar">Recovery <button class="winb" onclick="reboot();">Exit</button></div>
                 <div class="content"><p class="h2">Recovery</p>
             <p>You can erase to fix all issues, or wipe the cache/bootload variables to attempt a fix.</p>
             <button class="b1" onclick="burnitall();">Erase</button><button class="b1" onclick="wipeboot();">Delete cache</button>
             </div></div>`
+            opap('recovery');
         }
 
         document.addEventListener('keydown', function (event) {
