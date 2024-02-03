@@ -265,16 +265,15 @@ function exec(url) {
     const allowedUrls = ["./assets/apps/rosetoy.js"];
 
     if (allowedUrls.includes(url)) {
-        runcode(url);
+        appendScript(url);
     } else {
         mkw(`<p>That code is not from WebDesk, and cannot be run right now.</p>`, 'Security', '250px');
     }
 
-    function runcode(url) {
-        fetch(url)
-            .then(response => response.text())
-            .then(code => eval(code))
-            .catch(error => console.error('Error executing code:', error));
+    function appendScript(url) {
+        const scriptElement = document.createElement('script');
+        scriptElement.src = url;
+        document.head.appendChild(scriptElement);
     }
 }
 
