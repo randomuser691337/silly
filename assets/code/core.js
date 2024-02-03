@@ -219,9 +219,12 @@ function updateClock() {
 }
 
 function browsergo() {
-    const id1 = document.getElementById('browserlink').value;
+    const url = document.getElementById('browserlink').value;
     const id2 = document.getElementById('browserframe');
-    id2.src = id1;
+    if (!/^https?:\/\//i.test(url) && !/^www?:\/\//i.test(url)) {
+        url = "https://" + url;
+    }
+    id2.src = url;
 }
 
 async function resizew(elemID, name1, name2) {
