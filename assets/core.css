@@ -133,14 +133,14 @@ input:placeholder {
 }
 
 .winb:active {
-    transform: scale(0.92);
+    transform: scale(0.88);
 }
 
 .i1 {
     padding: 4px 7px;
     border-radius: var(--rad2);
     border: 2px solid rgba(var(--accent));
-    background-color: rgba(var(--accent), 0.5);
+    background-color: rgba(var(--accent), 0.4);
     font-size: var(--fz1);
     color: var(--fontc);
     width: 100%;
@@ -152,7 +152,7 @@ input:placeholder {
 }
 
 .i1:focus {
-    background-color: rgba(var(--accent), 0.6);
+    background-color: rgba(var(--accent), 0.55);
 }
 
 .window {
