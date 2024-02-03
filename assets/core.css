@@ -49,6 +49,7 @@ body {
 .setup {
     position: fixed;
     transform: translate(-50%, -50%) scale(1.0);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.17);
     left: 50%;
     top: 50%;
     padding: 10px;
@@ -164,7 +165,7 @@ input:placeholder {
     border-radius: var(--rad1);
     position: absolute;
     display: none;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.17);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.17);
     animation: yeah 0.3s;
 }
 
@@ -248,6 +249,7 @@ button {
     display: none;
     z-index: 4;
     overflow: auto !important;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.17);
 }
 
 .cent {
