@@ -155,6 +155,10 @@ input:placeholder {
     background-color: rgba(var(--accent), 0.55);
 }
 
+.hide {
+    display: none;
+}
+
 .window {
     width: auto;
     height: auto;
