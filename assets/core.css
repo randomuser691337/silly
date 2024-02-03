@@ -56,6 +56,7 @@ body {
     background-color: var(--lightdark);
     border-radius: var(--rad1);
     max-width: 85% !important;
+    animation: 0.5s yeah;
 }
 
 p {
@@ -163,7 +164,7 @@ input:placeholder {
     border-radius: var(--rad1);
     position: absolute;
     display: none;
-    animation: yeah 0.25s;
+    animation: yeah 0.3s;
 }
 
 @keyframes yeah {
