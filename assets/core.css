@@ -164,7 +164,7 @@ input:placeholder {
     border-radius: var(--rad1);
     position: absolute;
     display: none;
-    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2); 
+    box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.2); 
     animation: yeah 0.3s;
 }
 
