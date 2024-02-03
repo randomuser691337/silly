@@ -33,7 +33,6 @@ function winrec(element) {
 
     function duringDrag(e) {
         if (isDragging) {
-            e.preventDefault();
             element.style.left = e.clientX - offsetX + 'px';
             element.style.top = e.clientY - offsetY + 'px';
         }
