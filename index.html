@@ -11,7 +11,7 @@
         var lastedit = "Feb 1, 2024";
         var crashed = false;
         var mostrecerr = "No history."
-        var forcedatac = true; 
+        var forcedatac = true;
         document.addEventListener('touchstart', function (event) {
             if (event.touches.length > 1) {
                 event.preventDefault();
@@ -31,72 +31,81 @@
 
 <body>
     <div class="fullbg" id="nest">
-        <div class="setup" id="setup" class="window">
+        <div id="setup" class="window">
             <div class="title-bar">Setup Assistant</div>
-            <div id="setup1" style="max-width: 330px; display: none;">
-                <p class="h2">Welcome to WebDesk!</p>
-                <p>In just a few steps, you'll be ready to go.</p>
-                <p class="smt">- Select "Migrate" if you want to copy data</p>
-                <p class="smt">- Select "Let's Go" to get started (normal)</p>
-                <p class="smt">- Select "Guest" to skip setup or debug</p>
-                <button class="b1" onclick="guestmode();">Guest</button><button class="b1"
-                    onclick="fesw('setup1', 'mig');">Migrate</button><button class="b1"
-                    onclick="fesw('setup1', 'setup2');">Let's go!</button>
-                <p class="rsmt" style="margin-top: 4px;"><span class="ver"></span> - <span class="lastedit"></span></p>
-            </div>
-            <div id="setup2" style="display: none; max-width: 320px;">
-                <p class="h2">User Setup</p>
-                <p>Enter a username and select your preferences.</p>
-                <input type="text" id="username" class="i1" placeholder="Enter a new username" autocomplete="off">
-                <p class="smt">Select the options below to toggle them (green is on, red is off)</p>
-                <button class="thingy green" onclick="setchk('sendcrashs', 'yescrd', 'nocrd');" id="sendcrashs">Allow
-                    sending crash details to the dev</button>
-                <button class="thingy red" onclick="setchk('senderrors', 'yeserrd', 'noerrd');" id="senderrors">Allow
-                    sending error details to the dev</button>
-                <button class="thingy red" onclick="setchk('senddata', 'forceoffdata', 'forceondata');"
-                    id="senddata">Forcibly disable all data collection</button>
-                <button class="b1" onclick="fesw('setup2', 'setup1');">Back</button><button class="b1"
-                    onclick="fesw('setup2', 'setup3');">Done!</button>
-            </div>
-            <div id="setup3" style="display: none; max-width: 230px;">
-                <p class="h2">Personalize</p>
-                <p>Accent color</p>
-                <button class="acb" style="background: rgb(210, 30, 30);" onclick="chacc('210, 30, 30');"></button>
-                <button class="acb" style="background: rgb(210, 120, 30);" onclick="chacc('210, 120, 30');"></button>
-                <button class="acb" style="background: rgb(210, 180, 20);" onclick="chacc('210, 180, 20');"></button>
-                <button class="acb" style="background: rgb(50, 160, 20);" onclick="chacc('50, 160, 20');"></button>
-                <button class="acb" style="background: rgb(40, 70, 235);" onclick="chacc('40, 70, 235');"></button>
-                <button class="acb" style="background: rgb(120, 60, 235);" onclick="chacc('120, 60, 235');"></button>
-                <p>Appearance</p>
-                <button class="b1 b2 light" onclick="appear('l');">Light</button><button class="b1 b2 dark"
-                    onclick="appear();">Dark</button>
-                <p><button class="b1" onclick="fesw('setup3', 'setup2');">Back</button><button class="b1"
-                        onclick="finishsetup();nametime('username');">Done!</button></p>
-            </div>
-            <div id="setup4" style="display: none; max-width: 320px;">
-                <p class="h2">Setup is done!</p>
-                <p>Finishing up a few things...</p>
-                <button class="b1" onclick="window.location.reload();">Reload</button>
-            </div>
-            <div id="mig" style="max-width: 330px; display: none;">
-                <p class="h2" id="lobotomy">Migration Assistant</p>
-                <p>Note: Safari can have issues migrating.</p>
-                <p class="smt">- Go to your Everything Menu and open Migration Assistant on the other WebDesk.</p>
-                <p class="smt">- Enter the code "<span id="codemig" style="color: #fff;"></span>" into the Assistant.
-                </p>
-                <button class="b1" onclick="fesw('mig', 'setup1');">Back</button>
-            </div>
-            <div id="load" style="max-width: 320px;">
-                <p class="h2">Loading...</p>
-                <p>If this gets stuck or takes too long, reload.</p>
-                <button class="b1" onclick="recovery();">Recovery</button><button class="b1"
-                    onclick="reboot();">Reload</button>
-            </div>
-            <div id="mdone" style="max-width: 300px; display: none;">
-                <p class="h2">Migration Assistant</p>
-                <p>Migration complete.</p>
-                <p>Click "Done" to reboot into your WebDesk.</p>
-                <button class="b1" onclick="reboot();">Done</button>
+            <div class="content">
+                <div id="setup1" style="max-width: 330px; display: none;">
+                    <p class="h2">Welcome to WebDesk!</p>
+                    <p>In just a few steps, you'll be ready to go.</p>
+                    <p class="smt">- Select "Migrate" if you want to copy data</p>
+                    <p class="smt">- Select "Let's Go" to get started (normal)</p>
+                    <p class="smt">- Select "Guest" to skip setup or debug</p>
+                    <button class="b1" onclick="guestmode();">Guest</button><button class="b1"
+                        onclick="fesw('setup1', 'mig');">Migrate</button><button class="b1"
+                        onclick="fesw('setup1', 'setup2');">Let's go!</button>
+                    <p class="rsmt" style="margin-top: 4px;"><span class="ver"></span> - <span class="lastedit"></span>
+                    </p>
+                </div>
+                <div id="setup2" style="display: none; max-width: 320px;">
+                    <p class="h2">User Setup</p>
+                    <p>Enter a username and select your preferences.</p>
+                    <input type="text" id="username" class="i1" placeholder="Enter a new username" autocomplete="off">
+                    <p class="smt">Select the options below to toggle them (green is on, red is off)</p>
+                    <button class="thingy green" onclick="setchk('sendcrashs', 'yescrd', 'nocrd');"
+                        id="sendcrashs">Allow
+                        sending crash details to the dev</button>
+                    <button class="thingy red" onclick="setchk('senderrors', 'yeserrd', 'noerrd');"
+                        id="senderrors">Allow
+                        sending error details to the dev</button>
+                    <button class="thingy red" onclick="setchk('senddata', 'forceoffdata', 'forceondata');"
+                        id="senddata">Forcibly disable all data collection</button>
+                    <button class="b1" onclick="fesw('setup2', 'setup1');">Back</button><button class="b1"
+                        onclick="fesw('setup2', 'setup3');">Done!</button>
+                </div>
+                <div id="setup3" style="display: none; max-width: 230px;">
+                    <p class="h2">Personalize</p>
+                    <p>Accent color</p>
+                    <button class="acb" style="background: rgb(210, 30, 30);" onclick="chacc('210, 30, 30');"></button>
+                    <button class="acb" style="background: rgb(210, 120, 30);"
+                        onclick="chacc('210, 120, 30');"></button>
+                    <button class="acb" style="background: rgb(210, 180, 20);"
+                        onclick="chacc('210, 180, 20');"></button>
+                    <button class="acb" style="background: rgb(50, 160, 20);" onclick="chacc('50, 160, 20');"></button>
+                    <button class="acb" style="background: rgb(40, 70, 235);" onclick="chacc('40, 70, 235');"></button>
+                    <button class="acb" style="background: rgb(120, 60, 235);"
+                        onclick="chacc('120, 60, 235');"></button>
+                    <p>Appearance</p>
+                    <button class="b1 b2 light" onclick="appear('l');">Light</button><button class="b1 b2 dark"
+                        onclick="appear();">Dark</button>
+                    <p><button class="b1" onclick="fesw('setup3', 'setup2');">Back</button><button class="b1"
+                            onclick="finishsetup();nametime('username');">Done!</button></p>
+                </div>
+                <div id="setup4" style="display: none; max-width: 320px;">
+                    <p class="h2">Setup is done!</p>
+                    <p>Finishing up a few things...</p>
+                    <button class="b1" onclick="window.location.reload();">Reload</button>
+                </div>
+                <div id="mig" style="max-width: 330px; display: none;">
+                    <p class="h2" id="lobotomy">Migration Assistant</p>
+                    <p>Note: Safari can have issues migrating.</p>
+                    <p class="smt">- Go to your Everything Menu and open Migration Assistant on the other WebDesk.</p>
+                    <p class="smt">- Enter the code "<span id="codemig" style="color: #fff;"></span>" into the
+                        Assistant.
+                    </p>
+                    <button class="b1" onclick="fesw('mig', 'setup1');">Back</button>
+                </div>
+                <div id="load" style="max-width: 320px;">
+                    <p class="h2">Loading...</p>
+                    <p>If this gets stuck or takes too long, reload.</p>
+                    <button class="b1" onclick="recovery();">Recovery</button><button class="b1"
+                        onclick="reboot();">Reload</button>
+                </div>
+                <div id="mdone" style="max-width: 300px; display: none;">
+                    <p class="h2">Migration Assistant</p>
+                    <p>Migration complete.</p>
+                    <p>Click "Done" to reboot into your WebDesk.</p>
+                    <button class="b1" onclick="reboot();">Done</button>
+                </div>
             </div>
         </div>
         <!--Migration Assistant-->
