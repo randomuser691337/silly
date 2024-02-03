@@ -158,7 +158,7 @@
         <div class="window" id="camera" style="width: 280px;" ver="1.0">
             <div class="title-bar" id="titleBar"><span class="camtime" style="pointer-events: none;">Camera</span>
                 <button class="winb wc"
-                    onclick="hidef('camera');nocam();fesw('cameraitself', 'enablecam');">Close</button>
+                    onclick="hidef('camera');nocam();fesw('cameraitself', 'enablecam');hidef('snapper');">Close</button>
             </div>
             <div class="content">
                 <div id="enablecam">
@@ -178,6 +178,7 @@
                     <button class="b1" onclick="tsnap(3000, 3);">3s</button><button class="b1"
                         onclick="tsnap(6000, 6);">6s</button><button class="b1"
                         onclick="tsnap(9000, 9);">9s</button><button class="b1" onclick="tsnap(12000, 12);">12s</button>
+                    <p><button class="b1" onclick="fesw('snapper', 'cameraitself');">Back</button></p>
                 </div>
             </div>
             <script src="./assets/apps/camera.js"></script>

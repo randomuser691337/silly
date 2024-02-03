@@ -275,6 +275,8 @@ button {
     color: var(--fontc);
     border: none;
     animation: mainbtn 1s;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 }
 
 @keyframes mainbtn {
