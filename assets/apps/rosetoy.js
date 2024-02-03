@@ -10,6 +10,6 @@ function rosetoy() {
       <button class="b1 b2" onclick="rose1();">Pulsing</button>
       <button class="b1 b2" onclick="vi(20000);">Steady</button>
     </div>`
-    mkwin(win, 'Rose Toy', '240px', 'auto', 'too silly');
+    mkw(win, 'Rose Toy', '240px');
 }
 rosetoy();
