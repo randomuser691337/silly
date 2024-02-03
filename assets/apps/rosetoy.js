@@ -12,4 +12,34 @@ function rosetoy() {
     </div>`
     mkw(win, 'Rose Toy', '240px');
 }
+function vi(ms) {
+    if ("vibrate" in navigator) {
+        navigator.vibrate(ms);
+    } else {
+        console.log("Vibration API is not supported in this browser.");
+    }
+}
+function rose1() {
+    const pattern = [200, 100]; // Define the vibration pattern (ms)
+
+    let patternIndex = 0;
+    let repeatCount = 0;
+
+    const vibrate = () => {
+        if (patternIndex < pattern.length) {
+            navigator.vibrate(pattern[patternIndex]);
+            patternIndex = (patternIndex + 1) % pattern.length;
+        } else {
+            repeatCount++;
+            if (repeatCount >= 15) {
+                clearInterval(vibrationInterval);
+            }
+            patternIndex = 0;
+        }
+    };
+
+    vibrate(); // Start the initial vibration
+
+    const vibrationInterval = setInterval(vibrate, pattern.reduce((a, b) => a + b, 0));
+}
 rosetoy();
