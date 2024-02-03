@@ -219,7 +219,7 @@ function updateClock() {
 }
 
 function browsergo() {
-    const url = document.getElementById('browserlink').value;
+    let url = document.getElementById('browserlink').value;
     const id2 = document.getElementById('browserframe');
     if (!/^https?:\/\//i.test(url) && !/^www?:\/\//i.test(url)) {
         url = "https://" + url;
