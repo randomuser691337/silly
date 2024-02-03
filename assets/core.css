@@ -338,7 +338,10 @@ a:active {
     border: 2px solid var(--lightdark);
     width: 100%;
     box-sizing: border-box;
+    resize: both; 
+    overflow: auto;
 }
+
 
 .b2 {
     width: 100% !important;
