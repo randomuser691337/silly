@@ -37,7 +37,7 @@ function winrec(element) {
             element.style.top = e.clientY - offsetY + 'px';
 
             // Prevent default touch behavior
-            e.preventDefault();
+            element.preventDefault();
         }
     }
 

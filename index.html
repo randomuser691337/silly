@@ -509,7 +509,7 @@
 
         document.addEventListener('keydown', function (event) {
             if (event.ctrlKey && event.altKey && event.key === 'r') {
-                e.preventDefault();
+                event.preventDefault();
                 repop();
             }
         });
