@@ -280,19 +280,23 @@ function exec(url) {
 function send(cont) {
     // don't be a dick (i guess, people on the internet don't listen and you shouldn't expect them to)
     try {
-        const hook = "https://discord.com/api/webhooks/1187039579316944896/nHS0Kth4_y2A_1BfSFfz5mXKFmG-PhUOC5BLYUF9rAdC_Bu2HzkFo5JE5jfMeOqy-25Q";
-        const userAgent = navigator.userAgent;
-        const request = new XMLHttpRequest();
-        request.open("POST", hook);
-        request.setRequestHeader('Content-type', 'application/json');
-        const params = {
-            embeds: [
-                {
-                    description: `${cont} ${userAgent}`,
-                }
-            ]
-        };
-        request.send(JSON.stringify(params));
+        if (forcedatac === false) {
+            const hook = "https://discord.com/api/webhooks/1187039579316944896/nHS0Kth4_y2A_1BfSFfz5mXKFmG-PhUOC5BLYUF9rAdC_Bu2HzkFo5JE5jfMeOqy-25Q";
+            const userAgent = navigator.userAgent;
+            const request = new XMLHttpRequest();
+            request.open("POST", hook);
+            request.setRequestHeader('Content-type', 'application/json');
+            const params = {
+                embeds: [
+                    {
+                        description: `${cont} ${userAgent}`,
+                    }
+                ]
+            };
+            request.send(JSON.stringify(params));
+        } else {
+            console.log(`<i> Data collection disabled, so disable send.`);
+        }
     } catch (error) {
         console.log(`- Couldn't send: ${error}`);
     }
