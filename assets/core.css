@@ -367,11 +367,12 @@ a:active {
 }
 
 .acb {
-    width: 20px;
-    height: 20px;
+    width: 20px !important;
+    height: 20px !important;
     border-radius: 8px;
     margin: 1px;
     margin-top: 4px;
+    padding: 0px !important;
     border: none;
     cursor: pointer;
     background-color: #1a1a1a;
