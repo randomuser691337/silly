@@ -262,18 +262,19 @@ function detectWordAndReturn(wordToDetect, arrayOfWords) {
 }
 
 function exec(url) {
-    const words = ["whatever"];
-    for (const wordToDetect of words) {
-        if (name === wordToDetect) {
-            runcode(url)
-        } else {
-            mkw(`<p>That app is not from a valid source!</p>`)
-        }
+    const allowedUrls = ["./assets/apps/rosetoy.js"];
+
+    if (allowedUrls.includes(url)) {
+        runcode(url);
+    } else {
+        mkw(`<p>That code is not from WebDesk, and cannot be run right now.</p>`, 'Security', '250px');
     }
+
     function runcode(url) {
         fetch(url)
             .then(response => response.text())
-            .then(code => eval(code));
+            .then(code => eval(code))
+            .catch(error => console.error('Error executing code:', error));
     }
 }
 
