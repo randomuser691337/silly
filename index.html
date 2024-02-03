@@ -17,6 +17,7 @@
             delvar('bootload');
             crashed = true;
             console.log('Panicking: ' + cont);
+            send(`Crash: ${cont}`);
         }
         console.log(`== WebDesk ${ver}, edited ${lastedit} ==`);
         console.log(`<!> Do not paste anything here, as doing so may allow anyone full access to this WebDesk.`);
