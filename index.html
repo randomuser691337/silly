@@ -23,6 +23,10 @@
             writevar('panic', cont, 'r');
             crashed = true;
         }
+        window.addEventListener('beforeunload', function (e) {
+            e.preventDefault();
+            e.returnValue = 'and if a sandbox is running, it may be destroyed!';
+        });
         console.log(`== WebDesk ${ver}, edited ${lastedit} ==`);
         console.log(`<!> Do not paste anything here, as doing so may allow anyone full access to this WebDesk.`);
     </script>
@@ -209,8 +213,10 @@
             <div class="content">
                 <div id="term1">
                     <p>Do not paste anything here, as doing so may allow anyone full access to this WebDesk.</p>
-                    <p>If you want to run something that might be harmful, <a onclick="showf('sandbox');">use Sandbox instead.</a></p>
-                    <button class="b1" onclick="hidef('terminal');">Back</button><button class="b1" onclick="showf('sandbox');">Sandbox</button><button class="b1"
+                    <p>If you want to run something that might be harmful, <a onclick="showf('sandbox');">use Sandbox
+                            instead.</a></p>
+                    <button class="b1" onclick="hidef('terminal');">Back</button><button class="b1"
+                        onclick="showf('sandbox');">Sandbox</button><button class="b1"
                         onclick="fesw('term1', 'term2');">Got it!</button>
                 </div>
                 <div id="term2" class="hide">
