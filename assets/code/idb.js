@@ -137,7 +137,6 @@ async function delvar(varName) {
 async function eraseall() {
     try {
         if (crashed == true) { console.log('Rejected FS action: crashed!'); return; }
-        const db = await initDB();
         indexedDB.deleteDatabase(NTName);
         console.log('[OK] Erased container successfully.');
     } catch (error) {
@@ -148,12 +147,13 @@ async function eraseall() {
 async function burnitall(er) {
     try {
         await eraseall();
+        promptreboot = false;
         if (er === undefined || er === "") {
             stm('<p>Erase completed. Auto-rebooting in 3s...</p><button class="b1" onclick="window.location.reload();">Reboot</button>', 'Erase Assistant', '200px');
             setTimeout(reboot, 3000);
         } else {
-            stm(`<p>Erase completed. Auto-rebooting in 5s...</p><p>Reason: ${er}</p><button class="b1" onclick="window.location.reload();">Reboot</button>`, 'Erase Assistant', '200px');
-            setTimeout(reboot, 5000);
+            stm(`<p>Erase completed. Auto-rebooting in 4s...</p><p>Reason: ${er}</p><button class="b1" onclick="window.location.reload();">Reboot</button>`, 'Erase Assistant', '200px');
+            setTimeout(reboot, 4000);
         }
         console.log('[OK] All data has been destroyed.');
     } catch (error) {

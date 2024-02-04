@@ -12,6 +12,7 @@
         var crashed = false;
         var mostrecerr = "No history."
         var forcedatac = true;
+        var promptreboot = true;
         document.addEventListener('touchstart', function (event) {
             if (event.touches.length > 1) {
                 event.preventDefault();
@@ -24,8 +25,10 @@
             crashed = true;
         }
         window.addEventListener('beforeunload', function (e) {
-            e.preventDefault();
-            e.returnValue = 'and if a sandbox is running, it may be destroyed!';
+            if (promptreboot === true) {
+                e.preventDefault();
+                e.returnValue = 'and if a sandbox is running, it may be destroyed!';
+            }
         });
         console.log(`== WebDesk ${ver}, edited ${lastedit} ==`);
         console.log(`<!> Do not paste anything here, as doing so may allow anyone full access to this WebDesk.`);
