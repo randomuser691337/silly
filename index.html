@@ -438,7 +438,7 @@
                         onclick="hidef('mainmenu');">Close</button>
                 </div>
                 <div class="padmenu hide" id="mainsandact">
-                    <button class="b1" onclick="stm('end');">Exit Sandbox</button><button class="b1" onclick="exsand();">Erase and exit</button><button class="b1"
+                    <button class="b1" onclick="exsand();">Exit Sandbox</button><button class="b1"
                         onclick="sth('hide');">Suspend Sandbox</button><button class="b1"
                         onclick="hidef('mainmenu');">Close</button>
                 </div>
@@ -508,7 +508,7 @@
                     } else if (setup == "guest") {
                         burnitall('Guest Mode');
                     } else if (setup == "fuckingkillme") {
-                        eraseall();
+                        burnitall('justreload');
                     } else {
                         fesw('load', 'setup1');
                     }

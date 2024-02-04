@@ -151,6 +151,8 @@ async function burnitall(er) {
         if (er === undefined || er === "") {
             stm('<p>Erase completed. Auto-rebooting in 3s...</p><button class="b1" onclick="window.location.reload();">Reboot</button>', 'Erase Assistant', '200px');
             setTimeout(reboot, 3000);
+        } else if (er = "justreload") {
+            window.location.reload();
         } else {
             stm(`<p>Erase completed. Auto-rebooting in 4s...</p><p>Reason: ${er}</p><button class="b1" onclick="window.location.reload();">Reboot</button>`, 'Erase Assistant', '200px');
             setTimeout(reboot, 4000);
