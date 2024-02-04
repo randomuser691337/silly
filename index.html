@@ -30,6 +30,7 @@
 
 <body>
     <div class="fullbg" id="nest">
+        <p class="h2 hide" style="margin-top: 12px;" id="sandwarn">Sandbox Desktop</p>
         <div id="setup" class="window">
             <div class="title-bar">Setup Assistant <button class="winb" onclick="about();">About</button></div>
             <div class="content">
@@ -426,9 +427,9 @@
                         onclick="showf('sandbox');">Open Sandbox</button><button class="b1 fucku"
                         onclick="hidef('mainmenu');">Close</button>
                 </div>
-                <div class="padmenu" id="mainsandact" class="hide">
-                    <button class="b1 b2" onclick="exsand();">Exit Sandbox</button>
-                    <button class="b1 b2" onclick="sth('hide');">Suspend Sandbox</button><button class="b1 fucku"
+                <div class="padmenu hide" id="mainsandact">
+                    <button class="b1" onclick="exsand();">Exit Sandbox</button>
+                    <button class="b1" onclick="sth('hide');">Suspend Sandbox</button><button class="b1"
                         onclick="hidef('mainmenu');">Close</button>
                 </div>
             </div>
@@ -546,10 +547,10 @@
                 repop();
             }
         });
-        
+
         if (sandParam) {
             mkw('<p>Welcome to WebDesk Sandbox!</p><p>You can safely run anything in here, without any risks.</p><p>All data in Sandbox will be destroyed after leaving.</p>', 'Sandbox', '340px');
-            fesw('mainwebact', 'mainsandact');
+            fesw('mainwebact', 'mainsandact'); showf('sandwarn');
         } else {
             console.log(`<i> No database variable defined (?db=)`);
             window.addEventListener("message", receiveMessage, false);
