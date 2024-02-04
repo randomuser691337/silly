@@ -125,6 +125,13 @@ async function desktop(name) {
     }
 }
 
+function getsh(percentage) {
+    const decimalPercentage = parseFloat(percentage) / 100;
+    const screenHeight = window.innerHeight;
+    const heightInPixels = decimalPercentage * screenHeight;
+    return heightInPixels + 'px';
+}
+
 function stm(winc, winn, wins) {
     dest('nest');
     const ret = mkw(winc, winn, wins, 's');
