@@ -419,13 +419,26 @@
                         onclick="opapp('calculator');">Calculator</button>
                 </div>
                 <p class="h2">WebDesk</p>
-                <div class="padmenu">
+                <div class="padmenu" id="mainwebact">
                     <button class="b1 b2" onclick="about();hidef('mainmenu');">About WebDesk</button>
                     <button class="b1 b2" onclick="reboot();">Reboot</button>
                     <button class="b1 fucku" onclick="cleantop();">Clean Desktop</button><button class="b1 fucku"
+                        onclick="showf('sandbox');">Open Sandbox</button><button class="b1 fucku"
+                        onclick="hidef('mainmenu');">Close</button>
+                </div>
+                <div class="padmenu" id="mainsandact" class="hide">
+                    <button class="b1 b2" onclick="exsand();">Exit Sandbox</button>
+                    <button class="b1 b2" onclick="sth('hide');">Suspend Sandbox</button><button class="b1 fucku"
                         onclick="hidef('mainmenu');">Close</button>
                 </div>
             </div>
+        </div>
+        <div id="sandbox"
+            style="position: fixed; left: 0px; right: 0px; top: 0px; bottom: 0px; z-index: 999; background-color: var(--background);"
+            class="hide">
+            <embed style="width: 100%; height: 100%; box-sizing: border-box; border: none; z-index: 1;"
+                src="./assets/sandbox.html" id="sandboxframe">Sandbox is
+            booting...</embed>
         </div>
         <!--End of desktop nav-->
     </div>
@@ -532,9 +545,24 @@
         const sandParam = urlParams.get("sand");
         if (sandParam) {
             guestmode();
-            mkw('<p>Welcome to WebDesk Sandbox!</p><p>You can safely run anything in here, without any risks.</p><p>All data in Sandbox will be destroyed after leaving.</p>', 'Sandbox', '340px')
+            mkw('<p>Welcome to WebDesk Sandbox!</p><p>You can safely run anything in here, without any risks.</p><p>All data in Sandbox will be destroyed after leaving.</p>', 'Sandbox', '340px');
+            fesw('mainwebact', 'mainsandact');
         } else {
             console.log(`<i> No database variable defined (?db=)`);
+            window.addEventListener("message", receiveMessage, false);
+            function receiveMessage(event) {
+                if (event.data === "hide") {
+                    console.log('<i> Suspending sandbox...');
+                    hidef('sandbox');
+                } else if (event.data === "end") {
+                    console.log('<i> Ending sandbox...');
+                    hidef('sandbox');
+                    document.getElementById('sandboxframe').src = "./assets/sandbox.html";
+                }
+            }
+        }
+        function sth(con) {
+            window.parent.postMessage(con, "*");
         }
     </script>
 </body>
