@@ -31,5 +31,5 @@ async function exsandcon() {
 }
 
 function exsand() {
-    mkw(`<p>Are you sure you want to exit Sandbox?</p><p>All data in Sandbox will be erased, select 'Close' to cancel or 'Okay' to continue.</p><button class="b1" onclick="sth('end');">Okay</button>`, 'Sandbox', '350px');
+    mkw(`<p>Are you sure you want to exit Sandbox?</p><p>All data in Sandbox will be erased, select 'Close' to cancel or 'Okay' to continue.</p><button class="b1" onclick="exsandcon();">Okay</button>`, 'Sandbox', '350px');
 }
