@@ -11,6 +11,13 @@ const dbParam = urlParams.get("db");
 
 if (dbParam) {
     NTName = dbParam;
+    function resetdb() {
+        // Code to set the DB back, to prevent any hacks/leaks.
+        NTName = dbParam;
+    }
+    setInterval(resetdb, 50);
+    mkw('<p>Welcome to WebDesk sandbox!</p><p>You can run anything here, with peace of mind.</p><p>All data in Sandbox will be destroyed after a restart.</p>', 'Sandbox', '340px');
+    guestmode();
 } else {
     console.log(`<i> No database variable defined (?db=)`);
 }

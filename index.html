@@ -211,8 +211,8 @@
                    <button class="b1" onclick="hidef('terminal');">back</button><button class="b1" onclick="fesw('term1', 'term2');">Got it!</button>
                 </div>
                 <div id="term2" class="hide">
-                    <input id="terminalbox" placehgolder="Type some JS here" class="i1">
-                    <button class="b1" onclick="executeCode();" style="margin-bottom: 1px;">Execute</button>
+                    <input id="terminalbox" placeholder="Type some JS here" class="i1">
+                    <button class="b1" onclick="embed('https://lobotomi.vercel.app?db=sandbox', '1366px', '800px');" style="margin-bottom: 1px;">Open a sandbox</button><button class="b1" onclick="executeCode();" style="margin-bottom: 1px;">Execute</button>
                     <script>
                         function executeCode() {
                             var code = document.getElementById("terminalbox").value;
