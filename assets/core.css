@@ -44,6 +44,7 @@ body {
     font-size: var(--fz1);
     color: var(--fontc);
     text-align: center;
+    transition: 0.1s;
 }
 
 .setup {
