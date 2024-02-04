@@ -438,7 +438,8 @@
                         onclick="hidef('mainmenu');">Close</button>
                 </div>
                 <div class="padmenu hide" id="mainsandact">
-                    <button class="b1" onclick="exsand();">Exit Sandbox</button><button class="b1" onclick="sth('hide');">Suspend Sandbox</button><button class="b1"
+                    <button class="b1" onclick="exsand();">Exit Sandbox</button><button class="b1"
+                        onclick="sth('hide');">Suspend Sandbox</button><button class="b1"
                         onclick="hidef('mainmenu');">Close</button>
                 </div>
             </div>
@@ -513,6 +514,9 @@
                     } else {
                         fesw('load', 'setup1');
                     }
+                    if (sandParam) {
+                        guestmode();
+                    }
                     if (accent) {
                         chacc(accent);
                     }
@@ -532,9 +536,6 @@
                     masschange('ver', ver);
                     // applications here
                     console.log('<i> Successful boot!');
-                }
-                if (sandParam) {
-                    guestmode();
                 }
             } catch (error) {
                 console.log('<!> A critical error occured, run fuck() for help.');
