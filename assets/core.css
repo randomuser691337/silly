@@ -346,6 +346,7 @@ a:active {
     box-sizing: border-box;
     resize: both; 
     overflow: auto;
+    max-height: 75%;
 }
 
 
