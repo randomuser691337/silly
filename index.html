@@ -529,9 +529,8 @@
                 repop();
             }
         });
-        const urlParams = new URLSearchParams(window.location.search);
-        const dbParam = urlParams.get("sand");
-        if (dbParam) {
+        const sandParam = urlParams.get("sand");
+        if (sandParam) {
             guestmode();
             mkw('<p>Welcome to WebDesk Sandbox!</p><p>You can safely run anything in here, without any risks.</p><p>All data in Sandbox will be destroyed after leaving.</p>', 'Sandbox', '340px')
         } else {
