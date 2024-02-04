@@ -18,11 +18,10 @@
             }
         }, { passive: false });
         function panic(cont) {
-            writevar('panic', cont, 'r');
-            delvar('bootload');
-            crashed = true;
-            console.log('Panicking: ' + cont);
             send(`Crash: ${cont}`);
+            delvar('bootload');
+            writevar('panic', cont, 'r');
+            crashed = true;
         }
         console.log(`== WebDesk ${ver}, edited ${lastedit} ==`);
         console.log(`<!> Do not paste anything here, as doing so may allow anyone full access to this WebDesk.`);
@@ -207,14 +206,20 @@
                     class="winb" id="run" onclick="document.getElementById('terminalbox').value = '';">Clear</button>
             </div>
             <div class="content">
-                <input id="terminalbox" placeholder="Run any JS function" class="i1">
-                <button class="b1" onclick="executeCode();" style="margin-bottom: 1px;">Execute</button>
-                <script>
-                    function executeCode() {
-                        var code = document.getElementById("terminalbox").value;
-                        eval(code);
-                    }
-                </script>
+                <div id="term1">
+                   <p>Do not paste anything here, as doing so may allow anyone full access to this WebDesk.</p>
+                   <button class="b1" onclick="hidef('terminal');">back</button><button class="b1" onclick="fesw('term1', 'term2');">Got it!</button>
+                </div>
+                <div id="term2" class="hide">
+                    <input id="terminalbox" placehgolder="Type some JS here" class="i1">
+                    <button class="b1" onclick="executeCode();" style="margin-bottom: 1px;">Execute</button>
+                    <script>
+                        function executeCode() {
+                            var code = document.getElementById("terminalbox").value;
+                            eval(code);
+                        }
+                    </script>
+                </div>
             </div>
         </div>
         <!--End of terminal-->
