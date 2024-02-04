@@ -454,7 +454,6 @@
     <script src="./assets/code/rec.js"></script>
     <script>
         let started = false;
-        const sandParam = urlParams.get("sand");
         document.onreadystatechange = async function () {
             try {
                 if (started === true) {
@@ -498,7 +497,11 @@
                             send(`Someone is using WebDesk as "${hewwo}" from`);
                         }
                     } else if (setup == "guest") {
-                        burnitall('Guest Mode');
+                        if (sandParam) {
+                            burnitall('Sandbox');
+                        } else {
+                            burnitall('Guest Mode');
+                        }
                     } else {
                         fesw('load', 'setup1');
                     }

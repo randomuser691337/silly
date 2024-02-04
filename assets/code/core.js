@@ -1,5 +1,6 @@
 
 /* if you find any bugs, feel free to submit a pull request idk how github/git works lmao TwT*/
+const sandParam = urlParams.get("sand");
 function winrec(element) {
     let offsetX, offsetY, isDragging = false;
 
@@ -78,7 +79,9 @@ async function nameutil(cont) {
 }
 
 async function guestmode() {
-    mkw(`<p>You're in Guest Mode.</p><p>Upon reload/restart, WebDesk will auto-erase.</p>`, 'Setup Assistant', '320px');
+    if (sandParam) {
+        mkw(`<p>You're in Guest Mode.</p><p>Upon reload/restart, WebDesk will auto-erase.</p>`, 'Setup Assistant', '320px');
+    }
     desktop('Guest');
     await writevar('setupdone', 'guest');
 }
