@@ -209,14 +209,15 @@
             <div class="content">
                 <div id="term1">
                     <p>Do not paste anything here, as doing so may allow anyone full access to this WebDesk.</p>
-                    <button class="b1" onclick="hidef('terminal');">back</button><button class="b1"
+                    <p>If you want to run something that might be harmful, <a onclick="showf('sandbox');">use Sandbox instead.</a></p>
+                    <button class="b1" onclick="hidef('terminal');">Back</button><button class="b1" onclick="showf('sandbox');">Sandbox</button><button class="b1"
                         onclick="fesw('term1', 'term2');">Got it!</button>
                 </div>
                 <div id="term2" class="hide">
                     <input id="terminalbox" placeholder="Type some JS here" class="i1">
                     <button class="b1"
                         onclick="const screenh = getsh('75%'); embed('https://webdesk-sandbox.vercel.app?sand=true', 'Sandbox', '1366px', screenh);"
-                        style="margin-bottom: 1px;">Open a sandbox</button><button class="b1" onclick="executeCode();"
+                        style="margin-bottom: 1px;">Open sandbox</button><button class="b1" onclick="executeCode();"
                         style="margin-bottom: 1px;">Execute</button>
                     <script>
                         function executeCode() {
@@ -551,6 +552,7 @@
         if (sandParam) {
             mkw('<p>Welcome to WebDesk Sandbox!</p><p>You can safely run anything in here, without any risks.</p><p>All data in Sandbox will be destroyed after leaving.</p>', 'Sandbox', '340px');
             fesw('mainwebact', 'mainsandact'); showf('sandwarn');
+            document.getElementById('sandbox').innerHTML = `<p>You can't run Sandbox in Sandbox!</p><button class="b1" onclick="hidef('sandbox');">Back<button>`
         } else {
             console.log(`<i> No database variable defined (?db=)`);
             window.addEventListener("message", receiveMessage, false);
