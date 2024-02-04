@@ -564,6 +564,7 @@
             document.getElementById('sandbox').innerHTML = `<p>You can't run Sandbox in Sandbox!</p><button class="b1" onclick="hidef('sandbox');">Back<button>`
             showf('mainbtn'); dest('setup');
             masschange('user', 'User');
+            writevar('setupdone', 'guest')
         } else {
             console.log(`<i> No database variable defined (?db=)`);
             window.addEventListener("message", receiveMessage, false);
