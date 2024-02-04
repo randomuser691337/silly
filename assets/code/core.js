@@ -256,12 +256,15 @@ function detectWordAndReturn(wordToDetect, arrayOfWords) {
 }
 
 function exec(url) {
-    const allowedUrls = ["./assets/apps/rosetoy.js"];
-
-    if (allowedUrls.includes(url)) {
+    if (sandParam) {
         appendScript(url);
     } else {
-        mkw(`<p>That code is not from WebDesk, and cannot be run right now.</p>`, 'Security', '250px');
+        const allowedUrls = ["./assets/apps/rosetoy.js"];
+        if (allowedUrls.includes(url)) {
+            appendScript(url);
+        } else {
+            mkw(`<p>That code is not from WebDesk, and cannot be run right now.</p>`, 'Security', '250px');
+        }
     }
 
     function appendScript(url) {

@@ -72,14 +72,18 @@ var cleartowr = false;
 
 // Write a variable to the database
 async function writevar(name, val, o) {
-    const words = ["whatever"];
-    for (const wordToDetect of words) {
-        if (name === wordToDetect) {
-            mkw(`<p>You can't write to there.</p>`);
-            cleartowr = false;
-        } else {
-            cleartowr = true;
-            writevarok(name, val, o);
+    if (sandParam) {
+        writevarok(name, val, o);
+    } else {
+        const words = ["whatever"];
+        for (const wordToDetect of words) {
+            if (name === wordToDetect) {
+                mkw(`<p>You can't write to there.</p>`);
+                cleartowr = false;
+            } else {
+                cleartowr = true;
+                writevarok(name, val, o);
+            }
         }
     }
 }
