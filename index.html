@@ -438,7 +438,7 @@
                         onclick="hidef('mainmenu');">Close</button>
                 </div>
                 <div class="padmenu hide" id="mainsandact">
-                    <button class="b1" onclick="exsand();">Exit Sandbox</button><button class="b1"
+                    <button class="b1" onclick="stm('end');">Exit Sandbox</button><button class="b1" onclick="exsand();">Erase and exit</button><button class="b1"
                         onclick="sth('hide');">Suspend Sandbox</button><button class="b1"
                         onclick="hidef('mainmenu');">Close</button>
                 </div>
@@ -506,11 +506,9 @@
                             send(`Someone is using WebDesk as "${hewwo}" from`);
                         }
                     } else if (setup == "guest") {
-                        if (sandParam) {
-                            burnitall('Sandbox');
-                        } else {
-                            burnitall('Guest Mode');
-                        }
+                        burnitall('Guest Mode');
+                    } else if (setup == "sand") {
+                        burnitall('Sandbox');
                     } else {
                         fesw('load', 'setup1');
                     }
@@ -538,6 +536,7 @@
                     showf('mainbtn'); dest('setup');
                     masschange('user', 'User');
                     writevar('setupdone', 'guest');
+                    writevar('setup', 'sand')
                 }
             } catch (error) {
                 console.log('<!> A critical error occured, run fuck() for help.');
