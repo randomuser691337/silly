@@ -514,9 +514,6 @@
                     } else {
                         fesw('load', 'setup1');
                     }
-                    if (sandParam) {
-                        guestmode();
-                    }
                     if (accent) {
                         chacc(accent);
                     }
@@ -565,6 +562,8 @@
             mkw('<p>Welcome to WebDesk Sandbox!</p><p>You can safely run anything in here, without any risks.</p><p>All data in Sandbox will be destroyed after leaving.</p>', 'Sandbox', '340px');
             fesw('mainwebact', 'mainsandact'); showf('sandwarn');
             document.getElementById('sandbox').innerHTML = `<p>You can't run Sandbox in Sandbox!</p><button class="b1" onclick="hidef('sandbox');">Back<button>`
+            showf('mainbtn'); dest('setup');
+            masschange('user', 'User');
         } else {
             console.log(`<i> No database variable defined (?db=)`);
             window.addEventListener("message", receiveMessage, false);

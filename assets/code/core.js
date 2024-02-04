@@ -78,13 +78,8 @@ async function nameutil(cont) {
 }
 
 async function guestmode() {
-    if (!sandParam) {
-        mkw(`<p>You're in Guest Mode.</p><p>Upon reload/restart, WebDesk will auto-erase.</p>`, 'Setup Assistant', '320px');
-        desktop('Guest');
-    } else {
-        desktop('User');
-        masschange('greet', 'Have fun')
-    }
+    mkw(`<p>You're in Guest Mode.</p><p>Upon reload/restart, WebDesk will auto-erase.</p>`, 'Setup Assistant', '320px');
+    desktop('Guest');
     await writevar('setupdone', 'guest');
 }
 
@@ -120,7 +115,6 @@ function setchk(id, act1, act2) {
 async function desktop(name) {
     showf('mainbtn'); dest('setup');
     masschange('user', name);
-    dest('setup');
     const pan = await readvar('panic');
     if (pan) {
         mkw(`<p>WebDesk crashed. Details:</p><p>${pan}</p>`, 'WebDesk Desktop', '300px');
