@@ -1,4 +1,5 @@
 var DoNotModifyUnlessYouKnowWhatYoureDoing = ["whatever"];
+var sandParam = urlParams.get("sand");
 async function forceoffdata() {
     await writevar('forcedata', 'off');
 }

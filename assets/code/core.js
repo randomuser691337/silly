@@ -1,6 +1,5 @@
 
 /* if you find any bugs, feel free to submit a pull request idk how github/git works lmao TwT*/
-const sandParam = urlParams.get("sand");
 function winrec(element) {
     let offsetX, offsetY, isDragging = false;
 
