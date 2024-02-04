@@ -99,22 +99,6 @@ function prr(val) {
     mkw(`<p>Please reboot to ${val}</p><button class="b1 b2" onclick="reboot();">Reboot</button>`, 'WebDesk', '270px');
 }
 
-async function yescrd() {
-    await writevar('crd', 'y');
-}
-
-async function nocrd() {
-    await writevar('crd', 'n');
-}
-
-async function yeserrd() {
-    await writevar('errd', 'y');
-}
-
-async function noerrd() {
-    await writevar('errd', 'n');
-}
-
 function setchk(id, act1, act2) {
     var button = document.getElementById(id);
     if (button.classList.contains('green')) {
