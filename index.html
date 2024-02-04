@@ -207,12 +207,16 @@
             </div>
             <div class="content">
                 <div id="term1">
-                   <p>Do not paste anything here, as doing so may allow anyone full access to this WebDesk.</p>
-                   <button class="b1" onclick="hidef('terminal');">back</button><button class="b1" onclick="fesw('term1', 'term2');">Got it!</button>
+                    <p>Do not paste anything here, as doing so may allow anyone full access to this WebDesk.</p>
+                    <button class="b1" onclick="hidef('terminal');">back</button><button class="b1"
+                        onclick="fesw('term1', 'term2');">Got it!</button>
                 </div>
                 <div id="term2" class="hide">
                     <input id="terminalbox" placeholder="Type some JS here" class="i1">
-                    <button class="b1" onclick="embed('https://lobotomi.vercel.app?db=sandbox', 'Sandbox', '1366px', '800px');" style="margin-bottom: 1px;">Open a sandbox</button><button class="b1" onclick="executeCode();" style="margin-bottom: 1px;">Execute</button>
+                    <button class="b1"
+                        onclick="embed('https://webdesk-sandbox.vercel.app', 'Sandbox', '1366px', '75%');"
+                        style="margin-bottom: 1px;">Open a sandbox</button><button class="b1" onclick="executeCode();"
+                        style="margin-bottom: 1px;">Execute</button>
                     <script>
                         function executeCode() {
                             var code = document.getElementById("terminalbox").value;
@@ -525,6 +529,14 @@
                 repop();
             }
         });
+        const urlParams = new URLSearchParams(window.location.search);
+        const dbParam = urlParams.get("sand");
+        if (dbParam) {
+            guestmode();
+            mkw('<p>Welcome to WebDesk Sandbox!</p><p>You can safely run anything in here, without any risks.</p><p>All data in Sandbox will be destroyed after leaving.</p>', 'Sandbox', '340px')
+        } else {
+            console.log(`<i> No database variable defined (?db=)`);
+        }
     </script>
 </body>
 

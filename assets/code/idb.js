@@ -4,7 +4,6 @@
 const DB_NAME = "WebDeskStore";
 const STORE_NAME = "WebDeskDB";
 let NTName = "database"; // Default value
-
 // Open IndexedDB
 // Initialize the IndexedDB
 let dbPromise = null;
@@ -206,19 +205,11 @@ async function restoredb() {
     }
 }
 
-// Check if the "db" URL parameter is present
 const urlParams = new URLSearchParams(window.location.search);
 const dbParam = urlParams.get("db");
 
 if (dbParam) {
     NTName = dbParam;
-    function resetdb() {
-        // Code to set the DB back, to prevent any hacks/leaks.
-        NTName = dbParam;
-    }
-    setInterval(resetdb, 50);
-    mkw('<p>Welcome to WebDesk sandbox!</p><p>You can run anything here, with peace of mind.</p><p>All data in Sandbox will be destroyed after a restart.</p>', 'Sandbox', '340px');
-    guestmode();
 } else {
     console.log(`<i> No database variable defined (?db=)`);
 }
