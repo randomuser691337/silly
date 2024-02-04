@@ -209,8 +209,6 @@ async function restoredb() {
         }
     }
 }
-
-const urlParams = new URLSearchParams(window.location.search);
 const dbParam = urlParams.get("db");
 
 if (dbParam) {
