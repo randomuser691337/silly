@@ -225,7 +225,7 @@
                 <div id="term2" class="hide">
                     <input id="terminalbox" placeholder="Type some JS here" class="i1">
                     <button class="b1"
-                        onclick="const screenh = getsh('75%'); embed('https://webdesk-sandbox.vercel.app?sand=true', 'Sandbox', '1366px', screenh);"
+                        onclick="showf('sandbox');"
                         style="margin-bottom: 1px;">Open sandbox</button><button class="b1" onclick="executeCode();"
                         style="margin-bottom: 1px;">Execute</button>
                     <script>
@@ -417,15 +417,16 @@
         <div id="mainmenu">
             <div class="content"
                 style="padding: 6px; border-radius: var(--rad2); background-color: rgba(var(--accent), 0.08);">
-                <p class="h3"><span class="greet">Welcome to WebDesk</span>, <span class="user"></span>!</p>
-                <p class="smt weather" onclick="opapp('weather');">Select to set up weather</p>
+                <p class="h3 sandnoapp"><span class="greet">Welcome to WebDesk</span>, <span class="user"></span>!</p>
+                <p class="h3 sandapp">WebDesk Sandbox</p>
+                <p class="smt weather sandnoapp" onclick="opapp('weather');">Select to set up weather</p>
                 <p class="h2">Apps</p>
                 <div class="padmenu">
-                    <button class="b1" onclick="opapp('migration');">Migration Assistant</button><button class="b1"
-                        onclick="opapp('settings');">Settings</button><button class="b1"
+                    <button class="b1 sandnoapp" onclick="opapp('migration');">Migration Assistant</button><button class="b1"
+                        onclick="opapp('settings');">Settings</button><button class="b1 sandnoapp"
                         onclick="opapp('camera');">Camera</button><button class="b1"
-                        onclick="opapp('terminal');">Terminal</button><button class="b1"
-                        onclick="opapp('weather');">Weather</button><button class="b1"
+                        onclick="opapp('terminal');">Terminal</button><button class="b1 sandnoapp"
+                        onclick="opapp('weather');">Weather</button><button class="b1 sandnoapp"
                         onclick="opapp('browser');">Browser</button><button class="b1"
                         onclick="opapp('calculator');">Calculator</button>
                 </div>
@@ -564,7 +565,8 @@
         if (sandParam) {
             mkw('<p>Welcome to WebDesk Sandbox!</p><p>You can safely run anything in here, without any risks.</p><p>All data in Sandbox will be destroyed after leaving.</p>', 'Sandbox', '340px');
             fesw('mainwebact', 'mainsandact'); showf('sandwarn');
-            document.getElementById('sandbox').innerHTML = `<p>You can't run Sandbox in Sandbox!</p><button class="b1" onclick="hidef('sandbox');">Back<button>`
+            document.getElementById('sandbox').innerHTML = `<p>You can't run Sandbox in Sandbox!</p><button class="b1" onclick="hidef('sandbox');">Back<button>`;
+            hidecls('sandnoapp');showcls('sandapp');
         } else {
             console.log(`<i> No database variable defined (?db=)`);
             window.addEventListener("message", receiveMessage, false);

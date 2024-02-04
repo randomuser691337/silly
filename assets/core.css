@@ -156,7 +156,8 @@ input:placeholder {
     background-color: rgba(var(--accent), 0.55);
 }
 
-.hide {
+.hide,
+.sandapp {
     display: none;
 }
 
@@ -388,7 +389,7 @@ a:active {
 
 .padmenu {
     padding: 9px;
-    border-radius: 8px;
+    border-radius: 7px;
     background-color: var(--lightdarkb);
     width: 100%;
     box-sizing: border-box;

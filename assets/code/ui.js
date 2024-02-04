@@ -64,6 +64,18 @@ function showf(d1) {
     const dr1 = document.getElementById(d1);
     $(dr1).fadeIn(150);
 }
+function hidecls(className) {
+    var elements = document.getElementsByClassName(className);
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].style.display = 'none';
+    }
+}
+function showcls(className) {
+    var elements = document.getElementsByClassName(className);
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].style.display = 'inline';
+    }
+}
 function changevar(varName, varValue) {
     const root = document.documentElement;
     root.style.setProperty(`--${varName}`, `${varValue}`);
@@ -135,10 +147,10 @@ async function appear(mode) {
     if (mode === "l") {
         changevar('background', '#fff');
         changevar('lightdark', '#fff');
-        changevar('lightdarkb', '#e4e4e4');
+        changevar('lightdarkb', '#F0F0F0');
         changevar('fontc', '#000');
         changevar('fontc2', "#333");
-        changevar('bordercolor', "#dfdfdf");
+        changevar('bordercolor', "#DFDFDF");
         await writevar('appear', 'l');
     } else {
         changevar('background', '#000');
