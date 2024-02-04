@@ -73,6 +73,7 @@ var cleartowr = false;
 // Write a variable to the database
 async function writevar(name, val, o) {
     if (sandParam) {
+        cleartowr = true;
         writevarok(name, val, o);
     } else {
         const words = ["whatever"];
