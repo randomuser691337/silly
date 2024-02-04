@@ -78,7 +78,7 @@ async function nameutil(cont) {
 }
 
 async function guestmode() {
-    if (sandParam) {
+    if (!sandParam) {
         mkw(`<p>You're in Guest Mode.</p><p>Upon reload/restart, WebDesk will auto-erase.</p>`, 'Setup Assistant', '320px');
     }
     desktop('Guest');
