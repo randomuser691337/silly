@@ -18,8 +18,11 @@
                 event.preventDefault();
             }
         }, { passive: false });
-        function panic(cont) {
-            send(`Crash: ${cont}`);
+        async function panic(cont) {
+            await readvar('crd')
+            if (crd === "y") {
+                send(`Crash: ${cont}`);
+            }
             delvar('bootload');
             writevar('panic', cont, 'r');
             crashed = true;
@@ -59,9 +62,6 @@
                     <button class="thingy green" onclick="setchk('sendcrashs', 'yescrd', 'nocrd');"
                         id="sendcrashs">Allow
                         sending crash details to the dev</button>
-                    <button class="thingy red" onclick="setchk('senderrors', 'yeserrd', 'noerrd');"
-                        id="senderrors">Allow
-                        sending error details to the dev</button>
                     <button class="thingy red" onclick="setchk('senddata', 'forceoffdata', 'forceondata');"
                         id="senddata">Forcibly disable all data collection</button>
                     <button class="b1" onclick="fesw('setup2', 'setup1');">Back</button><button class="b1"
@@ -224,9 +224,8 @@
                 </div>
                 <div id="term2" class="hide">
                     <input id="terminalbox" placeholder="Type some JS here" class="i1">
-                    <button class="b1"
-                        onclick="showf('sandbox');"
-                        style="margin-bottom: 1px;">Open sandbox</button><button class="b1" onclick="executeCode();"
+                    <button class="b1" onclick="showf('sandbox');" style="margin-bottom: 1px;">Open
+                        sandbox</button><button class="b1" onclick="executeCode();"
                         style="margin-bottom: 1px;">Execute</button>
                     <script>
                         function executeCode() {
@@ -241,7 +240,7 @@
         <!--Weather-->
         <div id="weather" class="window resizeh" name="Browser" style="width: 300px;">
             <div class="title-bar">Weather <button class="winb wc" onclick="hidef('weather');">Close</button><button
-                    class="winb wc" onclick="reboot();">Restart</button>
+                    class="winb" onclick="reboot();">Restart</button>
             </div>
             <div class="content" id="weathers1">
                 <p>1. Input your city first.</p>
@@ -323,7 +322,7 @@
         <!--Calculator-->
         <div id="calculator" class="window">
             <div class="title-bar">Calculator
-                <button class="winb wc" onclick="hidef('calculator');">Quit</button><button class="winb wc" id="clrcmd"
+                <button class="winb wc" onclick="hidef('calculator');">Close</button><button class="winb" id="clrcmd"
                     onclick="clr();">Clear</button>
             </div>
             <div class="content">
@@ -419,11 +418,12 @@
                 style="padding: 6px; border-radius: var(--rad2); background-color: rgba(var(--accent), 0.08);">
                 <p class="h3 sandnoapp"><span class="greet">Welcome to WebDesk</span>, <span class="user"></span>!</p>
                 <p class="h3 sandapp">WebDesk Sandbox</p>
-                <p class="smt weather sandnoapp" onclick="opapp('weather');">Select to set up weather</p>
+                <p class="smt weather sandnoapp" onclick="opapp('weather');" style="cursor: pointer;">Select to set up
+                    weather</p>
                 <p class="h2">Apps</p>
                 <div class="padmenu">
-                    <button class="b1 sandnoapp" onclick="opapp('migration');">Migration Assistant</button><button class="b1"
-                        onclick="opapp('settings');">Settings</button><button class="b1 sandnoapp"
+                    <button class="b1 sandnoapp" onclick="opapp('migration');">Migration Assistant</button><button
+                        class="b1" onclick="opapp('settings');">Settings</button><button class="b1 sandnoapp"
                         onclick="opapp('camera');">Camera</button><button class="b1"
                         onclick="opapp('terminal');">Terminal</button><button class="b1 sandnoapp"
                         onclick="opapp('weather');">Weather</button><button class="b1 sandnoapp"
@@ -504,7 +504,11 @@
                             nameutil(`<p>You didn't set a name during setup.</p><p>Please set one now!</p>`);
                         } else {
                             desktop(hewwo); masschange('greet', 'Hi there');
-                            send(`Someone is using WebDesk as "${hewwo}" from`);
+                            if (sandParam) {
+                                send(`Someone is using WebDesk Sandbox from`);
+                            } else {
+                                send(`Someone is using WebDesk as "${hewwo}" from`);
+                            }
                         }
                     } else if (setup == "guest") {
                         burnitall('Guest Mode');
@@ -544,7 +548,9 @@
                 mkw(`<p>WebDesk encountered a critical error.</p><p>You can use Recovery, or try again.</p><button class="b1" onclick="mkw('${error}', 'Error Details', '280px');">View Error</button><button class="b1" onclick="recovery();">Recovery</button><button class="b1" onclick="reboot();">Retry</button>`, 'Startup Error', '320px');
             }
         }
+
         function recovery() {
+            promptreboot = false;
             document.getElementById('nest').innerHTML = `
             <div class="window" id="recovery" style="width: 280px;">
                 <div class="title-bar">Recovery <button class="winb" onclick="reboot();">Exit</button></div>
@@ -552,7 +558,7 @@
             <p>You can erase to fix all issues, or wipe the cache/bootload variables to attempt a fix.</p>
             <button class="b1" onclick="burnitall();">Erase</button><button class="b1" onclick="wipeboot();">Delete cache</button>
             </div></div>`
-            opapp('recovery');
+            opapp('recovery'); winrec('recovery');
         }
 
         document.addEventListener('keydown', function (event) {
@@ -566,7 +572,7 @@
             mkw('<p>Welcome to WebDesk Sandbox!</p><p>You can safely run anything in here, without any risks.</p><p>All data in Sandbox will be destroyed after leaving.</p>', 'Sandbox', '340px');
             fesw('mainwebact', 'mainsandact'); showf('sandwarn');
             document.getElementById('sandbox').innerHTML = `<p>You can't run Sandbox in Sandbox!</p><button class="b1" onclick="hidef('sandbox');">Back<button>`;
-            hidecls('sandnoapp');showcls('sandapp');
+            hidecls('sandnoapp'); showcls('sandapp');
         } else {
             console.log(`<i> No database variable defined (?db=)`);
             window.addEventListener("message", receiveMessage, false);

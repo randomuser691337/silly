@@ -15,14 +15,6 @@ async function nocrd() {
     await writevar('crd', 'n');
 }
 
-async function yeserrd() {
-    await writevar('errd', 'y');
-}
-
-async function noerrd() {
-    await writevar('errd', 'n');
-}
-
 async function exsandcon() {
     if (sandParam) {
        burnitall();
