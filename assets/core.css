@@ -208,7 +208,7 @@ input:placeholder {
     padding: 8px;
 }
 
-.thingy {
+.b3 {
     border-radius: var(--rad2);
     padding: 2px 5px;
     border: 0px;
@@ -216,14 +216,16 @@ input:placeholder {
     font-family: 'PoppinsM', Arial;
     cursor: pointer;
     transition: 0.05s;
-    margin-bottom: 2px;
-    width: 100%;
-    box-sizing: border-box;
+    margin: 1px;
     color: var(--fontc)
 }
 
-.thingy:hover {
+.b3:hover {
     opacity: 0.75;
+}
+
+.b3:active {
+    opacity: 0.5;
 }
 
 .red {

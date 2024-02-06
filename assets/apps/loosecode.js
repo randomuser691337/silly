@@ -3,16 +3,11 @@ var urlParams = new URLSearchParams(window.location.search);
 var sandParam = urlParams.get("sand");
 async function forceoffdata() {
     await writevar('forcedata', 'off');
+    send(`This WebDesk's final cry: someone's disabled data collection. `);
 }
 async function forceondata() {
     await writevar('forcedata', 'on');
-}
-async function yescrd() {
-    await writevar('crd', 'y');
-}
-
-async function nocrd() {
-    await writevar('crd', 'n');
+    send(`This WebDesk's NOT final cry: the user took it back! `);
 }
 
 async function exsandcon() {

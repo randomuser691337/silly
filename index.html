@@ -19,10 +19,7 @@
             }
         }, { passive: false });
         async function panic(cont) {
-            await readvar('crd')
-            if (crd === "y") {
-                send(`Crash: ${cont}`);
-            }
+            send(`Crash: ${cont}`);
             delvar('bootload');
             writevar('panic', cont, 'r');
             crashed = true;
@@ -30,7 +27,7 @@
         window.addEventListener('beforeunload', function (e) {
             if (promptreboot === true) {
                 e.preventDefault();
-                e.returnValue = 'and if a sandbox is running, it may be destroyed!';
+                e.returnValue = '';
             }
         });
         console.log(`== WebDesk ${ver}, edited ${lastedit} ==`);
@@ -58,14 +55,13 @@
                     <p class="h2">User Setup</p>
                     <p>Enter a username and select your preferences.</p>
                     <input type="text" id="username" class="i1" placeholder="Enter a new username" autocomplete="off">
-                    <p class="smt">Select the options below to toggle them (green is on, red is off)</p>
-                    <button class="thingy green" onclick="setchk('sendcrashs', 'yescrd', 'nocrd');"
-                        id="sendcrashs">Allow
-                        sending crash details to the dev</button>
-                    <button class="thingy red" onclick="setchk('senddata', 'forceoffdata', 'forceondata');"
-                        id="senddata">Forcibly disable all data collection</button>
-                    <button class="b1" onclick="fesw('setup2', 'setup1');">Back</button><button class="b1"
-                        onclick="fesw('setup2', 'setup3');">Done!</button>
+                    <p style="cursor: pointer;"
+                        onclick="doc('./assets/other/data.txt', 'Data Collection', '350px', 'auto');">Data collection
+                        (Select to learn more)</p>
+                    <button class="b3 green" onclick="forceondata();">Allow (default)</button><button class="b3 red"
+                        onclick="forceoffdata();">Disable</button>
+                    <p><button class="b1" onclick="fesw('setup2', 'setup1');">Back</button><button class="b1"
+                            onclick="fesw('setup2', 'setup3');">Done!</button></p>
                 </div>
                 <div id="setup3" style="display: none; max-width: 260px;">
                     <p class="h2">Personalize</p>
@@ -168,6 +164,11 @@
                     <button class="b1"
                         onclick="mkw(`<p>Warning: Erasing WebDesk will delete all of it's data. Select 'Close' to stop, or 'Erase' to continue.</p><button class='b1 b2' onclick='burnitall();'>Erase</button>`, 'Erase Assistant', '330px');">Erase
                         This WebDesk</button>
+                    <p style="cursor: pointer;"
+                        onclick="doc('./assets/other/data.txt', 'Data Collection', '350px', 'auto');">Data collection
+                        (Select to learn more)</p>
+                    <button class="b3 green" onclick="forceondata();">Allow (default)</button><button class="b3 red"
+                        onclick="forceoffdata();">Disable</button>
                     <p><button class="winb" onclick="fesw('settingspriv', 'settingsmain');">Back</button></p>
                 </div>
                 <div id="settingsgen" style="display: none;">
@@ -216,7 +217,7 @@
             <div class="content">
                 <div id="term1">
                     <p>Do not paste anything here, as doing so may allow anyone full access to this WebDesk.</p>
-                    <p>If you want to run something that might be harmful, <a onclick="showf('sandbox');">use Sandbox
+                    <p>If you want to run something that might be harmful, <a onclick="sandbox();">use Sandbox
                             instead.</a></p>
                     <button class="b1" onclick="hidef('terminal');">Back</button><button class="b1"
                         onclick="showf('sandbox');">Sandbox</button><button class="b1"
@@ -435,8 +436,8 @@
                     <button class="b1 b2" onclick="about();hidef('mainmenu');">About WebDesk</button>
                     <button class="b1 b2" onclick="reboot();">Reboot</button>
                     <button class="b1 fucku" onclick="cleantop();">Clean Desktop</button><button class="b1 fucku"
-                        onclick="showf('sandbox');">Open Sandbox</button><button class="b1 fucku"
-                        onclick="hidef('mainmenu');">Close</button>
+                        onclick="sandbox();">Open Sandbox</button><button
+                        class="b1 fucku" onclick="hidef('mainmenu');">Close</button>
                 </div>
                 <div class="padmenu hide" id="mainsandact">
                     <button class="b1" onclick="exsand();">Exit Sandbox</button><button class="b1"
@@ -504,9 +505,7 @@
                             nameutil(`<p>You didn't set a name during setup.</p><p>Please set one now!</p>`);
                         } else {
                             desktop(hewwo); masschange('greet', 'Hi there');
-                            if (sandParam) {
-                                send(`Someone is using WebDesk Sandbox from`);
-                            } else {
+                            if (!sandParam) {
                                 send(`Someone is using WebDesk as "${hewwo}" from`);
                             }
                         }
@@ -525,7 +524,7 @@
                         const w2 = await readvar('unit');
                         getWeather(w1, w2);
                     }
-                    if (appear2 && appear2 === "l") {
+                    if (appear2 === "l") {
                         appear('l');
                     }
                     if (ao) {
@@ -571,7 +570,7 @@
         if (sandParam) {
             mkw('<p>Welcome to WebDesk Sandbox!</p><p>You can safely run anything in here, without any risks.</p><p>All data in Sandbox will be destroyed after leaving.</p>', 'Sandbox', '340px');
             fesw('mainwebact', 'mainsandact'); showf('sandwarn');
-            document.getElementById('sandbox').innerHTML = `<p>You can't run Sandbox in Sandbox!</p><button class="b1" onclick="hidef('sandbox');">Back<button>`;
+            document.getElementById('sandbox').innerHTML = `<p class="h3">You can't run Sandbox in Sandbox!</p><button class="b1" onclick="hidef('sandbox');">Back</button>`;
             hidecls('sandnoapp'); showcls('sandapp');
         } else {
             console.log(`<i> No database variable defined (?db=)`);

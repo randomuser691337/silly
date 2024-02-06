@@ -1,0 +1,6 @@
+<p class="h2">What data is collected</p>
+<p>- Your username, to identify/match you to any errors or problems</p>
+<p>- Whenever you boot WebDesk, to find any errors/confirm something I updated worked</p>
+<p>- Whenever you migrate and wether it suceeds or not, to debug any PeerJS issues</p>
+<p>- Whenever you boot Sandbox, to tell if any issues occur.</p>
+<p>All of this info helps me debug issues and polish WebDesk. Thanks for using WebDesk!</p>

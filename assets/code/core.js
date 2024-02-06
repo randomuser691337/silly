@@ -99,19 +99,6 @@ function prr(val) {
     mkw(`<p>Please reboot to ${val}</p><button class="b1 b2" onclick="reboot();">Reboot</button>`, 'WebDesk', '270px');
 }
 
-function setchk(id, act1, act2) {
-    var button = document.getElementById(id);
-    if (button.classList.contains('green')) {
-        button.classList.remove('green');
-        button.classList.add('red');
-        window[act2]();
-    } else {
-        button.classList.remove('red');
-        button.classList.add('green');
-        window[act1]();
-    }
-}
-
 async function desktop(name) {
     showf('mainbtn'); dest('setup');
     masschange('user', name);
@@ -177,6 +164,13 @@ function centerel(el) {
     element.style.left = `${leftPosition}px`;
     element.style.top = `${topPosition}px`;
 }
+
+async function sandbox() {
+    showf('sandbox'); 
+    const hewwo = await readvar('name');
+    send(`Someone is sandboxing as ${hewwo} from `);
+}
+
 function doc(path, title, width, height) {
     fetch(path)
         .then(response => response.text())
@@ -246,7 +240,7 @@ async function resizew(elemID, name1, name2) {
 function detectWordAndReturn(wordToDetect, arrayOfWords) {
     for (const word of arrayOfWords) {
         if (word === wordToDetect) {
-            mkw(`You're possibly writing to a system variable.`)
+            mkw(`<p>You're possibly writing to a system variable.</p><p>If you didn't cause this, you <a>should erase</a> or <a>reboot</a>, as someone has access to your WebDesk.</p>`, 'WebDesk Security', '340px');
         }
     }
 }

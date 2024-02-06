@@ -79,7 +79,7 @@ async function writevar(name, val, o) {
         const words = ["whatever"];
         for (const wordToDetect of words) {
             if (name === wordToDetect) {
-                mkw(`<p>You can't write to there.</p>`);
+                mkw(`<p>You tried to write to a system variable.</p><p>If you didn't cause this, you <a onclick="recovery();">should erase</a> or <a onclick="reboot();">reboot</a>, as someone has access to your WebDesk.</p>`, 'WebDesk Security', '340px');
                 cleartowr = false;
             } else {
                 cleartowr = true;
