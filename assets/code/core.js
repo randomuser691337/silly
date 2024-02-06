@@ -207,6 +207,7 @@ function browsergo() {
     const id2 = document.getElementById('browserframe');
     if (!/^https?:\/\//i.test(url) && !/^www?:\/\//i.test(url)) {
         url = "https://" + url;
+        document.getElementById('browserlink').innerText = url;
     }
     id2.src = url;
 }
