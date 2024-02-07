@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./assets/core.css">
     <script>
         var ver = "0.0.9";
-        var lastedit = "Feb 3, 2024";
+        var lastedit = "Feb 6, 2024";
         var crashed = false;
         var mostrecerr = "No history."
         var forcedatac = true;
@@ -604,7 +604,7 @@
             document.getElementById('sandbox').innerHTML = `<p class="h3">You can't run Sandbox in Sandbox!</p><button class="b1" onclick="hidef('sandbox');">Back</button>`;
             hidecls('sandnoapp'); showcls('sandapp');
         } else {
-            console.log(`<i> No database variable defined (?db=)`);
+            console.log(`<i> Not in Sandbox mode`);
             window.addEventListener("message", receiveMessage, false);
             function receiveMessage(event) {
                 if (event.data === "hide") {
