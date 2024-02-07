@@ -1,4 +1,5 @@
 function initializePeerConnection() {
+    console.log('<i> Starting PeerJS migrator...');
     backupdb();
     const customId = gen(4); // Set your desired custom ID here
     const peer = new Peer(customId); // Pass the custom ID when creating the Peer instance
@@ -8,13 +9,19 @@ function initializePeerConnection() {
     peer.on('open', (id) => {
         myid = id;
         document.getElementById('codemig').innerText = id;
+        console.log('<i> Opened PeerJS migrator! Waiting...');
     });
 
     peer.on('connection', (conn) => {
-        document.getElementById('lobotomy').innerHTML = "Migrating, please wait..."
+        const lobotomi = document.getElementById('lobotomy');
+        if (lobotomi) {
+            lobotomi.innerHTML = "Migrating, please wait..."
+        }
+        console.log('<i> Connection started.');
         conn.on('data', (data) => {
             console.log('Received:', data);
             backupDataVariable = data;
+            console.log('<i> Migration data recieved!');
             restoredb();
         });
 
@@ -45,6 +52,3 @@ function initializePeerConnection() {
         });
     });
 }
-
-// Call this function whenever you want to initialize the Peer connection
-initializePeerConnection();

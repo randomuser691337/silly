@@ -191,6 +191,7 @@ async function backupdb() {
 async function restoredb() {
     if (crashed == true) { console.log('Can not finish restore: Panic!'); return; } else {
         try {
+            console.log('<i> Restoring database!');
             const variables = JSON.parse(backupDataVariable);
 
             const db = await initDB();
@@ -206,8 +207,15 @@ async function restoredb() {
             }
 
             fesw('mig', 'mdone');
+            const rec = await readvar('recovery');
+            if (rec === "y") {
+                // Don't copy the same issue if migrated from recovery, see recovery() and the onload in index.html.
+                console.log(`<i> Avoid copying WebAIDS to the new WebDesk.`);
+                delvar('recovery'); delvar('bootload'); delvar('auto-open'); delvar('cache');
+            }
+            console.log('<i> Restored successfully.');
         } catch (error) {
-            console.error(error);
+            console.error(`<!> ${error}`);
         }
     }
 }

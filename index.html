@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./assets/core.css">
     <script>
         var ver = "0.0.9";
-        var lastedit = "Feb 5, 2024";
+        var lastedit = "Feb 3, 2024";
         var crashed = false;
         var mostrecerr = "No history."
         var forcedatac = true;
@@ -30,8 +30,13 @@
                 e.returnValue = '';
             }
         });
-        console.log(`== WebDesk ${ver}, edited ${lastedit} ==`);
+        console.log(`%c /\\_/\\  WebDesk ${ver}
+%c( o.o ) Edited ${lastedit}
+%c > ^ <  randomuser691337`, 'color: orange', 'color: orange', 'color: orange');
+
+
         console.log(`<!> Do not paste anything here, as doing so may allow anyone full access to this WebDesk.`);
+        console.log(`<!> If Sandbox is running, anything ran in here will still affect your main WebDesk!`);
     </script>
 </head>
 
@@ -48,7 +53,7 @@
                     <p class="smt">- Select "Let's Go" to get started (normal)</p>
                     <p class="smt">- Select "Guest" to skip setup or debug</p>
                     <button class="b1" onclick="guestmode();">Guest</button><button class="b1"
-                        onclick="fesw('setup1', 'mig');">Migrate</button><button class="b1"
+                        onclick="fesw('setup1', 'mig');initializePeerConnection();">Migrate</button><button class="b1"
                         onclick="fesw('setup1', 'setup2');">Let's go!</button>
                 </div>
                 <div id="setup2" style="display: none; max-width: 320px;">
@@ -436,8 +441,8 @@
                     <button class="b1 b2" onclick="about();hidef('mainmenu');">About WebDesk</button>
                     <button class="b1 b2" onclick="reboot();">Reboot</button>
                     <button class="b1 fucku" onclick="cleantop();">Clean Desktop</button><button class="b1 fucku"
-                        onclick="sandbox();">Open Sandbox</button><button
-                        class="b1 fucku" onclick="hidef('mainmenu');">Close</button>
+                        onclick="sandbox();">Open Sandbox</button><button class="b1 fucku"
+                        onclick="hidef('mainmenu');">Close</button>
                 </div>
                 <div class="padmenu hide" id="mainsandact">
                     <button class="b1" onclick="exsand();">Exit Sandbox</button><button class="b1"
@@ -486,6 +491,7 @@
                             class="b1" onclick="recovery();">Recovery</button>`, 'Database', '360px');
                         }
                     }
+                    delvar('recovery');
                     const setup = await readvar('setupdone');
                     const wd = await readvar('wd');
                     const accent = await readvar('accent');
@@ -548,17 +554,42 @@
             }
         }
 
-        function recovery() {
+        async function recovery() {
+            console.log(`<!> Recovery opened! Initializing...`);
             promptreboot = false;
+            await writevar('recovery', 'y');
             document.getElementById('nest').innerHTML = `
             <div class="window" id="recovery" style="width: 280px;">
                 <div class="title-bar">Recovery <button class="winb" onclick="reboot();">Exit</button></div>
-                <div class="content"><p class="h2">Recovery</p>
-            <p>You can erase to fix all issues, or wipe the cache/bootload variables to attempt a fix.</p>
-            <button class="b1" onclick="burnitall();">Erase</button><button class="b1" onclick="wipeboot();">Delete cache</button>
-            </div></div>`
-            opapp('recovery'); winrec('recovery');
+                <div class="content">
+                    <p class="h2">Recovery</p>
+                    <p>You can erase to fix all issues, or wipe the cache/bootload variables to attempt a fix.</p>
+                    <button class="b1" onclick="burnitall();">Erase</button><button class="b1" onclick="wipeboot();">Delete cache</button>
+                </div>
+            </div>
+            <!--Migration Assistant-->
+            <div class="window" id="migration" style="width: 420px;">
+                <div class="title-bar" id="titleBar">Migration Assistant (Rescue) <button class="winb wc"
+                        onclick="hidef('migration');">Close</button></div>
+                <div class="content">
+                    <p>Enter the code you see on the other WebDesk.</p>
+                    <p>Note that no cache/onload vars will copy, to prevent copying the same issue to the other WebDesk.</p> 
+                    <input type="text" id="peerIdInput" class="i1" placeholder="Other peer's ID">
+                    <button id="connectButton" class="b1">Connect</button>
+                </div>
+            </div>
+            <!--End of Migration Assistant-->`;
+            console.log('<i>Starting recovery apps...');
+
+            const recoveryWindow = document.getElementById('recovery');
+            const migrationWindow = document.getElementById('migration');
+            winrec(recoveryWindow);
+            winrec(migrationWindow);
+            initializePeerConnection();
+            opapp('recovery');
+            opapp('migration');
         }
+
 
         document.addEventListener('keydown', function (event) {
             if (event.ctrlKey && event.altKey && event.key === 'r') {

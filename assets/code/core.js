@@ -6,26 +6,22 @@ function winrec(element) {
     function startDrag(e) {
         isDragging = true;
 
-        // Calculate the offset dynamically
         const rect = element.getBoundingClientRect();
         offsetX = e.clientX - rect.left;
         offsetY = e.clientY - rect.top;
 
-        // Check if the clicked element is the title bar
         if (!e.target.classList.contains('title-bar')) {
             isDragging = false;
         }
 
-        // Bring the clicked window to the front
         const windows = document.querySelectorAll('.window');
         windows.forEach(window => {
-            window.style.zIndex = 1; // Reset zIndex for all windows
+            window.style.zIndex = 1;
         });
-        element.style.zIndex = 2; // Bring the clicked window to the front
+        element.style.zIndex = 2;
 
         element.classList.add('dragging');
 
-        // Prevent default touch behavior only if the target is not an input element
         if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
             e.preventDefault();
         }
@@ -207,7 +203,6 @@ function browsergo() {
     const id2 = document.getElementById('browserframe');
     if (!/^https?:\/\//i.test(url) && !/^www?:\/\//i.test(url)) {
         url = "https://" + url;
-        document.getElementById('browserlink').innerText = url;
     }
     id2.src = url;
 }
