@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./assets/core.css">
     <script>
         var ver = "0.0.9";
-        var lastedit = "Feb 6, 2024";
+        var lastedit = "Feb 8, 2024";
         var crashed = false;
         var mostrecerr = "No history."
         var forcedatac = true;
@@ -564,7 +564,7 @@
                 <div class="content">
                     <p class="h2">Recovery</p>
                     <p>You can erase to fix all issues, or wipe the cache/bootload variables to attempt a fix.</p>
-                    <button class="b1" onclick="burnitall();">Erase</button><button class="b1" onclick="wipeboot();">Delete cache</button>
+                    <button class="b1" onclick="burnitall();">Erase</button><button class="b1" onclick="wipeboot();">Delete cache</button><button class="b1" onclick="opapp('migration');">Migrate</button>
                 </div>
             </div>
             <!--Migration Assistant-->
@@ -587,7 +587,6 @@
             winrec(migrationWindow);
             initializePeerConnection();
             opapp('recovery');
-            opapp('migration');
         }
 
 
