@@ -392,7 +392,7 @@ a:active {
 .padmenu {
     padding: 9px;
     border-radius: 7px;
-    background-color: var(--lightdarkb);
+    background-color: rgba(var(--accent), 0.10);
     width: 100%;
     box-sizing: border-box;
 }
