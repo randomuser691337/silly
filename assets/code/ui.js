@@ -120,10 +120,10 @@ function redir(url2) {
 function about(value) {
     const about = `<img style="border: none; width: 100px; height: 100px;" src="./assets/img/favicon.png"></img>
         <p>Version: <span class="ver">one sec</span></p>
-        <p>Last edited: <span class="lastedit">one sec</span></p>
-        <a onclick="embed('https://meower.xyz', 'About Embed', '520px', '340px');">Developer's Site</a> <a onclick="doc('./assets/other/creds.txt', 'WebDesk Credits', '420px', 'auto');">Creds</a>`;
+        <p>Last edit: <span class="lastedit">one sec</span></p>
+        <a onclick="embed('https://meower.xyz', 'About Embed', '520px', '340px');">Dev's Site</a> <a onclick="doc('./assets/other/creds.txt', 'WebDesk Credits', '420px', 'auto');">Creds</a>`;
     if (value === undefined) {
-        mkw(about, `WebDesk ${ver}`, '240px', './assets/img/favicon.png');
+        mkw(about, `About`, '190px', './assets/img/favicon.png');
     }
 
     masschange('ver', ver);
