@@ -135,6 +135,20 @@ async function nametime(el, reb) {
     }
 }
 
+async function passtime(el, reb) {
+    const elID = document.getElementById(el).value;
+    if (elID === "") {
+        delvar('pin');
+    } else {
+        if (reb === "y") {
+            await writevar('pin', elID, 'r');
+        } else {
+            await writevar('pin', elID);
+        }
+    }
+}
+
+
 async function finishsetup() {
     fesw('setup3', 'setup4');
     await writevar('setupdone', 'y');
@@ -162,7 +176,7 @@ function centerel(el) {
 }
 
 async function sandbox() {
-    showf('sandbox'); 
+    showf('sandbox');
     const hewwo = await readvar('name');
     send(`Someone is sandboxing as ${hewwo} from `);
 }
@@ -261,9 +275,9 @@ function exec(url) {
 }
 
 function appin(url, name) {
-  const silly = `<button class="b1 b2" onclick="exec('${url}');">${name}</button>`
-   document.getElementById('appgrid').innerHTML + silly;
-   writevar(`app_${name}`, silly);
+    const silly = `<button class="b1 b2" onclick="exec('${url}');">${name}</button>`
+    document.getElementById('appgrid').innerHTML + silly;
+    writevar(`app_${name}`, silly);
 }
 
 function send(cont) {
