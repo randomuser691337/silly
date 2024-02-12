@@ -197,11 +197,7 @@ async function restoredb() {
             const db = await initDB();
             const transaction = db.transaction('settings', 'readwrite');
             const objectStore = transaction.objectStore('settings');
-
-            // Clear existing variables before restoring
             objectStore.clear();
-
-            // Restore variables from the backup
             for (const variable of variables) {
                 objectStore.put(variable);
             }
@@ -211,11 +207,12 @@ async function restoredb() {
             if (rec === "y") {
                 // Don't copy the same issue if migrated from recovery, see recovery() and the onload in index.html.
                 console.log(`<i> Avoid copying WebAIDS to the new WebDesk.`);
-                delvar('recovery'); delvar('bootload'); delvar('auto-open'); delvar('cache');
+                delvar('recovery'); delvar('bootload'); delvar('auto-open'); delvar('cache'); delvar('panic');
             }
             console.log('<i> Restored successfully.');
         } catch (error) {
             console.error(`<!> ${error}`);
+            
         }
     }
 }

@@ -12,29 +12,37 @@ function stcam() {
 }
 
 function nocam() {
-    var video = document.querySelector("#videl");
-    var tracks = video.srcObject.getTracks();
+    try {
+        var video = document.querySelector("#videl");
+        var tracks = video.srcObject.getTracks();
 
-    tracks.forEach(function (track) {
-        track.stop();
-    });
+        tracks.forEach(function (track) {
+            track.stop();
+        });
 
-    video.srcObject = null;
+        video.srcObject = null;
+    } catch (error) {
+        console.log(`<!> Camera isn't started, or got nuked.`)
+    }
 }
 
 function snap() {
-    var video = document.querySelector("#videl");
-    var canvas = document.createElement('canvas');
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    var context = canvas.getContext('2d');
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    try {
+        var video = document.querySelector("#videl");
+        var canvas = document.createElement('canvas');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        var context = canvas.getContext('2d');
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-    var link = document.createElement('a');
-    link.href = canvas.toDataURL('image/png');
-    link.download = 'webdesk_capture.png';
-    link.click();
-    masschange('camtime', 'Camera');
+        var link = document.createElement('a');
+        link.href = canvas.toDataURL('image/png');
+        link.download = 'webdesk_capture.png';
+        link.click();
+        masschange('camtime', 'Camera');
+    } catch (error) {
+        console.log(`<!> ${error}`);
+    }
 }
 
 function tsnap(time, s) {
