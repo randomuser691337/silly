@@ -148,9 +148,20 @@
             </div>
             <div class="content">
                 <div id="settingsmain">
-                    <button class="b1 b2" onclick="fesw('settingsmain', 'settingsappear');">Appearance</button><button
-                        class="b1 b2" onclick="fesw('settingsmain', 'settingspriv');">Data & Privacy</button><button
-                        class="b1 b2" onclick="fesw('settingsmain', 'settingsgen');">General</button>
+                    <script>
+                        var FUCKOFF = `fesw('settingsmain', 'settingsuser');`;
+                    </script>
+                    <button class="b1 b2 guestno" onclick="passp('Enter PIN to access menu', FUCKOFF)">Username &
+                        Password</button><button class="b1 b2"
+                        onclick="fesw('settingsmain', 'settingsappear');">Appearance</button><button class="b1 b2"
+                        onclick="fesw('settingsmain', 'settingspriv');">Data & Privacy</button><button class="b1 b2"
+                        onclick="fesw('settingsmain', 'settingsgen');">General</button>
+                </div>
+                <div id="settingsappear" style="display: none;">
+                    <p style="margin: 0px !important;">Username / PIN</p>
+                    <button class="b1" onclick="nameutil(`<p>Enter new username</p>`);">Change username</button><button class="b1" onclick="passutil('<p>Enter new PIN</p>');">Change PIN</button>
+                    <p>Other</p>
+                    <p><button class="winb" onclick="fesw('settingsappear', 'settingsmain');">Back</button></p>
                 </div>
                 <div id="settingsappear" style="display: none;">
                     <p style="margin: 0px !important;">Accent / Appearance</p>
@@ -437,7 +448,7 @@
                             let inputValue = document.getElementById("result2").value;
                             if (inputValue === confirmValue) {
                                 locked = false;
-                                window[alright]();
+                                window[alright];
                                 hidef('auth');
                             } else {
                                 clr2();
@@ -564,7 +575,7 @@
                     delvar('recovery');
                     const pw = await readvar('pin');
                     if (pw) {
-                        passp('Enter your PIN to continue startup.', 'boots2();');
+                        passp('Enter your PIN to continue startup.', 'boots2()');
                     } else {
                         locked = false;
                         boots2();

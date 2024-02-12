@@ -73,10 +73,15 @@ async function nameutil(cont) {
     mkw(`${cont}<p><input class="i1" placeholder="Username here" id="seconduserbox"></input><button class="b1" onclick="nametime('seconduserbox', 'y');">Set name & reload</button></p>`, 'WebDesk Login Manager', '270px');
 }
 
+async function passutil(cont) {
+    mkw(`${cont}<p><input class="i1" placeholder="New PIN" id="seconduserbox"></input><button class="b1" onclick="passtime('seconduserbox');">Set PIN</button></p>`, 'WebDesk Login Manager', '270px');
+}
+
 async function guestmode() {
     mkw(`<p>You're in Guest Mode.</p><p>Upon reload/restart, WebDesk will auto-erase.</p>`, 'Setup Assistant', '320px');
     desktop('Guest');
     await writevar('setupdone', 'guest');
+    hidecls('guestno');
 }
 
 function gen(length) {
