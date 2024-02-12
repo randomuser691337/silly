@@ -92,7 +92,7 @@
                     <button class="b1 b2 light" onclick="appear('l');">Light</button><button class="b1 b2 dark"
                         onclick="appear();">Dark</button>
                     <p><button class="b1" onclick="fesw('setup3', 'setup2');">Back</button><button class="b1"
-                            onclick="finishsetup();nametime('username');passtime('oobepin');passtime('oobepin');">Done!</button></p>
+                            onclick="finishsetup();nametime('username');passtime('oobepin');">Done!</button></p>
                 </div>
                 <div id="setup4" style="display: none;">
                     <p class="h2">Setup is done!</p>
@@ -420,7 +420,7 @@
         <!--End of calculator-->
         <!--auth-->
         <div id="auth" class="window">
-            <div class="title-bar">auth
+            <div class="title-bar">WebDesk Security
                 <button class="winb wc" onclick="hidef('auth');">Close</button><button class="winb" id="clrcmd"
                     onclick="clr2();">Clear</button>
             </div>
@@ -455,7 +455,7 @@
                         }
                     </script>
                     <p class="passtxt">Enter your PIN</p>
-                    <p><input class="calctext txttop txtbtm" type="text" id="result2" placeholder="Enter password"
+                    <p><input class="calctext txttop txtbtm" type="password" id="result2" placeholder="Enter password"
                             onfocus="this.blur();">
                     </p>
                     <p><input type="button" value="1" onclick="addpass('1')">
@@ -472,7 +472,7 @@
                     </p>
                     <p>
                         <input type="button" value="0" onclick="addpass('0')">
-                        <input type="button" value="Check" onclick="check();">
+                        <input type="button" value="Unlock" onclick="checkpass();">
                     </p>
                 </div>
             </div>
