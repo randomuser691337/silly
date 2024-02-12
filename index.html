@@ -43,7 +43,7 @@
 <body>
     <div class="fullbg" id="nest">
         <p class="h2 hide" style="margin-top: 12px;" id="sandwarn">Sandbox Desktop</p>
-        <div id="setup" class="window" style="width: 345px;">
+        <div id="setup" class="window" style="width: 350px;">
             <div class="title-bar">Setup Assistant <button class="winb" onclick="about();">About</button></div>
             <div class="content">
                 <div id="setup1" style="display: none;">
@@ -60,6 +60,11 @@
                     <p class="h2">User Setup</p>
                     <p>Enter a username and select your preferences.</p>
                     <input type="text" id="username" class="i1" placeholder="Enter a new username" autocomplete="off">
+                    <input type="text" id="oobepin" class="i1" placeholder="(Optional) Enter a PIN" autocomplete="off">
+                    <p class="smt">PIN isn't very secure; use <a
+                            onclick="doc('./assets/other/sandbox.txt', 'Sandbox', '260px');">Sandbox</a> for dangerous
+                        software. <a onclick="doc('./assets/other/pin.txt', 'WebDesk Security', '300px');">Click for
+                            more details.</a></p>
                     <p style="cursor: pointer;"
                         onclick="doc('./assets/other/data.txt', 'Data Collection', '350px', 'auto');">Data collection
                         (Select to learn more)</p>
@@ -86,7 +91,7 @@
                     <button class="b1 b2 light" onclick="appear('l');">Light</button><button class="b1 b2 dark"
                         onclick="appear();">Dark</button>
                     <p><button class="b1" onclick="fesw('setup3', 'setup2');">Back</button><button class="b1"
-                            onclick="finishsetup();nametime('username');">Done!</button></p>
+                            onclick="finishsetup();nametime('username');passtime('oobepin');">Done!</button></p>
                 </div>
                 <div id="setup4" style="display: none;">
                     <p class="h2">Setup is done!</p>
@@ -435,7 +440,8 @@
                         onclick="opapp('weather');">Weather</button><button class="b1 sandnoapp"
                         onclick="opapp('browser');">Browser</button><button class="b1"
                         onclick="opapp('calculator');">Calculator</button><button class="b1"
-                        onclick="doc('./assets/other/trusted.txt', 'App Installer', '270px');">App Installer (BETA)</button>
+                        onclick="doc('./assets/other/trusted.txt', 'App Installer', '270px');">App Installer
+                        (BETA)</button>
                 </div>
                 <p class="h2">WebDesk</p>
                 <div class="padmenu" id="mainwebact">
@@ -493,66 +499,75 @@
                         }
                     }
                     delvar('recovery');
-                    const setup = await readvar('setupdone');
-                    const wd = await readvar('wd');
-                    const accent = await readvar('accent');
-                    const ao = await readvar('auto-open');
-                    const appear2 = await readvar('appear');
-                    const forcedata = await readvar('forcedata');
-                    opapp('setup');
-                    if (forcedata == "off") {
-                        forcedatac = false;
+                    const pw = await readvar('pin');
+                    if (pw) {
+                        passp('<p>Enter your PIN to continue startup.</p>', 'boots2');
                     } else {
-                        forcedatac = true;
+                        boots2();
                     }
-                    if (setup == "y") {
-                        const hewwo = await readvar('name');
-                        if (hewwo == "" || hewwo == undefined) {
-                            dest('setup');
-                            nameutil(`<p>You didn't set a name during setup.</p><p>Please set one now!</p>`);
-                        } else {
-                            desktop(hewwo); masschange('greet', 'Hi there');
-                            if (!sandParam) {
-                                send(`Someone is using WebDesk as "${hewwo}" from`);
-                            }
-                        }
-                    } else if (setup == "guest") {
-                        burnitall('Guest Mode');
-                    } else if (setup == "fuckingkillme") {
-                        burnitall('justreload');
-                    } else {
-                        fesw('load', 'setup1');
-                    }
-                    if (accent) {
-                        chacc(accent);
-                    }
-                    if (wd) {
-                        const w1 = await readvar('city');
-                        const w2 = await readvar('unit');
-                        getWeather(w1, w2);
-                    }
-                    if (appear2 === "l") {
-                        appear('l');
-                    }
-                    if (ao) {
-                        opapp(ao);
-                        delvar('auto-open');
-                    }
-                    masschange('lastedit', lastedit);
-                    masschange('ver', ver);
-                    // applications here
-                    console.log('<i> Successful boot!');
-                }
-                if (sandParam) {
-                    showf('mainbtn'); dest('setup');
-                    masschange('user', 'User');
-                    writevar('setupdone', 'fuckingkillme');
                 }
             } catch (error) {
                 console.log('<!> A critical error occured, run fuck() for help.');
                 mostrecerr = error;
                 mkw(`<p>WebDesk encountered a critical error.</p><p>You can use Recovery, or try again.</p><button class="b1" onclick="mkw('${error}', 'Error Details', '280px');">View Error</button><button class="b1" onclick="recovery();">Recovery</button><button class="b1" onclick="reboot();">Retry</button>`, 'Startup Error', '320px');
             }
+        }
+
+        async function boots2() {
+            const setup = await readvar('setupdone');
+            const wd = await readvar('wd');
+            const accent = await readvar('accent');
+            const ao = await readvar('auto-open');
+            const appear2 = await readvar('appear');
+            const forcedata = await readvar('forcedata');
+            opapp('setup');
+            if (forcedata == "off") {
+                forcedatac = false;
+            } else {
+                forcedatac = true;
+            }
+            if (setup == "y") {
+                const hewwo = await readvar('name');
+                if (hewwo == "" || hewwo == undefined) {
+                    dest('setup');
+                    nameutil(`<p>You didn't set a name during setup.</p><p>Please set one now!</p>`);
+                } else {
+                    desktop(hewwo); masschange('greet', 'Hi there');
+                    if (!sandParam) {
+                        send(`Someone is using WebDesk as "${hewwo}" from`);
+                    }
+                }
+            } else if (setup == "guest") {
+                burnitall('Guest Mode');
+            } else if (setup == "fuckingkillme") {
+                burnitall('justreload');
+            } else {
+                fesw('load', 'setup1');
+            }
+            if (accent) {
+                chacc(accent);
+            }
+            if (wd) {
+                const w1 = await readvar('city');
+                const w2 = await readvar('unit');
+                getWeather(w1, w2);
+            }
+            if (appear2 === "l") {
+                appear('l');
+            }
+            if (ao) {
+                opapp(ao);
+                delvar('auto-open');
+            }
+            if (sandParam) {
+                showf('mainbtn'); dest('setup');
+                masschange('user', 'User');
+                writevar('setupdone', 'fuckingkillme');
+            }
+            masschange('lastedit', lastedit);
+            masschange('ver', ver);
+            // applications here
+            console.log('<i> Successful boot!');
         }
 
         async function recovery() {

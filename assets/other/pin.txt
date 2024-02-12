@@ -1,0 +1,7 @@
+<p class="h2">PIN protection notes</p>
+<p>What a PIN can defend against:</p>
+<p>- Tech-illiterate people/people who don't know how to use a computer</p>
+<p>What a PIN cannot defend against:</p>
+<p>- Yourself, by opening the Inspector and entering scripts that compromise WebDesk</p>
+<p>- People who know how to use the Inspector (Unlocking)</p>
+<p>- People who can follow tutorials well</p>

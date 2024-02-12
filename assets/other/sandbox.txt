@@ -1,0 +1,3 @@
+<p class="h2">What is Sandbox?</p>
+<p>Sandbox is a WebDesk session seperated from your main session, therefor making it very secure.</p>
+<p>Sandbox is identical to normal WebDesk, but with security features disabled for testing (developers), and erases itself on reboot. Some features have been removed to ensure security.</p>
