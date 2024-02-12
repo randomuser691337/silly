@@ -1,0 +1,2 @@
+<p>Click on an app you want, and it'll instantly install and open.</p>
+<button class="b1 b2" onclick="exec('./assets/apps/rosetoy.js');">Rose Toy - A vibrator app, how mature!</button>

@@ -1,7 +1,7 @@
 function initializePeerConnection() {
     console.log('<i> Starting PeerJS migrator...');
     backupdb();
-    const customId = gen(4); // Set your desired custom ID here
+    const customId = gen(5); // Set your desired custom ID here
     const peer = new Peer(customId); // Pass the custom ID when creating the Peer instance
     let connection;
     let myid = undefined;
@@ -19,7 +19,7 @@ function initializePeerConnection() {
         }
         console.log('<i> Connection started.');
         conn.on('data', (data) => {
-            console.log('Received:', data);
+            console.log('<i> Database:', data);
             backupDataVariable = data;
             console.log('<i> Migration data recieved!');
             restoredb();

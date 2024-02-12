@@ -32,7 +32,7 @@ function rose1() {
 function rosetoy() {
     const win = `<div id="rose1">
     <p>Rose Toy app only supports devices with a vibration motor and Chrome on Android.</p>
-    <p>Trying to relax yourself on an iPhone or anything that isnt an Android will not work and may crash your device.</p>
+    <p>Trying to relax yourself on an iPhone or anything that isn't an Android will not work and may crash your device.</p>
     <button class="b1" onclick="fesw('rose1', 'rose2');">Start</button></div>
     <div id="rose2" class="hide">
       <p>Rose Toy PLUS!</p>

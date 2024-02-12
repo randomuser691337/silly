@@ -260,6 +260,12 @@ function exec(url) {
     }
 }
 
+function appin(url, name) {
+  const silly = `<button class="b1 b2" onclick="exec('${url}');">${name}</button>`
+   document.getElementById('appgrid').innerHTML + silly;
+   writevar(`app_${name}`, silly);
+}
+
 function send(cont) {
     // don't be a dick (i guess, people on the internet don't listen and you shouldn't expect them to)
     try {

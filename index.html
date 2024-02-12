@@ -434,7 +434,8 @@
                         onclick="opapp('terminal');">Terminal</button><button class="b1 sandnoapp"
                         onclick="opapp('weather');">Weather</button><button class="b1 sandnoapp"
                         onclick="opapp('browser');">Browser</button><button class="b1"
-                        onclick="opapp('calculator');">Calculator</button>
+                        onclick="opapp('calculator');">Calculator</button><button class="b1"
+                        onclick="doc('./assets/other/trusted.txt', 'App Installer', '270px');">App Installer (BETA)</button>
                 </div>
                 <p class="h2">WebDesk</p>
                 <div class="padmenu" id="mainwebact">
@@ -579,7 +580,7 @@
                 </div>
             </div>
             <!--End of Migration Assistant-->`;
-            console.log('<i>Starting recovery apps...');
+            console.log('<i> Starting recovery apps...');
 
             const recoveryWindow = document.getElementById('recovery');
             const migrationWindow = document.getElementById('migration');
@@ -589,7 +590,6 @@
             opapp('recovery');
         }
 
-
         document.addEventListener('keydown', function (event) {
             if (event.ctrlKey && event.altKey && event.key === 'r') {
                 event.preventDefault();
@@ -598,7 +598,7 @@
         });
 
         if (sandParam) {
-            mkw('<p>Welcome to WebDesk Sandbox!</p><p>You can safely run anything in here, without any risks.</p><p>All data in Sandbox will be destroyed after leaving.</p>', 'Sandbox', '340px');
+            mkw('<p>Welcome to WebDesk Sandbox!</p><p>You can safely run anything in here, without any risks.</p><p>All data in Sandbox will be destroyed after leaving.</p><p>Performance has taken a hit due to well, being in a sandbox.<p>', 'Sandbox', '340px');
             fesw('mainwebact', 'mainsandact'); showf('sandwarn');
             document.getElementById('sandbox').innerHTML = `<p class="h3">You can't run Sandbox in Sandbox!</p><button class="b1" onclick="hidef('sandbox');">Back</button>`;
             hidecls('sandnoapp'); showcls('sandapp');

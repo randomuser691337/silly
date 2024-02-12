@@ -258,6 +258,22 @@ button {
     z-index: 4;
     overflow: auto !important;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.17);
+    animation: mainm 0.25s;
+}
+
+@keyframes mainm {
+    0% {
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) scale(0.4);
+        opacity: 0%;
+    }
+    100% {
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) scale(1.0);
+        opacity: 100%;
+    }
 }
 
 .cent {
@@ -347,7 +363,7 @@ a:active {
     border: 2px solid var(--lightdark);
     width: 100%;
     box-sizing: border-box;
-    resize: both; 
+    resize: both;
     overflow: auto;
     max-height: 75%;
 }
