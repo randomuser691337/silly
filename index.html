@@ -43,10 +43,10 @@
 <body>
     <div class="fullbg" id="nest">
         <p class="h2 hide" style="margin-top: 12px;" id="sandwarn">Sandbox Desktop</p>
-        <div id="setup" class="window">
+        <div id="setup" class="window" style="width: 330px;">
             <div class="title-bar">Setup Assistant <button class="winb" onclick="about();">About</button></div>
             <div class="content">
-                <div id="setup1" style="max-width: 330px; display: none;">
+                <div id="setup1" style="display: none;">
                     <p class="h2">Welcome to WebDesk!</p>
                     <p>In just a few steps, you'll be ready to go.</p>
                     <p class="smt">- Select "Migrate" if you want to copy data</p>
@@ -56,7 +56,7 @@
                         onclick="fesw('setup1', 'mig');initializePeerConnection();">Migrate</button><button class="b1"
                         onclick="fesw('setup1', 'setup2');">Let's go!</button>
                 </div>
-                <div id="setup2" style="display: none; max-width: 320px;">
+                <div id="setup2" style="display: none;">
                     <p class="h2">User Setup</p>
                     <p>Enter a username and select your preferences.</p>
                     <input type="text" id="username" class="i1" placeholder="Enter a new username" autocomplete="off">
@@ -68,7 +68,7 @@
                     <p><button class="b1" onclick="fesw('setup2', 'setup1');">Back</button><button class="b1"
                             onclick="fesw('setup2', 'setup3');">Done!</button></p>
                 </div>
-                <div id="setup3" style="display: none; max-width: 260px;">
+                <div id="setup3" style="display: none;">
                     <p class="h2">Personalize</p>
                     <p>Accent color</p>
                     <button class="acb" style="background: rgb(210, 30, 30);" onclick="chacc('210, 30, 30');"></button>
@@ -88,12 +88,12 @@
                     <p><button class="b1" onclick="fesw('setup3', 'setup2');">Back</button><button class="b1"
                             onclick="finishsetup();nametime('username');">Done!</button></p>
                 </div>
-                <div id="setup4" style="display: none; max-width: 320px;">
+                <div id="setup4" style="display: none;">
                     <p class="h2">Setup is done!</p>
                     <p>Finishing up a few things...</p>
                     <button class="b1" onclick="window.location.reload();">Reload</button>
                 </div>
-                <div id="mig" style="max-width: 330px; display: none;">
+                <div id="mig" style="display: none;">
                     <p class="h2" id="lobotomy">Migration Assistant</p>
                     <p>Note: Safari can have issues migrating.</p>
                     <p class="smt">- Go to your Everything Menu and open Migration Assistant on the other WebDesk.</p>
@@ -102,13 +102,13 @@
                     </p>
                     <button class="b1" onclick="fesw('mig', 'setup1');">Back</button>
                 </div>
-                <div id="load" style="max-width: 320px;">
+                <div id="load">
                     <p class="h2">Loading...</p>
                     <p>If this gets stuck or takes too long, reload.</p>
                     <button class="b1" onclick="recovery();">Recovery</button><button class="b1"
                         onclick="reboot();">Reload</button>
                 </div>
-                <div id="mdone" style="max-width: 300px; display: none;">
+                <div id="mdone" style="display: none;">
                     <p class="h2">Migration Assistant</p>
                     <p>Migration complete.</p>
                     <p>Click "Done" to reboot into your WebDesk.</p>
