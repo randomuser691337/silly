@@ -30,11 +30,11 @@ function getWeather2(city2, system, bypass) {
                 const weatherInfo2 = `${temperature}*${system === 'metric' ? 'C' : 'F'}, ${conditions}`;
                 masschange('weather', weatherInfo2);
                 masschange('weathera', weatherInfo);
-                console.log('[OK] getWeather has pinged with no errors.');
+                console.log('<i> getWeather ran with no errors.');
             })
             .catch(error => {
                 masschange('weather', 'An error occurred, check the console.');
-                console.log(error);
+                console.log(`<!> ${error}`);
             });
         writevar('city', city);
         writevar('unit', system);
@@ -55,6 +55,6 @@ function getWeather(city3, sys, bypass) {
         if (weatherInterval) clearInterval(weatherInterval); // Clear previous interval
         weatherInterval = setInterval(() => checkw(city3, sys), 180000);
     } else {
-        console.log('HEYYYYYY!!! WEATHER ALREADY WENT BOING!!!!');
+        console.log('<!> HEYYYYYY!!! WEATHER ALREADY WENT BOING!!!!');
     }
 }
