@@ -436,6 +436,7 @@
                             const confirmValue = await readvar('pin');
                             let inputValue = document.getElementById("result2").value;
                             if (inputValue === confirmValue) {
+                                locked = false;
                                 window[alright]();
                                 hidef('auth');
                             } else {
