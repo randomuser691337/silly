@@ -436,7 +436,7 @@
                             const confirmValue = await readvar('pin');
                             let inputValue = document.getElementById("result2").value;
                             if (inputValue === confirmValue) {
-                                eval(alright);
+                                window[alright]();
                                 hidef('auth');
                             } else {
                                 clr2();
@@ -563,7 +563,7 @@
                     delvar('recovery');
                     const pw = await readvar('pin');
                     if (pw) {
-                        passp('Enter your PIN to continue startup.', 'boots2()');
+                        passp('Enter your PIN to continue startup.', 'boots2();');
                     } else {
                         locked = false;
                         boots2();
