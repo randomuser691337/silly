@@ -159,7 +159,8 @@
                 </div>
                 <div id="settingsappear" style="display: none;">
                     <p style="margin: 0px !important;">Username / PIN</p>
-                    <button class="b1" onclick="nameutil(`<p>Enter new username</p>`);">Change username</button><button class="b1" onclick="passutil('<p>Enter new PIN</p>');">Change PIN</button>
+                    <button class="b1" onclick="nameutil(`<p>Enter new username</p>`);">Change username</button><button
+                        class="b1" onclick="passutil('<p>Enter new PIN</p>');">Change PIN</button>
                     <p>Other</p>
                     <p><button class="winb" onclick="fesw('settingsappear', 'settingsmain');">Back</button></p>
                 </div>
@@ -461,9 +462,15 @@
                         }
 
                         function passp(passt, func) {
-                            alright = func;
-                            masschange('passtxt', passt);
-                            opapp('auth');
+                            const p = readvar('pin');
+                            if (p) {
+                                alright = func;
+                                masschange('passtxt', passt);
+                                opapp('auth');
+                            } else {
+                                window[func];
+                                console.log(`<i> No password, bypass protection`);
+                            }
                         }
                     </script>
                     <p class="passtxt">Enter your PIN</p>
