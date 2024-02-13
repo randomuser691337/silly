@@ -461,9 +461,9 @@
                             document.getElementById("result2").value = "";
                         }
 
-                        function passp(passt, func) {
-                            const p = readvar('pin');
-                            if (p) {
+                        async function passp(passt, func) {
+                            const p = await readvar('pin');
+                            if (!p == undefined) {
                                 alright = func;
                                 masschange('passtxt', passt);
                                 opapp('auth');
