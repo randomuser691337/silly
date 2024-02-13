@@ -142,22 +142,24 @@
         </div>
         <!--End of Migration Assistant-->
         <!--Settings-->
+        <script>
+            function imsosilly() {
+                fesw('settingsmain', 'settingsuser');
+            }
+        </script>
         <div class="window" id="settings" style="width: 300px;">
             <div class="title-bar" id="titleBar">Settings <button class="winb wc"
                     onclick="hidef('settings');">Close</button>
             </div>
             <div class="content">
                 <div id="settingsmain">
-                    <script>
-                        var FUCKOFF = `fesw('settingsmain', 'settingsuser');`;
-                    </script>
-                    <button class="b1 b2 guestno" onclick="passp('Enter PIN to access menu', FUCKOFF)">Username &
+                    <button class="b1 b2 guestno" onclick="passp('Enter PIN to access menu', imsosilly);">Username &
                         Password</button><button class="b1 b2"
                         onclick="fesw('settingsmain', 'settingsappear');">Appearance</button><button class="b1 b2"
                         onclick="fesw('settingsmain', 'settingspriv');">Data & Privacy</button><button class="b1 b2"
                         onclick="fesw('settingsmain', 'settingsgen');">General</button>
                 </div>
-                <div id="settingsappear" style="display: none;">
+                <div id="settingsuser" style="display: none;">
                     <p style="margin: 0px !important;">Username / PIN</p>
                     <button class="b1" onclick="nameutil(`<p>Enter new username</p>`);">Change username</button><button
                         class="b1" onclick="passutil('<p>Enter new PIN</p>');">Change PIN</button>
