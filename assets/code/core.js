@@ -74,7 +74,7 @@ async function nameutil(cont) {
 }
 
 async function passutil(cont) {
-    mkw(`${cont}<p><input class="i1" placeholder="New PIN" id="seconduserbox"></input><button class="b1" onclick="passtime('seconduserbox');">Set PIN</button></p>`, 'WebDesk Login Manager', '270px');
+    mkw(`${cont}<p><input class="i1" placeholder="New PIN" id="seconduserbox"></input><button class="b1" onclick="passtime('seconduserbox');mkw('<p>Set PIN successfully.</p>', 'WebDesk Login Manager');">Set PIN</button></p>`, 'WebDesk Login Manager', '270px');
 }
 
 async function guestmode() {
@@ -82,6 +82,21 @@ async function guestmode() {
     desktop('Guest');
     await writevar('setupdone', 'guest');
     hidecls('guestno');
+}
+
+function customacc() {
+    document.getElementById('custacc');
+    if (custacc) {
+        mkw(`<p>Accent picker alreay open, find it, use it, or close it.</p>`, 'Already open!');
+        return;
+    }
+    const cont = `<p>Enter RGB code for example: 180, 180, 180</p>
+    <input class="i1" id="custacc" placeholder="RGB here"/><button class="b1" onclick="chacc2('custacc');">Confirm!</button>`
+}
+
+function chacc2(ye) {
+    const ye2 = document.getElementById(ye).value;
+    chacc(ye2);
 }
 
 function gen(length) {

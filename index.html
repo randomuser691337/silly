@@ -182,7 +182,7 @@
                     <p><button class="b1 light" onclick="appear('l');">Light</button><button style="margin-left: 3px;"
                             class="b1 dark" onclick="appear();">Dark</button></p>
                     <p>Other</p>
-                    <p><button class="winb" onclick="fesw('settingsappear', 'settingsmain');">Back</button></p>
+                    <p><button class="winb" onclick="custacc();">Custom accent...</button><button class="winb" onclick="fesw('settingsappear', 'settingsmain');">Back</button></p>
                 </div>
                 <div id="settingspriv" style="display: none;">
                     <p>Data & Privacy</p>
@@ -465,7 +465,7 @@
 
                         async function passp(passt, func) {
                             const p = await readvar('pin');
-                            if (!p == undefined) {
+                            if (p !== undefined) {
                                 alright = func;
                                 masschange('passtxt', passt);
                                 opapp('auth');
