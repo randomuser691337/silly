@@ -74,7 +74,7 @@ async function nameutil(cont) {
 }
 
 async function passutil(cont) {
-    mkw(`${cont}<p><input class="i1" placeholder="New PIN" id="seconduserbox"></input><button class="b1" onclick="passtime('seconduserbox');mkw('<p>Set PIN successfully.</p>', 'WebDesk Login Manager');">Set PIN</button></p>`, 'WebDesk Login Manager', '270px');
+    mkw(`${cont}<p><input class="i1" placeholder="New password" id="seconduserbox"></input><button class="b1" onclick="passtime('seconduserbox');mkw('<p>Set pass successfully.</p>', 'WebDesk Login Manager');">Set password</button></p>`, 'WebDesk Login Manager', '270px');
 }
 
 async function guestmode() {

@@ -61,8 +61,9 @@
                     <p class="h2">User Setup</p>
                     <p>Enter a username and select your preferences.</p>
                     <input type="text" id="username" class="i1" placeholder="Enter a new username" autocomplete="off">
-                    <input type="text" id="oobepin" class="i1" placeholder="(Optional) Enter a PIN" autocomplete="off">
-                    <p class="smt">PIN isn't very secure; use <a
+                    <input type="text" id="oobepin" class="i1" placeholder="(Optional) Enter a password"
+                        autocomplete="off">
+                    <p class="smt">Password isn't very secure; use <a
                             onclick="doc('./assets/other/sandbox.txt', 'Sandbox', '260px');">Sandbox</a> for dangerous
                         software. <a onclick="doc('./assets/other/pin.txt', 'WebDesk Security', '300px');">Click for
                             more details.</a></p>
@@ -153,18 +154,20 @@
             </div>
             <div class="content">
                 <div id="settingsmain">
-                    <button class="b1 b2 guestno" onclick="passp('Enter PIN to access menu', 'imsosilly()');">Username &
+                    <button class="b1 b2 guestno"
+                        onclick="passp('Enter password to access menu', 'imsosilly()');">Username &
                         Password</button><button class="b1 b2"
                         onclick="fesw('settingsmain', 'settingsappear');">Appearance</button><button class="b1 b2"
                         onclick="fesw('settingsmain', 'settingspriv');">Data & Privacy</button><button class="b1 b2"
                         onclick="fesw('settingsmain', 'settingsgen');">General</button>
                 </div>
                 <div id="settingsuser" style="display: none;">
-                    <p style="margin: 0px !important;">Username / PIN</p>
-                    <button class="b1" onclick="nameutil(`<p>Enter new username</p>`);">Change username</button><button
-                        class="b1" onclick="passutil('<p>Enter new PIN</p>');">Change PIN</button>
+                    <p style="margin: 0px !important;">Username / Password</p>
+                    <button class="b1 b2" onclick="nameutil(`<p>Enter new username</p>`);">Change
+                        username</button><button class="b1 b2" onclick="passutil('<p>Enter new password</p>');">Change
+                        pass</button>
                     <p>Other</p>
-                    <p><button class="winb" onclick="fesw('settingsuser', 'settingsmain');">Back</button></p>
+                    <p><button class="winb" onclick="fesw('settingsappear', 'settingsmain');">Back</button></p>
                 </div>
                 <div id="settingsappear" style="display: none;">
                     <p style="margin: 0px !important;">Accent / Appearance</p>
@@ -182,7 +185,8 @@
                     <p><button class="b1 light" onclick="appear('l');">Light</button><button style="margin-left: 3px;"
                             class="b1 dark" onclick="appear();">Dark</button></p>
                     <p>Other</p>
-                    <p><button class="winb" onclick="custacc();">Custom accent...</button><button class="winb" onclick="fesw('settingsappear', 'settingsmain');">Back</button></p>
+                    <p><button class="winb" onclick="custacc();">Custom accent...</button><button class="winb"
+                            onclick="fesw('settingsappear', 'settingsmain');">Back</button></p>
                 </div>
                 <div id="settingspriv" style="display: none;">
                     <p>Data & Privacy</p>
@@ -405,6 +409,10 @@
                             text-align: center;
                             width: 210px;
                         }
+
+                        .whar {
+                            display: none;
+                        }
                     </style>
                     <p><input class="calctext txttop txtbtm" type="text" id="result" placeholder="Type an equation..."
                             onfocus="this.blur();"></p>
@@ -433,69 +441,60 @@
         </div>
         <!--End of calculator-->
         <!--auth-->
-        <div id="auth" class="window">
+        <div id="auth" class="window" style="width: 320px;">
             <div class="title-bar">WebDesk Security
-                <button class="winb wc" onclick="hidef('auth');">Close</button><button class="winb" id="clrcmd"
-                    onclick="clr2();">Clear</button>
+                <button class="winb wc whar" onclick="hidef('auth');">Close</button><button class="winb"
+                    onclick="doc('./assets/other/logon.txt', 'WebDesk Security', '270px');">I forgot</button>
             </div>
             <div class="content">
-                <div id="auth2" style="text-align: center;">
-                    <script>
-                        var alright = "mkw('<p>Nothing is defined, but password was correct.</p>', 'WebDesk Security');"
-                        function addpass(val) {
-                            document.getElementById("result2").value += val;
-                        }
-
-                        async function checkpass() {
-                            const confirmValue = await readvar('pin');
-                            let inputValue = document.getElementById("result2").value;
-                            if (inputValue === confirmValue) {
-                                locked = false;
+                <script>
+                    var alright = "mkw('<p>Nothing is defined, but password was correct.</p>', 'WebDesk Security');"
+                    async function checkpass() {
+                        const confirmValue = await readvar('pin');
+                        let inputValue = document.getElementById("passboxauth").value;
+                        if (inputValue === confirmValue) {
+                            locked = false;
+                            clr2();
+                            try {
                                 eval(alright);
-                                hidef('auth');
-                            } else {
-                                clr2();
-                                mkw(`<p>Incorrect password.</p>`, 'WebDesk Security', '200px');
+                            } catch (error) {
+                                console.log('<!> ' + error);
                             }
+                            hidef('auth');
+                        } else {
+                            clr2();
+                            mkw(`<p>Incorrect password.</p>`, 'WebDesk Security', '200px');
                         }
+                    }
 
-                        function clr2() {
-                            document.getElementById("result2").value = "";
-                        }
+                    function clr2() {
+                        document.getElementById("passboxauth").value = "";
+                    }
 
-                        async function passp(passt, func) {
-                            const p = await readvar('pin');
-                            if (p !== undefined) {
-                                alright = func;
-                                masschange('passtxt', passt);
-                                opapp('auth');
-                            } else {
-                                eval(func);
-                                console.log(`<i> No password, bypass protection`);
-                            }
+                    async function passp(passt, func) {
+                        const p = await readvar('pin');
+                        if (p !== undefined) {
+                            alright = func;
+                            masschange('passtxt', passt);
+                            opapp('auth');
+                        } else {
+                            eval(func);
+                            console.log(`<i> No password, bypass protection`);
                         }
-                    </script>
-                    <p class="passtxt">Enter your PIN</p>
-                    <p><input class="calctext txttop txtbtm" type="password" id="result2" placeholder="Enter password"
-                            onfocus="this.blur();">
-                    </p>
-                    <p><input type="button" value="1" onclick="addpass('1')">
-                        <input type="button" value="2" onclick="addpass('2')">
-                        <input type="button" value="3" onclick="addpass('3')">
-                    </p>
-                    <p><input type="button" value="4" onclick="addpass('4')">
-                        <input type="button" value="5" onclick="addpass('5')">
-                        <input type="button" value="6" onclick="addpass('6')">
-                    </p>
-                    <p><input type="button" value="7" onclick="addpass('7')">
-                        <input type="button" value="8" onclick="addpass('8')">
-                        <input type="button" value="9" onclick="addpass('9')">
-                    </p>
-                    <p>
-                        <input type="button" value="0" onclick="addpass('0')">
-                        <input type="button" value="Unlock" onclick="checkpass();">
-                    </p>
-                </div>
+                    }
+
+                    const inputField = document.getElementById('passboxauth');
+                    const submitButton = document.getElementById('authgo');
+                    inputField.addEventListener('keyup', function (event) {
+                        if (event.keyCode === 13) {
+                            submitButton.click();
+                        }
+                    });
+                </script>
+                <p class="passtxt">Enter your password</p>
+                <input class="i1" id="passboxauth" placeholder="Enter password" type="password" />
+                <button class="b1" onclick="clr2();">Clear</button><button onclick="checkpass();" class="b1"
+                    id="authgo">OK</button>
             </div>
         </div>
         <!--End of auth-->
@@ -584,7 +583,7 @@
                     delvar('recovery');
                     const pw = await readvar('pin');
                     if (pw) {
-                        passp('Enter your PIN to continue startup.', 'boots2()');
+                        passp('Enter your password to continue startup.', 'boots2()');
                     } else {
                         locked = false;
                         boots2();
@@ -599,6 +598,7 @@
 
         async function boots2() {
             if (locked === false) {
+                showcls('whar');
                 const setup = await readvar('setupdone');
                 const wd = await readvar('wd');
                 const accent = await readvar('accent');
@@ -653,6 +653,8 @@
                 masschange('ver', ver);
                 // applications here
                 console.log('<i> Successful boot!');
+            } else {
+                panic(`Tried finishing boot without pass confirm`);
             }
         }
 
