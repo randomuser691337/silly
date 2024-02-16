@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./assets/core.css">
     <script>
         var ver = "0.0.9";
-        var lastedit = "Feb 9, 2024";
+        var lastedit = "Feb 15, 2024";
         var crashed = false;
         var mostrecerr = "No history."
         var forcedatac = true;
@@ -58,15 +58,12 @@
                     <p class="smt">- Select "Let's Go" to get started (normal)</p>
                     <p class="smt">- Select "Guest" to skip setup or debug</p>
                     <button class="b1" onclick="guestmode();">Guest</button><button class="b1"
-                        onclick="fesw('setup1', 'mig');initializePeerConnection();">Migrate</button><button class="b1"
+                        onclick="mkw(`Currently disabled due to several issues`, 'Error');// fesw('setup1', 'mig');initializePeerConnection();">Migrate</button><button class="b1"
                         onclick="fesw('setup1', 'setupnew');">Let's go!</button>
                 </div>
                 <div id="setupnew" style="display: none;">
                     <p class="h2">Password Setup</p>
-                    <p>Enter a password, 8 characters or longer.</p>
-                    <p>WebDesk asks for this first, as it needs a password to encrypt the database with before it's
-                        written to.</p>
-                    <p>Note: Right now, this password cannot be changed without erasing! Don't share it.</p>
+                    <p>Enter a strong password. The stronger the password, the better the security (WebDesk is encrypted.)</p>
                     <input type="password" id="oobepin" class="i1" placeholder="Enter a password" autocomplete="off">
                     <button class="b1" onclick="fesw('setupnew', 'setup1');">Back</button><button
                         onclick="passtime('oobepin');fesw('setupnew', 'setup2');" class="b1">Set password, next</button>
@@ -525,7 +522,7 @@
                     weather</p>
                 <p class="h2">Apps</p>
                 <div class="padmenu">
-                    <button class="b1 sandnoapp" onclick="opapp('migration');initializePeerConnection();">Migration Assistant</button><button
+                    <button class="b1 sandnoapp" onclick="mkw(`Currently disabled due to several issues`, 'Error');//opapp('migration');initializePeerConnection();">Migration Assistant</button><button
                         class="b1" onclick="opapp('settings');">Settings</button><button class="b1 sandnoapp"
                         onclick="opapp('camera');">Camera</button><button class="b1"
                         onclick="opapp('terminal');">Terminal</button><button class="b1 sandnoapp"
@@ -674,7 +671,7 @@
                 <div class="content">
                     <p class="h2">Recovery</p>
                     <p>You can erase to fix all issues, or wipe the cache/bootload variables to attempt a fix.</p>
-                    <button class="b1" onclick="burnitall();">Erase</button><button class="b1" onclick="wipeboot();">Delete cache</button><button class="b1" onclick="opapp('migration');">Migrate</button>
+                    <button class="b1" onclick="burnitall();">Erase</button><button class="b1" onclick="wipeboot();">Delete cache</button><button class="b1 hidden" onclick="opapp('migration');">Migrate</button>
                 </div>
             </div>
             <!--Migration Assistant-->
