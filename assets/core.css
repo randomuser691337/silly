@@ -197,6 +197,7 @@ input:placeholder {
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
     transition: 0.1s;
+    position: sticky;
 }
 
 .title-bar:active {
@@ -413,6 +414,16 @@ a:active {
     box-sizing: border-box;
 }
 
+.list {
+    padding: 7px;
+    border-radius: 7px;
+    background-color: rgba(var(--accent), 0.3);
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    margin-top: 3px;
+}
+
 ::placeholder {
     color: var(--fontc2);
 }
@@ -457,7 +468,7 @@ a:active {
 }
 
 @keyframes fade {
-    0% {opacity: 0%; background-color: var(--lightdark); padding: 10px;}
-    50% {opacity: 100%; padding: 60px;}
-    100% {opacity: 100%; background-color: var(--lightdark); padding: 10px;}
+    0% {padding: 10px; bottom: 40px; opacity: 0%;}
+    50% {opacity: 60%;}
+    100% {padding: 10px; bottom: 15px;}
 }

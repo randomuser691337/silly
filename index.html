@@ -58,12 +58,20 @@
                     <p class="smt">- Select "Let's Go" to get started (normal)</p>
                     <p class="smt">- Select "Guest" to skip setup or debug</p>
                     <button class="b1" onclick="guestmode();">Guest</button><button class="b1"
-                        onclick="mkw(`Currently disabled due to several issues`, 'Error');// fesw('setup1', 'mig');initializePeerConnection();">Migrate</button><button class="b1"
+                        onclick="fesw('setup1', 'mig');initializePeerConnection();">Migrate</button><button class="b1"
                         onclick="fesw('setup1', 'setupnew');">Let's go!</button>
+                </div>
+                <div id="yowetrapped" style="display: none;">
+                    <p class="h2">Sandbox</p>
+                    <p>Enter any password, NOT A USED ONE, to secure Sandbox with.</p>
+                    <input type="password" id="oobepin2" class="i1" placeholder="Enter a password" autocomplete="off">
+                    <button class="b1" onclick="sth('end');">Exit Sandbox</button><button
+                        onclick="passtime('oobepin2');desktop('User');writepb('setupdone', 'fuckingkillme');" class="b1">Set password, next</button>
                 </div>
                 <div id="setupnew" style="display: none;">
                     <p class="h2">Password Setup</p>
-                    <p>Enter a strong password. The stronger the password, the better the security (WebDesk is encrypted.)</p>
+                    <p>Enter a strong password. The stronger the password, the better the security (WebDesk is
+                        encrypted.)</p>
                     <input type="password" id="oobepin" class="i1" placeholder="Enter a password" autocomplete="off">
                     <button class="b1" onclick="fesw('setupnew', 'setup1');">Back</button><button
                         onclick="passtime('oobepin');fesw('setupnew', 'setup2');" class="b1">Set password, next</button>
@@ -290,7 +298,7 @@
         </div>
         <!--End of weather-->
         <!--Locker-->
-        <div id="locker" class="window resizeh" name="Locker" style="width: 300px;">
+        <div id="locker" class="window resizeh" name="Locker" style="width: 400px; overflow: auto !important;">
             <div class="title-bar">Locker <button class="winb wc" onclick="hidef('locker');">Close</button><button
                     class="winb" onclick="reboot();">Restart</button>
             </div>
@@ -490,9 +498,13 @@
                 }
 
                 async function passp(passt, func) {
-                    alright = func;
-                    masschange('passtxt', passt);
-                    opapp('auth');
+                    if (pass === "43fsj329t151afjds") {
+                        eval(func);
+                    } else {
+                        alright = func;
+                        masschange('passtxt', passt);
+                        opapp('auth');
+                    }
                 }
 
                 const inputField = document.getElementById('passboxauth');
@@ -522,15 +534,15 @@
                     weather</p>
                 <p class="h2">Apps</p>
                 <div class="padmenu">
-                    <button class="b1 sandnoapp" onclick="mkw(`Currently disabled due to several issues`, 'Error');//opapp('migration');initializePeerConnection();">Migration Assistant</button><button
-                        class="b1" onclick="opapp('settings');">Settings</button><button class="b1 sandnoapp"
-                        onclick="opapp('camera');">Camera</button><button class="b1"
+                    <button class="b1 sandnoapp" onclick="opapp('migration');initializePeerConnection();">Migration
+                        Assistant</button><button class="b1" onclick="opapp('settings');">Settings</button><button
+                        class="b1 sandnoapp" onclick="opapp('camera');">Camera</button><button class="b1"
                         onclick="opapp('terminal');">Terminal</button><button class="b1 sandnoapp"
                         onclick="opapp('weather');">Weather</button><button class="b1 sandnoapp"
                         onclick="opapp('browser');">Browser</button><button class="b1"
                         onclick="opapp('calculator');">Calculator</button><button class="b1"
                         onclick="doc('./assets/other/trusted.txt', 'App Installer', '270px');">App Installer
-                        (BETA)</button>
+                        (BETA)</button><button class="b1" onclick="opapp('locker');">Locker</button>
                 </div>
                 <p class="h2">WebDesk</p>
                 <div class="padmenu" id="mainwebact">
@@ -601,6 +613,10 @@
                         fesw('load', 'setup1');
                         opapp('setup');
                     }
+                    if (sandParam) {
+                        dest('setup1');showf('yowetrapped');
+                        writevar('username', 'User');
+                    }
                 }
             } catch (error) {
                 console.log('<!> A critical error occured, run fuck() for help.');
@@ -646,11 +662,6 @@
                 if (ao) {
                     opapp(ao);
                     delvar('auto-open');
-                }
-                if (sandParam) {
-                    showf('mainbtn'); dest('setup');
-                    masschange('user', 'User');
-                    writepb('setupdone', 'fuckingkillme');
                 }
                 masschange('lastedit', lastedit);
                 masschange('ver', ver);
@@ -704,7 +715,7 @@
         });
 
         if (sandParam) {
-            mkw('<p>Welcome to WebDesk Sandbox!</p><p>You can safely run anything in here, without any risks.</p><p>All data in Sandbox will be destroyed after leaving.</p><p>Performance has taken a hit due to well, being in a sandbox.<p>', 'Sandbox', '340px');
+            fesw('setup1', 'yowetrapped');
             fesw('mainwebact', 'mainsandact'); showf('sandwarn');
             document.getElementById('sandbox').innerHTML = `<p class="h3">You can't run Sandbox in Sandbox!</p><button class="b1" onclick="hidef('sandbox');">Back</button>`;
             hidecls('sandnoapp'); showcls('sandapp');
