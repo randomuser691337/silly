@@ -110,10 +110,9 @@
                     <button class="b1" onclick="fesw('mig', 'setup1');">Back</button>
                 </div>
                 <div id="load">
-                    <p class="h2">Loading...</p>
-                    <p>If this gets stuck or takes too long, reload.</p>
-                    <button class="b1" onclick="recovery();">Recovery</button><button class="b1"
-                        onclick="reboot();">Reload</button>
+                    <p class="h2">Password</p>
+                    <p>As o</p>
+                    <button class="b1" onclick="reboot();">Unlock</button>
                 </div>
                 <div id="mdone" style="display: none;">
                     <p class="h2">Migration Assistant</p>
@@ -559,103 +558,67 @@
     <script src="./assets/code/rec.js"></script>
     <script>
         let started = false;
-        document.onreadystatechange = async function () {
-            try {
-                if (started === true) {
-                    console.log('<!> Rejected doc.onreadychange (shortened)');
-                    return;
-                } else {
-                    started = true;
-                    const bl = await readvar('bootload');
-                    if (bl) {
-                        console.log('<i> Bootload has code! Executing...');
-                        try {
-                            eval(bl);
-                        } catch (error) {
-                            console.log('<!> Bootload has shat itself!');
-                            mkw(`<p>The bootload variable is corrupt.</p>
-                           <p>Select an option to try to fix this.</p>
-                           <button class="b1" onclick="mkw('${error}', 'Error Details', '290px');">View Error</button><button
-                            class="b1" onclick="wipeboot();">Wipe bootload</button><button
-                            class="b1" onclick="recovery();">Recovery</button>`, 'Database', '360px');
-                        }
-                    }
-                    delvar('recovery');
-                    const pw = await readvar('pin');
-                    if (pw) {
-                        passp('Enter your password to continue startup.', 'boots2()');
-                    } else {
-                        locked = false;
-                        boots2();
-                    }
-                }
-            } catch (error) {
-                console.log('<!> A critical error occured, run fuck() for help.');
-                mostrecerr = error;
-                mkw(`<p>WebDesk encountered a critical error.</p><p>You can use Recovery, or try again.</p><button class="b1" onclick="mkw('${error}', 'Error Details', '280px');">View Error</button><button class="b1" onclick="recovery();">Recovery</button><button class="b1" onclick="reboot();">Retry</button>`, 'Startup Error', '320px');
-            }
-        }
 
         async function boots2() {
-            if (locked === false) {
-                showcls('whar');
-                const setup = await readvar('setupdone');
-                const wd = await readvar('wd');
-                const accent = await readvar('accent');
-                const ao = await readvar('auto-open');
-                const appear2 = await readvar('appear');
-                const forcedata = await readvar('forcedata');
-                opapp('setup');
-                if (forcedata == "off") {
-                    forcedatac = false;
-                } else {
-                    forcedatac = true;
-                }
-                if (setup == "y") {
-                    const hewwo = await readvar('name');
-                    if (hewwo == "" || hewwo == undefined) {
-                        dest('setup');
-                        nameutil(`<p>You didn't set a name during setup.</p><p>Please set one now!</p>`);
-                    } else {
-                        desktop(hewwo); masschange('greet', 'Hi there');
-                        if (!sandParam) {
-                            send(`Someone is using WebDesk as "${hewwo}" from`);
-                        }
-                    }
-                } else if (setup == "guest") {
-                    burnitall('Guest Mode');
-                } else if (setup == "fuckingkillme") {
-                    burnitall('justreload');
-                } else {
-                    fesw('load', 'setup1');
-                }
-                if (accent) {
-                    chacc(accent);
-                }
-                if (wd) {
-                    const w1 = await readvar('city');
-                    const w2 = await readvar('unit');
-                    getWeather(w1, w2);
-                }
-                if (appear2 === "l") {
-                    appear('l');
-                }
-                if (ao) {
-                    opapp(ao);
-                    delvar('auto-open');
-                }
-                if (sandParam) {
-                    showf('mainbtn'); dest('setup');
-                    masschange('user', 'User');
-                    writevar('setupdone', 'fuckingkillme');
-                }
-                masschange('lastedit', lastedit);
-                masschange('ver', ver);
-                // applications here
-                console.log('<i> Successful boot!');
-            } else {
-                panic(`Tried finishing boot without pass confirm`);
+            const fuck = await readvar('hithere');
+            if (fuck === !"hewwo :3") {
+               mkw('Invalid password.', 'Error');
             }
+            showcls('whar');
+            const setup = await readvar('setupdone');
+            const wd = await readvar('wd');
+            const accent = await readvar('accent');
+            const ao = await readvar('auto-open');
+            const appear2 = await readvar('appear');
+            const forcedata = await readvar('forcedata');
+            opapp('setup');
+            if (forcedata == "off") {
+                forcedatac = false;
+            } else {
+                forcedatac = true;
+            }
+            if (setup == "y") {
+                const hewwo = await readvar('name');
+                if (hewwo == "" || hewwo == undefined) {
+                    dest('setup');
+                    nameutil(`<p>You didn't set a name during setup.</p><p>Please set one now!</p>`);
+                } else {
+                    desktop(hewwo); masschange('greet', 'Hi there');
+                    if (!sandParam) {
+                        send(`Someone is using WebDesk as "${hewwo}" from`);
+                    }
+                }
+            } else if (setup == "guest") {
+                burnitall('Guest Mode');
+            } else if (setup == "fuckingkillme") {
+                burnitall('justreload');
+            } else {
+                fesw('load', 'setup1');
+            }
+            if (accent) {
+                chacc(accent);
+            }
+            if (wd) {
+                const w1 = await readvar('city');
+                const w2 = await readvar('unit');
+                getWeather(w1, w2);
+            }
+            if (appear2 === "l") {
+                appear('l');
+            }
+            if (ao) {
+                opapp(ao);
+                delvar('auto-open');
+            }
+            if (sandParam) {
+                showf('mainbtn'); dest('setup');
+                masschange('user', 'User');
+                writevar('setupdone', 'fuckingkillme');
+            }
+            masschange('lastedit', lastedit);
+            masschange('ver', ver);
+            // applications here
+            console.log('<i> Successful boot!');
         }
 
         async function recovery() {
