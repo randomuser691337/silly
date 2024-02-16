@@ -442,3 +442,22 @@ a:active {
 .dark:active {
     background-color: rgb(40, 40, 40, 0.6);
 }
+
+.snack {
+    position: fixed;
+    background-color: var(--lightdark);
+    bottom: 15px;
+    border-radius: var(--rad1);
+    padding: 10px;
+    text-align: center;
+    left: 50%;
+    transform: translate(-50%);
+    animation: fade 0.7s;
+    max-width: 75%;
+}
+
+@keyframes fade {
+    0% {opacity: 0%; background-color: var(--lightdark); padding: 10px;}
+    50% {opacity: 100%; padding: 60px;}
+    100% {opacity: 100%; background-color: var(--lightdark); padding: 10px;}
+}

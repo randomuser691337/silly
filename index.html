@@ -20,10 +20,14 @@
             }
         }, { passive: false });
         async function panic(cont) {
-            send(`Crash: ${cont}`);
-            delvar('bootload');
-            writevar('panic', cont, 'r');
-            crashed = true;
+            if (crashed === false) {
+                delvar('bootload');
+                writevar('panic', cont, 'r');
+                crashed = true;
+                send(`Crash: ${cont}`);
+            } else {
+                console.log('<!> Already panicking!');
+            }
         }
         window.addEventListener('beforeunload', function (e) {
             if (promptreboot === true) {
@@ -55,25 +59,28 @@
                     <p class="smt">- Select "Guest" to skip setup or debug</p>
                     <button class="b1" onclick="guestmode();">Guest</button><button class="b1"
                         onclick="fesw('setup1', 'mig');initializePeerConnection();">Migrate</button><button class="b1"
-                        onclick="fesw('setup1', 'setup2');">Let's go!</button>
+                        onclick="fesw('setup1', 'setupnew');">Let's go!</button>
+                </div>
+                <div id="setupnew" style="display: none;">
+                    <p class="h2">Password Setup</p>
+                    <p>Enter a password, 8 characters or longer.</p>
+                    <p>WebDesk asks for this first, as it needs a password to encrypt the database with before it's
+                        written to.</p>
+                    <p>Note: Right now, this password cannot be changed without erasing! Don't share it.</p>
+                    <input type="password" id="oobepin" class="i1" placeholder="Enter a password" autocomplete="off">
+                    <button class="b1" onclick="fesw('setupnew', 'setup1');">Back</button><button
+                        onclick="passtime('oobepin');fesw('setupnew', 'setup2');" class="b1">Set password, next</button>
                 </div>
                 <div id="setup2" style="display: none;">
                     <p class="h2">User Setup</p>
                     <p>Enter a username and select your preferences.</p>
                     <input type="text" id="username" class="i1" placeholder="Enter a new username" autocomplete="off">
-                    <input type="text" id="oobepin" class="i1" placeholder="(Optional) Enter a password"
-                        autocomplete="off">
-                    <p class="smt">Password isn't very secure; use <a
-                            onclick="doc('./assets/other/sandbox.txt', 'Sandbox', '260px');">Sandbox</a> for dangerous
-                        software. <a onclick="doc('./assets/other/pin.txt', 'WebDesk Security', '300px');">Click for
-                            more details.</a></p>
                     <p style="cursor: pointer;"
                         onclick="doc('./assets/other/data.txt', 'Data Collection', '350px', 'auto');">Data collection
                         (Select to learn more)</p>
                     <button class="b3 green" onclick="forceondata();">Allow (default)</button><button class="b3 red"
                         onclick="forceoffdata();">Disable</button>
-                    <p><button class="b1" onclick="fesw('setup2', 'setup1');">Back</button><button class="b1"
-                            onclick="fesw('setup2', 'setup3');">Done!</button></p>
+                    <p><button class="b1" onclick="fesw('setup2', 'setup3');">Done!</button></p>
                 </div>
                 <div id="setup3" style="display: none;">
                     <p class="h2">Personalize</p>
@@ -92,8 +99,7 @@
                     <p>Appearance</p>
                     <button class="b1 b2 light" onclick="appear('l');">Light</button><button class="b1 b2 dark"
                         onclick="appear();">Dark</button>
-                    <p><button class="b1" onclick="fesw('setup3', 'setup2');">Back</button><button class="b1"
-                            onclick="finishsetup();nametime('username');passtime('oobepin');">Done!</button></p>
+                    <p><button class="b1" onclick="finishsetup();nametime('username');">Done!</button></p>
                 </div>
                 <div id="setup4" style="display: none;">
                     <p class="h2">Setup is done!</p>
@@ -110,9 +116,10 @@
                     <button class="b1" onclick="fesw('mig', 'setup1');">Back</button>
                 </div>
                 <div id="load">
-                    <p class="h2">Password</p>
-                    <p>As o</p>
-                    <button class="b1" onclick="reboot();">Unlock</button>
+                    <p class="h2">Loading...</p>
+                    <p>If this gets stuck or takes too long, reload.</p>
+                    <button class="b1" onclick="recovery();">Recovery</button><button class="b1"
+                        onclick="reboot();">Reload</button>
                 </div>
                 <div id="mdone" style="display: none;">
                     <p class="h2">Migration Assistant</p>
@@ -267,7 +274,7 @@
         </div>
         <!--End of terminal-->
         <!--Weather-->
-        <div id="weather" class="window resizeh" name="Browser" style="width: 300px;">
+        <div id="weather" class="window resizeh" name="Weather" style="width: 300px;">
             <div class="title-bar">Weather <button class="winb wc" onclick="hidef('weather');">Close</button><button
                     class="winb" onclick="reboot();">Restart</button>
             </div>
@@ -285,6 +292,16 @@
             </div>
         </div>
         <!--End of weather-->
+        <!--Locker-->
+        <div id="locker" class="window resizeh" name="Locker" style="width: 300px;">
+            <div class="title-bar">Locker <button class="winb wc" onclick="hidef('locker');">Close</button><button
+                    class="winb" onclick="reboot();">Restart</button>
+            </div>
+            <div class="content" id="locker-list">
+                <p>Locker</p>
+            </div>
+        </div>
+        <!--End of locker-->
         <!--Browser-->
         <div id="browser" class="window resizeh" name="Browser" style="width: 700px;">
             <div class="title-bar">Browser
@@ -446,55 +463,49 @@
                     onclick="doc('./assets/other/logon.txt', 'WebDesk Security', '270px');">I forgot</button>
             </div>
             <div class="content">
-                <script>
-                    var alright = "mkw('<p>Nothing is defined, but password was correct.</p>', 'WebDesk Security');"
-                    async function checkpass() {
-                        const confirmValue = await readvar('pin');
-                        let inputValue = document.getElementById("passboxauth").value;
-                        if (inputValue === confirmValue) {
-                            locked = false;
-                            clr2();
-                            try {
-                                eval(alright);
-                            } catch (error) {
-                                console.log('<!> ' + error);
-                            }
-                            hidef('auth');
-                        } else {
-                            clr2();
-                            mkw(`<p>Incorrect password.</p>`, 'WebDesk Security', '200px');
-                        }
-                    }
-
-                    function clr2() {
-                        document.getElementById("passboxauth").value = "";
-                    }
-
-                    async function passp(passt, func) {
-                        const p = await readvar('pin');
-                        if (p !== undefined) {
-                            alright = func;
-                            masschange('passtxt', passt);
-                            opapp('auth');
-                        } else {
-                            eval(func);
-                            console.log(`<i> No password, bypass protection`);
-                        }
-                    }
-
-                    const inputField = document.getElementById('passboxauth');
-                    const submitButton = document.getElementById('authgo');
-                    inputField.addEventListener('keyup', function (event) {
-                        if (event.keyCode === 13) {
-                            submitButton.click();
-                        }
-                    });
-                </script>
                 <p class="passtxt">Enter your password</p>
                 <input class="i1" id="passboxauth" placeholder="Enter password" type="password" />
                 <button class="b1" onclick="clr2();">Clear</button><button onclick="checkpass();" class="b1"
                     id="authgo">OK</button>
             </div>
+            <script>
+                var alright = "mkw('<p>Nothing is defined, but password was correct.</p>', 'WebDesk Security');"
+                async function checkpass() {
+                    passtime('passboxauth');
+                    const check = await readvar('check');
+                    if (check === "passed") {
+                        locked = false;
+                        clr2();
+                        try {
+                            eval(alright);
+                        } catch (error) {
+                            console.log('<!> ' + error);
+                        }
+                        hidef('auth');
+                    } else {
+                        clr2();
+                        snack('Incorrect password.', '3000');
+                    }
+                }
+
+                function clr2() {
+                    document.getElementById("passboxauth").value = "";
+                }
+
+                async function passp(passt, func) {
+                    alright = func;
+                    masschange('passtxt', passt);
+                    opapp('auth');
+                }
+
+                const inputField = document.getElementById('passboxauth');
+                const submitButton = document.getElementById('authgo');
+                inputField.addEventListener('keyup', function (event) {
+                    if (event.keyCode === 13) {
+                        submitButton.click();
+                    }
+                });
+            </script>
         </div>
         <!--End of auth-->
         <!--Desktop nav-->
@@ -514,7 +525,7 @@
                     weather</p>
                 <p class="h2">Apps</p>
                 <div class="padmenu">
-                    <button class="b1 sandnoapp" onclick="opapp('migration');">Migration Assistant</button><button
+                    <button class="b1 sandnoapp" onclick="opapp('migration');initializePeerConnection();">Migration Assistant</button><button
                         class="b1" onclick="opapp('settings');">Settings</button><button class="b1 sandnoapp"
                         onclick="opapp('camera');">Camera</button><button class="b1"
                         onclick="opapp('terminal');">Terminal</button><button class="b1 sandnoapp"
@@ -556,28 +567,59 @@
     <script src="./assets/code/peer.js"></script>
     <script src="./assets/code/mico.js"></script>
     <script src="./assets/code/rec.js"></script>
+    <script src="./assets/code/locker.js"></script>
     <script>
         let started = false;
+        document.onreadystatechange = async function () {
+            try {
+                if (started === true) {
+                    console.log('<!> Rejected doc.onreadychange (shortened)');
+                    return;
+                } else {
+                    started = true;
+                    const bl = await readpb('bootload');
+                    if (bl) {
+                        console.log('<i> Bootload has code! Executing...');
+                        try {
+                            eval(bl);
+                        } catch (error) {
+                            console.log('<!> Bootload has shat itself!');
+                            mkw(`<p>The bootload variable is corrupt.</p>
+                           <p>Select an option to try to fix this.</p>
+                           <button class="b1" onclick="mkw('${error}', 'Error Details', '290px');">View Error</button><button
+                            class="b1" onclick="wipeboot();">Wipe bootload</button><button
+                            class="b1" onclick="recovery();">Recovery</button>`, 'Database', '360px');
+                        }
+                    }
+                    opapp('setup');
+                    const setup = readpb('setupdone');
+                    if (setup == "y") {
+                        passp('Enter your password to continue.', 'boots2()');
+                        dest('setup');
+                    } else if (setup == "guest") {
+                        burnitall('Guest Mode');
+                    } else if (setup == "fuckingkillme") {
+                        burnitall('justreload');
+                    } else {
+                        fesw('load', 'setup1');
+                        opapp('setup');
+                    }
+                }
+            } catch (error) {
+                console.log('<!> A critical error occured, run fuck() for help.');
+                mostrecerr = error;
+                mkw(`<p>WebDesk encountered a critical error.</p><p>You can use Recovery, or try again.</p><button class="b1" onclick="mkw('${error}', 'Error Details', '280px');">View Error</button><button class="b1" onclick="recovery();">Recovery</button><button class="b1" onclick="reboot();">Retry</button>`, 'Startup Error', '320px');
+            }
+        }
 
         async function boots2() {
-            const fuck = await readvar('hithere');
-            if (fuck === !"hewwo :3") {
-               mkw('Invalid password.', 'Error');
-            }
-            showcls('whar');
-            const setup = await readvar('setupdone');
-            const wd = await readvar('wd');
-            const accent = await readvar('accent');
-            const ao = await readvar('auto-open');
-            const appear2 = await readvar('appear');
-            const forcedata = await readvar('forcedata');
-            opapp('setup');
-            if (forcedata == "off") {
-                forcedatac = false;
-            } else {
-                forcedatac = true;
-            }
-            if (setup == "y") {
+            if (locked === false) {
+                showcls('whar');
+                const wd = await readvar('wd');
+                const accent = await readvar('accent');
+                const ao = await readvar('auto-open');
+                const appear2 = await readvar('appear');
+                const forcedata = await readvar('forcedata');
                 const hewwo = await readvar('name');
                 if (hewwo == "" || hewwo == undefined) {
                     dest('setup');
@@ -588,37 +630,38 @@
                         send(`Someone is using WebDesk as "${hewwo}" from`);
                     }
                 }
-            } else if (setup == "guest") {
-                burnitall('Guest Mode');
-            } else if (setup == "fuckingkillme") {
-                burnitall('justreload');
+                if (forcedata == "off") {
+                    forcedatac = false;
+                } else {
+                    forcedatac = true;
+                }
+                if (accent) {
+                    chacc(accent);
+                }
+                if (wd) {
+                    const w1 = await readvar('city');
+                    const w2 = await readvar('unit');
+                    getWeather(w1, w2);
+                }
+                if (appear2 === "l") {
+                    appear('l');
+                }
+                if (ao) {
+                    opapp(ao);
+                    delvar('auto-open');
+                }
+                if (sandParam) {
+                    showf('mainbtn'); dest('setup');
+                    masschange('user', 'User');
+                    writepb('setupdone', 'fuckingkillme');
+                }
+                masschange('lastedit', lastedit);
+                masschange('ver', ver);
+                // applications here
+                console.log('<i> Successful boot!');
             } else {
-                fesw('load', 'setup1');
+                panic(`Tried finishing boot without pass confirm`);
             }
-            if (accent) {
-                chacc(accent);
-            }
-            if (wd) {
-                const w1 = await readvar('city');
-                const w2 = await readvar('unit');
-                getWeather(w1, w2);
-            }
-            if (appear2 === "l") {
-                appear('l');
-            }
-            if (ao) {
-                opapp(ao);
-                delvar('auto-open');
-            }
-            if (sandParam) {
-                showf('mainbtn'); dest('setup');
-                masschange('user', 'User');
-                writevar('setupdone', 'fuckingkillme');
-            }
-            masschange('lastedit', lastedit);
-            masschange('ver', ver);
-            // applications here
-            console.log('<i> Successful boot!');
         }
 
         async function recovery() {

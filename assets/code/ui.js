@@ -88,8 +88,22 @@ function dest(d1) {
     const dr1 = document.getElementById(d1);
     $(dr1).fadeOut(170, function () { dr1.remove });
 }
-function clis(elid, cl) {
-
+function snack(cont, t) {
+    var snackElement = document.createElement("div");
+    snackElement.className = "snack";
+    const fuckyou = gen(7);
+    snackElement.id = fuckyou;
+    snackElement.innerHTML = cont;
+    document.body.appendChild(snackElement);
+    snackElement.onclick = function () {
+        dest(fuckyou); 
+    }
+    setTimeout(function () {
+        dest(fuckyou);
+    }, t);
+}
+function sv() {
+    snack('Saved!', '2000');
 }
 function toggle(elementId, time3) {
     var element = document.getElementById(elementId);

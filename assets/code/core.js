@@ -74,24 +74,25 @@ async function nameutil(cont) {
 }
 
 async function passutil(cont) {
-    mkw(`${cont}<p><input class="i1" placeholder="New password" id="seconduserbox"></input><button class="b1" onclick="passtime('seconduserbox');mkw('<p>Set pass successfully.</p>', 'WebDesk Login Manager');">Set password</button></p>`, 'WebDesk Login Manager', '270px');
+    mkw(`${cont}<p><input class="i1" placeholder="New password" id="seconduserbox"></input><button class="b1" onclick="passtimedesk('seconduserbox');mkw('<p>Set pass successfully.</p>', 'WebDesk Login Manager');">Set password</button></p>`, 'WebDesk Login Manager', '270px');
 }
 
 async function guestmode() {
     mkw(`<p>You're in Guest Mode.</p><p>Upon reload/restart, WebDesk will auto-erase.</p>`, 'Setup Assistant', '320px');
     desktop('Guest');
-    await writevar('setupdone', 'guest');
+    writepb('setupdone', 'guest');
     hidecls('guestno');
 }
 
 function customacc() {
-    document.getElementById('custacc');
+    const custacc = document.getElementById('custacc');
     if (custacc) {
         mkw(`<p>Accent picker alreay open, find it, use it, or close it.</p>`, 'Already open!');
         return;
     }
     const cont = `<p>Enter RGB code for example: 180, 180, 180</p>
     <input class="i1" id="custacc" placeholder="RGB here"/><button class="b1" onclick="chacc2('custacc');">Confirm!</button>`
+    mkw(cont, 'Custom accent', '300px');
 }
 
 function chacc2(ye) {
@@ -155,25 +156,31 @@ async function nametime(el, reb) {
     }
 }
 
-async function passtime(el, reb) {
+function passtime(el) {
     const elID = document.getElementById(el).value;
     if (elID === "") {
-        delvar('pin');
+        mkw('Enter a password!', 'Error');
     } else {
-        if (reb === "y") {
-            await writevar('pin', elID, 'r');
-        } else {
-            await writevar('pin', elID);
-        }
+        pass = elID;
     }
 }
 
+function passtimedesk(el) {
+    const elID = document.getElementById(el).value;
+    if (elID === "") {
+        mkw('Enter a password!', 'Error');
+    } else {
+        pass = elID;
+        passchange(elID);
+    }
+}
 
 async function finishsetup() {
     fesw('setup3', 'setup4');
-    await writevar('setupdone', 'y');
+    writepb('setupdone', 'y');
     const hai = await readvar('name');
     desktop(hai);
+    await writevar('check', 'passed');
 }
 
 function reboot() {
