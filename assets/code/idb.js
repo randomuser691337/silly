@@ -166,6 +166,18 @@ async function delvar(varName) {
     }
 }
 
+async function renvar(variable, newname) {
+    try {
+        const value = await readvar(variable);
+        if (value !== undefined) {
+            await delvar(variable);
+            await writevar(newname, value);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 async function eraseall() {
     try {
         if (crashed == true) { console.log('Rejected FS action: crashed!'); return; }

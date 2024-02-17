@@ -300,7 +300,7 @@
         <!--Locker-->
         <div id="locker" class="window resizeh" name="Locker" style="width: 400px; overflow: auto !important;">
             <div class="title-bar">Locker <button class="winb wc" onclick="hidef('locker');">Close</button><button
-                    class="winb" onclick="reboot();">Restart</button>
+                    class="winb" onclick="upload();">Upload</button>
             </div>
             <div class="content" id="locker-list">
                 <p>Locker</p>
@@ -601,6 +601,11 @@
                         }
                     }
                     opapp('setup');
+                    if (sandParam) {
+                        dest('setup1');showf('yowetrapped');
+                        writevar('username', 'User');
+                        return;
+                    }
                     const setup = readpb('setupdone');
                     if (setup == "y") {
                         passp('Enter your password to continue.', 'boots2()');
@@ -610,12 +615,9 @@
                     } else if (setup == "fuckingkillme") {
                         burnitall('justreload');
                     } else {
+                        eraseall();
                         fesw('load', 'setup1');
                         opapp('setup');
-                    }
-                    if (sandParam) {
-                        dest('setup1');showf('yowetrapped');
-                        writevar('username', 'User');
                     }
                 }
             } catch (error) {
