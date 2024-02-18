@@ -4,7 +4,7 @@ function isFileTooLarge(file) {
     return fileSizeInMB > 12;
 }
 
-var valuesToCheck = [".jpg", ".png", ".mp3"];
+var valuesToCheck = [".jpg", ".png", ".svg", ".jpeg", ".webp", ".mp3"];
 
 // Function to handle file upload
 async function handleFileUpload(file) {
@@ -85,7 +85,7 @@ window.updateLockerList = async function () {
                 listItem.className = "list";
                 let found = valuesToCheck.find(value => key.includes(value));
                 const viewBtn = document.createElement('button');
-                if (found == ".png" || found == ".jpg") {
+                if (found == ".png" || found == ".jpg" || found == ".jpeg" || found == ".svg" || found == ".webp") {
                     viewBtn.textContent = "View";
                     viewBtn.className = "winb";
                     viewBtn.addEventListener('click', async () => {
