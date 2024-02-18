@@ -1,4 +1,4 @@
-function mkw(content, title, width, m, height) {
+function mkw(content, title, width, m, height, btnid) {
     const windowId = gen(6);
     const windowContainer = document.createElement('div');
     windowContainer.className = 'window';
@@ -11,7 +11,11 @@ function mkw(content, title, width, m, height) {
     }
     const titleBar = document.createElement('div');
     titleBar.className = 'title-bar';
-    titleBar.innerHTML = title + ` <button class="winb wc" onclick="dest('${windowId}');">Close</button>`;
+    if (btnid) {
+        titleBar.innerHTML = title + ` <button class="winb wc" onclick="dest('${windowId}');" id="${btnid}">Close</button>`;
+    } else {
+        titleBar.innerHTML = title + ` <button class="winb wc" onclick="dest('${windowId}');">Close</button>`;
+    }
     const contentContainer = document.createElement('div');
     contentContainer.className = 'content';
     contentContainer.innerHTML = content;
@@ -23,7 +27,7 @@ function mkw(content, title, width, m, height) {
         document.getElementById('nest').appendChild(windowContainer);
     }
     centerel(windowId); winrec(windowContainer);
-    hidef('mainmenu'); return windowId;
+    hidef('mainmenu'); ib(); return windowId;
 }
 
 function wal(content, btn1) {
@@ -41,6 +45,7 @@ function wal(content, btn1) {
     windowContainer.appendChild(titleBar);
     document.getElementById('nest').appendChild(windowContainer);
     centerel(windowId); winrec(windowContainer);
+    ib();
 }
 
 function opapp(d1) {

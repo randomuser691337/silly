@@ -4,10 +4,12 @@ var sandParam = urlParams.get("sand");
 async function forceoffdata() {
     await writevar('forcedata', 'off');
     send(`This WebDesk's final cry: someone's disabled data collection. `);
+    snack('Disabled data collection', '3000')
 }
 async function forceondata() {
     await writevar('forcedata', 'on');
-    send(`This WebDesk's NOT final cry: the user took it back! `);
+    send(`This WebDesk's NOT final cry: the user took it back!`);
+    snack('Enabled data collection', '3000');
 }
 
 async function exsandcon() {

@@ -4,7 +4,7 @@ function isFileTooLarge(file) {
     return fileSizeInMB > 12;
 }
 
-var valuesToCheck = [".jpg", ".png"];
+var valuesToCheck = [".jpg", ".png", ".mp3"];
 
 // Function to handle file upload
 async function handleFileUpload(file) {
@@ -83,14 +83,21 @@ window.updateLockerList = async function () {
                 const listItem = document.createElement('div');
                 listItem.textContent = fileName;
                 listItem.className = "list";
-                let found = valuesToCheck.some(value => key.includes(value));
+                let found = valuesToCheck.find(value => key.includes(value));
                 const viewBtn = document.createElement('button');
-                if (found) {
+                if (found == ".png" || found == ".jpg") {
                     viewBtn.textContent = "View";
                     viewBtn.className = "winb";
                     viewBtn.addEventListener('click', async () => {
                         const content = await readvar(key);
-                        viewimg(content);
+                        viewimg(content, fileName);
+                    });
+                } else if (found === ".mp3") {
+                    viewBtn.textContent = "Play";
+                    viewBtn.className = "winb";
+                    viewBtn.addEventListener('click', async () => {
+                        const content = await readvar(key);
+                        playaud(content);
                     });
                 }
 
@@ -134,8 +141,39 @@ window.updateLockerList = async function () {
                 p.appendChild(deleteButton);
                 p.appendChild(renButton);
                 lockerList.appendChild(listItem);
+                ib();
             }
         });
+    };
+
+
+    request.onerror = (event) => {
+        console.error("[ERR] Error fetching locker variables: " + event.target.errorCode);
+    };
+};
+
+window.fucklocker = async function () {
+    fesw('locker_list', 'lockerdel');
+    const db = await initDB();
+    const transaction = db.transaction('settings', 'readonly');
+    const objectStore = transaction.objectStore('settings');
+    const request = objectStore.getAllKeys();
+
+    request.onsuccess = async (event) => {
+        let anyKeyFound = false;
+        const keys = event.target.result;
+        keys.forEach(key => {
+            const fileName = key.slice(7);
+            if (key.startsWith('locker_')) {
+                anyKeyFound = true; // Set the flag to true if a key is found
+                delvar(key);
+                masschange('locker_del', `Deleting: ${fileName}`);
+            }
+        });
+
+        if (!anyKeyFound) {
+            hidef('locker'); fesw('lockerdel', 'locker_list'); window.updateLockerList(); snack(`Erased locker successfully.`, '3400');
+        }
     };
 
 
@@ -155,18 +193,6 @@ async function renlocker(name, box) {
     }
     await window.updateLockerList();
     snack(`Renamed to ${inputValue} successfully`, '3500');
-}
-
-
-
-function viewimg(val) {
-    if (!val.startsWith("data:image/")) {
-        console.error("Invalid image data format");
-        return;
-    }
-
-    const win = `<img class="embed" src="${val}"></img>`
-    mkw(win, 'Image Viewer', '300px');
 }
 
 window.updateLockerList();

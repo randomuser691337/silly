@@ -10,10 +10,6 @@ function winrec(element) {
         offsetX = e.clientX - rect.left;
         offsetY = e.clientY - rect.top;
 
-        if (!e.target.classList.contains('title-bar')) {
-            isDragging = false;
-        }
-
         const windows = document.querySelectorAll('.window');
         windows.forEach(window => {
             window.style.zIndex = 1;
@@ -21,6 +17,11 @@ function winrec(element) {
         element.style.zIndex = 2;
 
         element.classList.add('dragging');
+
+        // Check if the clicked element or its ancestor is a title bar
+        if (e.target.closest('.title-bar, .title-bar-ns') === null) {
+            isDragging = false;
+        }
 
         if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
             e.preventDefault();
@@ -51,6 +52,7 @@ function winrec(element) {
     document.addEventListener('touchmove', (e) => {
         const touch = e.touches[0];
         duringDrag(touch);
+        e.preventDefault(); // Prevent default touch behavior
     });
 
     document.addEventListener('touchend', endDrag);
@@ -335,6 +337,59 @@ function send(cont) {
 function cleantop() {
     hidef("mainmenu");
     mkw(`<p>This will close all windows, regardless of status.</p><p>Click 'Close' to cancel, or 'Clean Desktop' to continue.<button class='b1 b2' onclick="hidef('mainmenu'); sall('wc');">Clean Desktop</button></p>`, "WebDesk", "320px");
+}
+const abuttons = document.querySelectorAll("button");
+function playh() {
+    if (abs) {
+        var audio = document.getElementById("hSound");
+        audio.currentTime = 0;
+        audio.volume = 0.50;
+        audio.play();
+    }
+}
+function playc() {
+    if (abs) {
+        var audio = document.getElementById("cSound");
+        audio.currentTime = 0;
+        audio.volume = 0.70;
+        audio.play();
+    }
+}
+function inbt(buttons) {
+    buttons.forEach((button) => {
+        if (!button.classList.contains("n")) {
+            button.addEventListener("mouseenter", playh);
+            button.addEventListener("mousedown", playc);
+            button.addEventListener("mousemove", (e) => {
+                const rect = button.getBoundingClientRect();
+                const buttonX = rect.x + rect.width / 2;
+                const buttonY = rect.y + rect.height / 2;
+                const deltaX = e.clientX - buttonX;
+                const deltaY = e.clientY - buttonY;
+                button.style.transform = `translate(${deltaX / 25}px, ${deltaY / 25}px) scale(1.05)`;
+            });
+            function resetButtonStyles() {
+                button.style.transform = "translate(0, 0) scale(1.0)";
+                button.classList.remove("shadow");
+            }
+            button.addEventListener("mouseup", resetButtonStyles);
+            button.addEventListener("mouseout", resetButtonStyles);
+            button.addEventListener("mousedown", () => {
+                button.style.transform = "scale(0.95)";
+            });
+            button.addEventListener("mouseenter", () => {
+                button.classList.add("shadow");
+            });
+            button.addEventListener("mouseleave", () => {
+                button.classList.remove("shadow");
+            });
+        }
+    });
+}
+inbt(abuttons);
+function ib() {
+    const abuttons2 = document.querySelectorAll("button");
+    inbt(abuttons2);
 }
 updateClock();
 setInterval(updateClock, 1000);

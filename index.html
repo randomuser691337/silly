@@ -6,6 +6,7 @@
     <link rel="shortcut icon" href="./assets/img/favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="stylesheet" href="./assets/core.css">
+    <link rel="stylesheet" href="./assets/browser.css">
     <script>
         var ver = "0.0.9";
         var lastedit = "Feb 15, 2024";
@@ -14,6 +15,7 @@
         var forcedatac = true;
         var promptreboot = false;
         var locked = true;
+        var abs = true;
         document.addEventListener('touchstart', function (event) {
             if (event.touches.length > 1) {
                 event.preventDefault();
@@ -66,7 +68,8 @@
                     <p>Enter any password, NOT A USED ONE, to secure Sandbox with.</p>
                     <input type="password" id="oobepin2" class="i1" placeholder="Enter a password" autocomplete="off">
                     <button class="b1" onclick="sth('end');">Exit Sandbox</button><button
-                        onclick="passtime('oobepin2');desktop('User');writepb('setupdone', 'fuckingkillme');" class="b1">Set password, next</button>
+                        onclick="passtime('oobepin2');desktop('User');writepb('setupdone', 'fuckingkillme');"
+                        class="b1">Set password, next</button>
                 </div>
                 <div id="setupnew" style="display: none;">
                     <p class="h2">Password Setup</p>
@@ -123,6 +126,7 @@
                 <div id="load">
                     <p class="h2">Loading...</p>
                     <p>If this gets stuck or takes too long, reload.</p>
+                    <div class="line-wobble"></div>
                     <button class="b1" onclick="recovery();">Recovery</button><button class="b1"
                         onclick="reboot();">Reload</button>
                 </div>
@@ -173,7 +177,7 @@
                         onclick="fesw('settingsmain', 'settingsgen');">General</button>
                 </div>
                 <div id="settingsuser" style="display: none;">
-                    <p style="margin: 0px !important;">Username / Password</p>
+                    <p style="margin: 0px !important;" class="bold">Username / Password</p>
                     <button class="b1 b2" onclick="nameutil(`<p>Enter new username</p>`);">Change
                         username</button><button class="b1 b2" onclick="passutil('<p>Enter new password</p>');">Change
                         pass</button>
@@ -181,7 +185,7 @@
                     <p><button class="winb" onclick="fesw('settingsuser', 'settingsmain');">Back</button></p>
                 </div>
                 <div id="settingsappear" style="display: none;">
-                    <p style="margin: 0px !important;">Accent / Appearance</p>
+                    <p class="bold" style="margin: 0px !important;">Accent / Appearance</p>
                     <button class="acb" style="background: rgb(210, 30, 30);" onclick="chacc('210, 30, 30');"></button>
                     <button class="acb" style="background: rgb(210, 120, 30);"
                         onclick="chacc('210, 120, 30');"></button>
@@ -200,7 +204,7 @@
                             onclick="fesw('settingsappear', 'settingsmain');">Back</button></p>
                 </div>
                 <div id="settingspriv" style="display: none;">
-                    <p>Data & Privacy</p>
+                    <p class="bold">Data & Privacy</p>
                     <button class="b1"
                         onclick="mkw(`<p>Warning: Erasing WebDesk will delete all of it's data. Select 'Close' to stop, or 'Erase' to continue.</p><button class='b1 b2' onclick='burnitall();'>Erase</button>`, 'Erase Assistant', '330px');">Erase
                         This WebDesk</button>
@@ -212,7 +216,13 @@
                     <p><button class="winb" onclick="fesw('settingspriv', 'settingsmain');">Back</button></p>
                 </div>
                 <div id="settingsgen" style="display: none;">
-                    <p>General</p>
+                    <p class="bold">General</p>
+                    <p>Button sound effects</p>
+                    <button class="b3 green"
+                        onclick="writepb('b','t');abs=true;snack('Saved button settings.', '2500');">Enable
+                        (default)</button><button class="b3 red"
+                        onclick="writepb('b','f');abs=false;snack('Saved button settings.', '2500');">Disable</button>
+                    <p>System</p>
                     <button class="b1" onclick="repop();">Enter recovery (Ctrl+Alt+R)</button>
                     <p><button class="winb" onclick="fesw('settingsgen', 'settingsmain');">Back</button></p>
                 </div>
@@ -244,6 +254,11 @@
                         onclick="tsnap(6000, 6);">6s</button><button class="b1"
                         onclick="tsnap(9000, 9);">9s</button><button class="b1" onclick="tsnap(12000, 12);">12s</button>
                     <p><button class="b1" onclick="fesw('snapper', 'cameraitself');">Back</button></p>
+                </div>
+                <div id="savewherecam" style="display: none;">
+                    <p>Picture taken! Save to:</p>
+                    <button class="b1" onclick="savetodev();">Device</button><button class="b1" onclick="savetolocker();">Locker</button>
+                    <p><button class="b1" onclick="fesw('savewherecam', 'cameraitself');">Back</button></p>
                 </div>
             </div>
             <script src="./assets/apps/camera.js"></script>
@@ -300,75 +315,83 @@
         <!--Locker-->
         <div id="locker" class="window resizeh" name="Locker" style="width: 400px; overflow: auto !important;">
             <div class="title-bar">Locker <button class="winb wc" onclick="hidef('locker');">Close</button><button
-                    class="winb" onclick="upload();">Upload</button>
+                    class="winb" onclick="upload();">Upload</button><button
+                    class="winb" onclick="window.fucklocker();">Erase locker</button>
             </div>
             <div class="content" id="locker-list">
-                <p>Locker</p>
+            </div>
+            <div class="content hide" id="lockerdel">
+                <p class="locker_del">Starting...</p>
             </div>
         </div>
         <!--End of locker-->
         <!--Browser-->
-        <div id="browser" class="window resizeh" name="Browser" style="width: 700px;">
-            <div class="title-bar">Browser
-                <button class="winb wc" onclick="hidef('browser');">Close</button><button class="winb"
-                    onclick="fesw('browser2', 'browser1');">Page Error</button><button class="winb"
-                    onclick="browsergo();">Go!</button><button class="winb" onclick="browseback();">Back</button><button
-                    class="winb" onclick="browseforward();">Forward</button>
-            </div>
-            <div class="content">
-                <div id="browser1" style="display: none;">
-                    <p>To view most websites, you'll need to add a small tool to your Chrome/Edge browser.</p>
-                    <p>This tool helps WebDesk load websites that normally don't let you view them in a certain way.</p>
-                    <p>After you add it, come back here! You'll be shown how to enable it (it's easy).</p>
-                    <button onclick="fesw('browser1', 'browser2');" class="b1">Back</button><button class="b1"
-                        onclick="fesw('browser1', 'browser3');">Add Tool</button>
+        <div id="browser" class="window resizeh" name="Browser" style="width: 1366px;">
+            <div id="border-root">
+                <div id="border-titlebar" class="title-bar-ns">
+                    <div id="border-tab-menu">
+                        <div id="border-c-button" class="nodrag" onclick="hidef('browser');">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 20 20"
+                                fill="none">
+                                <path
+                                    d="M10 6.2963L3.7037 0L0 3.7037L6.2963 10L0 16.2963L3.7037 20L10 13.7037L16.2963 20L20 16.2963L13.7037 10L20 3.7037L16.2963 0L10 6.2963Z"
+                                    fill="rgba(var(--accent), 0.95)" />
+                            </svg>
+                        </div>
+                        <div id="border-tab-container">
+
+                        </div>
+                        <div id="border-add-button" class="nodrag">
+                            <svg width="10" height="10" viewBox="0 0 20 20" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M12.2727 7.72727V0H7.72727V7.72727H0V12.2727H7.72727V20H12.2727V12.2727H20V7.72727H12.2727Z"
+                                    fill="rgba(var(--accent), 0.95)" />
+                            </svg>
+                        </div>
+                    </div>
                 </div>
-                <div id="browser2">
-                    <input class="i1" placeholder="Link here, then select 'Go!'" id="browserlink">
-                    <embed class="embed" height="400px" src="./assets/browser.html" id="browserframe"></embed>
+                <div id="border-menu" class="nodrag">
+                    <div class="border-history-btn border-history-back">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 29 43"
+                            fill="none">
+                            <path class="border-svg-icon"
+                                d="M0 21.2132L21.2131 42.4264L28.2842 35.3553L14.1421 21.2132L28.2842 7.07104L21.2131 0L0 21.2132Z"
+                                fill="rgba(var(--accent), 0.6)" />
+                        </svg>
+                    </div>
+                    <div class="border-history-btn border-history-forward">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 29 43"
+                            fill="none">
+                            <path class="border-svg-icon"
+                                d="M29 21.7868L7.78687 0.573607L0.715823 7.64468L14.8579 21.7868L0.715821 35.929L7.78687 43L29 21.7868Z"
+                                fill="rgba(var(--accent), 0.6)" />
+                        </svg>
+                    </div>
+                    <div class="border-history-btn border-history-refresh">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 45 45"
+                            fill="none">
+                            <path class="border-svg-icon"
+                                d="M45 20V0L38.4099 6.59011C35.2632 3.44343 31.2541 1.30051 26.8895 0.432343C22.525 -0.435825 18.001 0.00975001 13.8896 1.71272C9.77828 3.41569 6.26427 6.29957 3.79193 9.99968C1.3196 13.6998 0 18.0499 0 22.5C0 26.9501 1.3196 31.3002 3.79193 35.0003C6.26427 38.7004 9.77828 41.5843 13.8896 43.2873C18.001 44.9903 22.525 45.4358 26.8895 44.5677C31.2541 43.6995 35.2632 41.5566 38.4099 38.4099L31.3388 31.3388C29.5907 33.087 27.3634 34.2775 24.9386 34.7598C22.5139 35.2421 20.0005 34.9946 17.7165 34.0485C15.4324 33.1024 13.4801 31.5003 12.1066 29.4446C10.7331 27.389 10 24.9723 10 22.5C10 20.0277 10.7331 17.611 12.1066 15.5554C13.4801 13.4998 15.4324 11.8976 17.7165 10.9515C20.0005 10.0054 22.5139 9.75788 24.9386 10.2402C27.3634 10.7225 29.5907 11.913 31.3388 13.6612L25 20H45Z"
+                                fill="rgba(var(--accent), 0.95)" />
+                        </svg>
+                    </div>
+                    <input id="border-searchbar" class="i1" placeholder="Enter an URL..."></input>
+                    <div id="border-search-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 40 43"
+                            fill="none">
+                            <path class="border-svg-icon"
+                                d="M18.071 0L39.2842 21.2132L18.071 42.4264L11 35.3553L20.3552 26H0V16H19.929L11 7.07108L18.071 0Z"
+                                fill="rgba(var(--accent), 0.95)" />
+                        </svg>
+                    </div>
                 </div>
-                <div id="browser3" style="display: none;">
-                    <p>Please enable the extension by:</p>
-                    <p>- Installing the extension by <a
-                            onclick="redir(`https://chromewebstore.google.com/detail/allow-x-frame-options/jfjdfokifdlmbkbncmcfbcobggohdnif`);">selecting
-                            this</a> (works on anything Chrome-base)</p>
-                    <p>- Opening the Extension menu (the puzzle piece in your URL bar)</p>
-                    <p>- Clicking "Allow X-Frame Options" (in the menu you opened)</p>
-                    <p>- Clicking "Toggle ON/OFF" (bottom left corner)</p>
-                    <p>When you're done, reboot to apply to WebDesk. Browser will auto-open.</p>
-                    <button class="b1" onclick="fesw('browser3', 'browser1');">Back</button>
-                    <button class="b1" onclick="writevar('auto-open', 'browser'); writevar('brsetup', 't', 'r');">All
-                        done!</button>
+                <div class="appbar"></div>
+                <div id="border-view-container" class="nodrag" style="border: 6px solid transparent;">
                 </div>
             </div>
         </div>
-        <script>
-            var iframe = document.getElementById("browserframe");
-            var visitedUrls = [];
-            var currentIndex = -1;
-
-            function browseback() {
-                if (currentIndex > 0) {
-                    currentIndex--;
-                    iframe.src = visitedUrls[currentIndex];
-                }
-            }
-
-            function browseforward() {
-                if (currentIndex < visitedUrls.length - 1) {
-                    currentIndex++;
-                    iframe.src = visitedUrls[currentIndex];
-                }
-            }
-
-            iframe.addEventListener("load", function () {
-                if (currentIndex === -1 || iframe.src !== visitedUrls[currentIndex]) {
-                    visitedUrls.splice(currentIndex + 1);
-                    visitedUrls.push(iframe.src);
-                    currentIndex++;
-                }
-            });
-        </script>
+        <script defer src="./assets/border.js"></script>
         <!--End of browser-->
         <!--Calculator-->
         <div id="calculator" class="window">
@@ -518,7 +541,7 @@
         </div>
         <!--End of auth-->
         <!--Desktop nav-->
-        <button id="mainbtn" class="cent" onclick="toggle('mainmenu');"><svg xmlns="http://www.w3.org/2000/svg"
+        <button id="mainbtn" class="cent n" onclick="toggle('mainmenu');playc();"><svg xmlns="http://www.w3.org/2000/svg"
                 width="24" height="16" viewBox="0 0 24 16" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-more-horizontal">
                 <circle cx="12" cy="10" r="1"></circle>
@@ -566,6 +589,16 @@
                 src="./assets/sandbox.html" id="sandboxframe">Sandbox is
             booting...</embed>
         </div>
+        <audio id="hSound">
+            <source src="./assets/other/h.mp3" type="audio/mpeg">
+            Your browser does not support the audio element, if you're actually seeing this PLEASE use a different
+            browser.
+        </audio>
+        <audio id="cSound">
+            <source src="./assets/other/c.mp3" type="audio/mpeg">
+            Your browser does not support the audio element, if you're actually seeing this PLEASE use a different
+            browser.
+        </audio>
         <!--End of desktop nav-->
     </div>
     <script src="./assets/apps/loosecode.js"></script>
@@ -576,9 +609,11 @@
     <script src="./assets/code/peer.js"></script>
     <script src="./assets/code/mico.js"></script>
     <script src="./assets/code/rec.js"></script>
+    <script src="./assets/code/opfile.js"></script>
     <script src="./assets/code/locker.js"></script>
     <script>
         let started = false;
+        var customCursor = document.createElement("div");
         document.onreadystatechange = async function () {
             try {
                 if (started === true) {
@@ -600,11 +635,30 @@
                             class="b1" onclick="recovery();">Recovery</button>`, 'Database', '360px');
                         }
                     }
+                    function isMobileDevice() {
+                        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                    }
+                    if (!isMobileDevice()) {
+                        customCursor.classList.add("custom-cursor");
+                        document.body.appendChild(customCursor);
+                        document.addEventListener("mousemove", function (event) {
+                            customCursor.style.left = event.clientX + "px";
+                            customCursor.style.top = event.clientY + "px";
+                        })
+                    } else {
+                        customCursor.id = "fucker";
+                        dest('fucker');
+                        console.log(`<i> Is mobile, destroy cursor`);
+                    }
                     opapp('setup');
                     if (sandParam) {
-                        dest('setup1');showf('yowetrapped');
+                        dest('setup1'); showf('yowetrapped');
                         writevar('username', 'User');
                         return;
+                    }
+                    const btn = readpb('b');
+                    if (btn === "f") {
+                        abs = false;
                     }
                     const setup = readpb('setupdone');
                     if (setup == "y") {
@@ -700,7 +754,6 @@
             </div>
             <!--End of Migration Assistant-->`;
             console.log('<i> Starting recovery apps...');
-
             const recoveryWindow = document.getElementById('recovery');
             const migrationWindow = document.getElementById('migration');
             winrec(recoveryWindow);
@@ -708,14 +761,12 @@
             initializePeerConnection();
             opapp('recovery');
         }
-
         document.addEventListener('keydown', function (event) {
             if (event.ctrlKey && event.altKey && event.key === 'r') {
                 event.preventDefault();
                 repop();
             }
         });
-
         if (sandParam) {
             fesw('setup1', 'yowetrapped');
             fesw('mainwebact', 'mainsandact'); showf('sandwarn');
