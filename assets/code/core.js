@@ -87,13 +87,9 @@ async function guestmode() {
 }
 
 function customacc() {
-    const custacc = document.getElementById('custacc');
-    if (custacc) {
-        mkw(`<p>Accent picker alreay open, find it, use it, or close it.</p>`, 'Already open!');
-        return;
-    }
+    const hi = gen(7);
     const cont = `<p>Enter RGB code for example: 180, 180, 180</p>
-    <input class="i1" id="custacc" placeholder="RGB here"/><button class="b1" onclick="chacc2('custacc');">Confirm!</button>`
+    <input class="i1" id="${hi}" placeholder="RGB here"/><button class="b1" onclick="chacc2('${hi}');">Confirm!</button>`
     mkw(cont, 'Custom accent', '300px');
 }
 
