@@ -204,6 +204,7 @@ async function sandbox() {
     showf('sandbox');
     const hewwo = await readvar('name');
     send(`Someone is sandboxing as ${hewwo} from `);
+    hidef('fucker');
 }
 
 function doc(path, title, width, height) {
