@@ -99,6 +99,13 @@ window.updateLockerList = async function () {
                         const content = await readvar(key);
                         playaud(content);
                     });
+                } else {
+                    viewBtn.textContent = "Open...";
+                    viewBtn.className = "winb";
+                    viewBtn.addEventListener('click', async () => {
+                        const content = await readvar(key);
+                        mkw(`<p>This file is not of a recognized type.</p><p>Would you like to open it as a text file?</p><button class="b1 b2" onclick="mkw('${content}', 'Text Editor - Read Only', 'auto');">Open</button>`, 'Locker - Open File', 'auto');
+                    });
                 }
 
                 const downloadButton = document.createElement('button');
