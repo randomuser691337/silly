@@ -1,2 +1,2 @@
-<p>If you forgot your pass, you'll need to erase WebDesk to use it.</p>
+<p>If you forgot your pass, erase WebDesk to use it again.</p>
 <button class="b1 b2" onclick="burnitall('justreload');">Erase all data</button>

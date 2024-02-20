@@ -166,7 +166,7 @@ function passtime(el) {
 function passtimedesk(el) {
     const elID = document.getElementById(el).value;
     if (elID === "") {
-        mkw('Enter a password!', 'Error');
+        snack('Enter a password!', '3000');
     } else {
         pass = elID;
         passchange(elID);

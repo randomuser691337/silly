@@ -127,7 +127,7 @@ window.updateLockerList = async function () {
                 renButton.className = "winb";
                 renButton.addEventListener('click', () => {
                     const boxId = gen(7);
-                    const win = `<p>Enter a name that isn't already used</p>
+                    const win = `<p>Enter a name that isn't already used, filenames are not encrypted!</p>
                     <input class="i1" id="${boxId}" placeholder="Name here"/><button class="b1" onclick="renlocker('${key}', '${boxId}');$(this).parent().parent().fadeOut('150', function() {$(this).remove();});">Rename</button>`;
                     mkw(win, 'Locker - Rename', '300px');
                 });
