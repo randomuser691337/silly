@@ -144,7 +144,7 @@ window.updateLockerList = async function () {
                 // Add both buttons to the list item
                 listItem.appendChild(p);
                 p.appendChild(downloadButton);
-                if (found) { p.appendChild(viewBtn); }
+                p.appendChild(viewBtn);
                 p.appendChild(deleteButton);
                 p.appendChild(renButton);
                 lockerList.appendChild(listItem);
@@ -174,12 +174,12 @@ window.fucklocker = async function () {
             if (key.startsWith('locker_')) {
                 anyKeyFound = true; // Set the flag to true if a key is found
                 delvar(key);
-                masschange('locker_del', `Deleting: ${fileName}`);
+                window.updateLockerList(); 
             }
         });
 
         if (!anyKeyFound) {
-            hidef('locker'); fesw('lockerdel', 'locker_list'); window.updateLockerList(); snack(`Erased locker successfully.`, '3400');
+             window.updateLockerList(); snack(`Erased locker successfully.`, '3400');
         }
     };
 
