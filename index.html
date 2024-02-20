@@ -650,10 +650,11 @@
                         document.addEventListener("mousemove", function (event) {
                             customCursor.style.left = event.clientX + "px";
                             customCursor.style.top = event.clientY + "px";
-                        })
+                        });
+                        customCursor.id = "fucker";
                     } else {
                         customCursor.id = "fucker";
-                        dest('fucker');
+                        hidef('fucker');
                         console.log(`<i> Is mobile, destroy cursor`);
                     }
                     opapp('setup');
@@ -785,10 +786,12 @@
                 if (event.data === "hide") {
                     console.log('<i> Suspending sandbox...');
                     hidef('sandbox');
+                    showf('fucker');
                 } else if (event.data === "end") {
                     console.log('<i> Ending sandbox...');
                     hidef('sandbox');
                     document.getElementById('sandboxframe').src = "./assets/sandbox.html";
+                    showf('fucker');
                 }
             }
         }
