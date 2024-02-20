@@ -35,7 +35,7 @@ function initDB() {
                     resolve(db);
                 };
             };
-        }, 500);
+        }, 200);
     });
 
     return dbPromise;
@@ -61,7 +61,7 @@ function erasepb() {
 
 function encrypt(value) {
     if (pass === "def") {
-        console.log(`<!> STOP: Password is unset. Value of attempted write: ${value}`);
+        console.log(`<!> STOP: Password is unset. Attempted write: ${value}`);
         return;
     }
     let encrypted = '';
@@ -73,7 +73,7 @@ function encrypt(value) {
 
 function decrypt(value) {
     if (pass === "def") {
-        console.log(`<!> STOP: Password is unset. Value of attempted read: ${value}`);
+        console.log(`<!> STOP: Password is unset. Attempted read: ${value}`);
         return;
     }
     let decrypted = '';
@@ -154,6 +154,7 @@ async function delvar(varName) {
     try {
         if (crashed == true) { console.log('Rejected FS action: Panic!'); } else {
             const db = await initDB();
+            
             const transaction = db.transaction('settings', 'readwrite');
             const objectStore = transaction.objectStore('settings');
             objectStore.delete(varName);
