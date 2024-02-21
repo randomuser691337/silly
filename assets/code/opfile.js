@@ -1,11 +1,22 @@
-function viewimg(val, name) {
-    if (!val.startsWith("data:image/")) {
-        console.error("Invalid image data format");
+function viewmed(val, name, mediaType) {
+    if (!(mediaType === 'i' && val.startsWith("data:image/")) &&
+        !(mediaType === 'v' && val.startsWith("data:video/"))) {
+        console.error("Invalid media data format");
         return;
     }
 
-    const win = `<img class="embed" src="${val}"></img>`
-    mkw(win, name, '300px');
+    const mediaTag = mediaType === 'i' ? 'img' : 'video'; // Adjusted mediaType checks
+    const mediaSrcAttribute = mediaType === 'i' ? 'src' : 'src';
+    const fuck = gen(7);
+    const mediaElement = `<${mediaTag} class="embed" ${mediaSrcAttribute}="${val}" id="${fuck}" controls></${mediaTag}>`;
+    const hi = gen(7);
+    mkw(mediaElement, name, '300px', undefined, undefined, hi);
+    const hi2 = document.getElementById(hi);
+    hi2.addEventListener('click', function () {
+        const fucker = document.getElementById(fuck);
+        fucker.pause();
+        dest(fucker);
+    });
 }
 
 function framecon(cont) {

@@ -4,7 +4,7 @@ function isFileTooLarge(file) {
     return fileSizeInMB > 12;
 }
 
-var valuesToCheck = [".jpg", ".png", ".svg", ".jpeg", ".webp", ".mp3"];
+var valuesToCheck = [".jpg", ".png", ".svg", ".jpeg", ".webp", ".mp3", ".mp4", ".webm", ".gif", ".avi"];
 
 // Function to handle file upload
 async function handleFileUpload(file) {
@@ -90,7 +90,14 @@ window.updateLockerList = async function () {
                     viewBtn.className = "winb";
                     viewBtn.addEventListener('click', async () => {
                         const content = await readvar(key);
-                        viewimg(content, fileName);
+                        viewmed(content, fileName, 'i');
+                    });
+                } else if (found == ".mp4" || found == ".webm" || found == ".gif" || found == ".avi") {
+                    viewBtn.textContent = "View";
+                    viewBtn.className = "winb";
+                    viewBtn.addEventListener('click', async () => {
+                        const content = await readvar(key);
+                        viewmed(content, fileName, 'v');
                     });
                 } else if (found === ".mp3") {
                     viewBtn.textContent = "Play";
@@ -104,7 +111,8 @@ window.updateLockerList = async function () {
                     viewBtn.className = "winb";
                     viewBtn.addEventListener('click', async () => {
                         const content = await readvar(key);
-                        mkw(`<p>This file is not of a recognized type.</p><p>Would you like to open it as a text file?</p><button class="b1 b2" onclick="mkw('${content}', 'Text Editor - Read Only', 'auto');">Open</button>`, 'Locker - Open File', 'auto');
+                        mkw(`<p>This file is not of a recognized type.</p><p>Would you like to open it as a text file?</p><button class="b1 b2" onclick="mkw('<p>' + '${content}' + '</p>', 'Text Editor - Read Only', 'auto');">Open</button>
+                        `, 'Locker - Open File', 'auto');
                     });
                 }
 
@@ -174,12 +182,12 @@ window.fucklocker = async function () {
             if (key.startsWith('locker_')) {
                 anyKeyFound = true; // Set the flag to true if a key is found
                 delvar(key);
-                window.updateLockerList(); 
+                window.updateLockerList();
             }
         });
 
         if (!anyKeyFound) {
-             window.updateLockerList(); snack(`Erased locker successfully.`, '3400');
+            window.updateLockerList(); snack(`Erased locker successfully.`, '3400');
         }
     };
 
