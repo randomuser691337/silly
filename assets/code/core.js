@@ -335,7 +335,7 @@ function cleantop() {
     hidef("mainmenu");
     mkw(`<p>This will close all windows, regardless of status.</p><p>Click 'Close' to cancel, or 'Clean Desktop' to continue.<button class='b1 b2' onclick="hidef('mainmenu'); sall('wc');">Clean Desktop</button></p>`, "WebDesk", "320px");
 }
-const abuttons = document.querySelectorAll("button", "a");
+const abuttons = document.querySelectorAll("button");
 function playh() {
     if (abs) {
         var audio = document.getElementById("hSound");
@@ -363,7 +363,7 @@ function inbt(buttons) {
                 const buttonY = rect.y + rect.height / 2;
                 const deltaX = e.clientX - buttonX;
                 const deltaY = e.clientY - buttonY;
-                button.style.transform = `translate(${deltaX / 25}px, ${deltaY / 25}px) scale(1.05)`;
+                button.style.transform = `translate(${deltaX / 25}px, ${deltaY / 25}px) scale(1.04)`;
             });
             function resetButtonStyles() {
                 button.style.transform = "translate(0, 0) scale(1.0)";

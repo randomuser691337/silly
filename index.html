@@ -18,7 +18,7 @@
     </style>
     <script>
         var ver = "0.0.9";
-        var lastedit = "Feb 15, 2024";
+        var lastedit = "Feb 21, 2024";
         var crashed = false;
         var mostrecerr = "No history."
         var forcedatac = true;
@@ -662,6 +662,10 @@
                         dest('setup1'); showf('yowetrapped');
                         writevar('username', 'User');
                         return;
+                    }
+                    const btn = readpb('b');
+                    if (btn === "f") {
+                        abs = false;
                     }
                     const btn = readpb('b');
                     if (btn === "f") {

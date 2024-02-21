@@ -11,6 +11,8 @@
     --fz3: 12px;
     --fontc: #fff;
     --fontc2: #aaa;
+    --slbl: blur(4px);
+    --mdbl: blur(10px);
 }
 
 @font-face {
@@ -373,8 +375,8 @@ button {
     color: var(--fontc);
     border: none;
     animation: mainbtn 1s;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: var(--slbl);
+    -webkit-backdrop-filter: var(--slbl);
 }
 
 @keyframes mainbtn {

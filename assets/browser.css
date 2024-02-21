@@ -84,12 +84,15 @@
     border-radius: 10px;
     height: 80%;
     margin-left: 5px;
-    opacity: 75%;
     background: rgba(var(--accent), 0.3);
-    -webkit-transition: all 0.2s ease;
-    -o-transition: all 0.2s ease;
-    transition: all 0.2s ease;
+    -webkit-transition: all 0.072s ease;
+    -o-transition: all 0.072s ease;
+    transition: all 0.072s ease;
     overflow: hidden;
+}
+
+.border-tab:hover {
+    background-color: rgba(var(--accent), 0.4);
 }
 
 .border-view {
@@ -142,7 +145,7 @@
 }
 
 .border-tab.border-current {
-    opacity: 100%;
+    background: rgba(var(--accent), 0.4);
 }
 
 .border-view.border-current {

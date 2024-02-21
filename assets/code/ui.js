@@ -41,6 +41,8 @@ function wal(content, btn1) {
     windowContainer.style.height = 'auto';
     const titleBar = document.createElement('div');
     titleBar.className = 'title-bar';
+    titleBar.style.border = "none";
+    titleBar.style.borderRadius = "12px";
     titleBar.innerHTML = content + `<p><button class="b1 wc" onclick="dest('${windowId}');">Close</button><button class="b1 wc" onclick="dest('${windowId}');${btn1}">Okay</button></p>`;
     windowContainer.appendChild(titleBar);
     document.getElementById('nest').appendChild(windowContainer);
