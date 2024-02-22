@@ -354,36 +354,40 @@ function playc() {
 }
 function inbt(buttons) {
     buttons.forEach((button) => {
-        if (!button.classList.contains("n")) {
-            button.addEventListener("mouseenter", playh);
-            button.addEventListener("mousedown", playc);
-            button.addEventListener("mousemove", (e) => {
-                const rect = button.getBoundingClientRect();
-                const buttonX = rect.x + rect.width / 2;
-                const buttonY = rect.y + rect.height / 2;
-                const deltaX = e.clientX - buttonX;
-                const deltaY = e.clientY - buttonY;
-                button.style.transform = `translate(${deltaX / 25}px, ${deltaY / 25}px) scale(1.04)`;
-            });
-            function resetButtonStyles() {
-                button.style.transform = "translate(0, 0) scale(1.0)";
-                button.classList.remove("shadow");
+        button.addEventListener("mouseenter", playh);
+        button.addEventListener("mousedown", playc);
+        if (gfx) {
+            if (!button.classList.contains("n")) {
+                button.addEventListener("mousemove", (e) => {
+                    const rect = button.getBoundingClientRect();
+                    const buttonX = rect.x + rect.width / 2;
+                    const buttonY = rect.y + rect.height / 2;
+                    const deltaX = e.clientX - buttonX;
+                    const deltaY = e.clientY - buttonY;
+                    button.style.transform = `translate(${deltaX / 25}px, ${deltaY / 25}px) scale(1.04)`;
+                });
+                function resetButtonStyles() {
+                    button.style.transform = "translate(0, 0) scale(1.0)";
+                    button.classList.remove("shadow");
+                }
+                button.addEventListener("mouseup", resetButtonStyles);
+                button.addEventListener("mouseout", resetButtonStyles);
+                button.addEventListener("mousedown", () => {
+                    button.style.transform = "scale(0.95)";
+                });
+                button.addEventListener("mouseenter", () => {
+                    button.classList.add("shadow");
+                });
+                button.addEventListener("mouseleave", () => {
+                    button.classList.remove("shadow");
+                });
             }
-            button.addEventListener("mouseup", resetButtonStyles);
-            button.addEventListener("mouseout", resetButtonStyles);
-            button.addEventListener("mousedown", () => {
-                button.style.transform = "scale(0.95)";
-            });
-            button.addEventListener("mouseenter", () => {
-                button.classList.add("shadow");
-            });
-            button.addEventListener("mouseleave", () => {
-                button.classList.remove("shadow");
-            });
+        } else {
+            console.log('<i> lowgfx on, btn hover disabled');
         }
     });
 }
-inbt(abuttons);
+
 function ib() {
     const abuttons2 = document.querySelectorAll("button");
     inbt(abuttons2);

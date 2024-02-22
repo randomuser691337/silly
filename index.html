@@ -7,15 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="stylesheet" href="./assets/core.css">
     <link rel="stylesheet" href="./assets/browser.css">
-    <style>
-        * {
-            cursor: none !important;
-        }
-
-        body {
-            cursor: none !important;
-        }
-    </style>
     <script>
         var ver = "0.0.9";
         var lastedit = "Feb 21, 2024";
@@ -25,6 +16,7 @@
         var promptreboot = false;
         var locked = true;
         var abs = true;
+        var gfx = true;
         document.addEventListener('touchstart', function (event) {
             if (event.touches.length > 1) {
                 event.preventDefault();
@@ -182,7 +174,8 @@
                         Password</button><button class="b1 b2"
                         onclick="fesw('settingsmain', 'settingsappear');">Appearance</button><button class="b1 b2"
                         onclick="fesw('settingsmain', 'settingspriv');">Data & Privacy</button><button class="b1 b2"
-                        onclick="fesw('settingsmain', 'settingsgen');">General</button>
+                        onclick="fesw('settingsmain', 'settingsgen');">General (UI)</button><button class="b1 b2"
+                        onclick="fesw('settingsmain', 'settingsdesk');">WebDesk System</button>
                 </div>
                 <div id="settingsuser" style="display: none;">
                     <p style="margin: 0px !important;" class="bold">Username / Password</p>
@@ -230,9 +223,23 @@
                         onclick="writepb('b','t');abs=true;snack('Saved button settings.', '2500');">Enable
                         (default)</button><button class="b3 red"
                         onclick="writepb('b','f');abs=false;snack('Saved button settings.', '2500');">Disable</button>
-                    <p>System</p>
-                    <button class="b1" onclick="repop();">Enter recovery (Ctrl+Shift+R)</button>
+                    <p>Button hover effect</p>
+                    <button class="b3 green"
+                        onclick="writepb('l','t');wal('<p>Reboot to apply changes.</p>', 'reboot()');">Enable
+                        (default)</button><button class="b3 red"
+                        onclick="writepb('l','f');wal('<p>Reboot to apply changes.</p>', 'reboot()');">Disable</button>
+                    <p>WebDesk Cursor</p>
+                    <button class="b3 green"
+                        onclick="writepb('c','t');wal('<p>Reboot to apply changes.</p>', 'reboot()');">Enable
+                        (default)</button><button class="b3 red"
+                        onclick="writepb('c','f');wal('<p>Reboot to apply changes.</p>', 'reboot()');">Disable</button>
                     <p><button class="winb" onclick="fesw('settingsgen', 'settingsmain');">Back</button></p>
+                </div>
+                <div id="settingsdesk" style="display: none;">
+                    <p class="bold">WebDesk System</p>
+                    <p>Troubleshooting</p>
+                    <button class="b1 b2" onclick="repop();">Enter recovery (Cmd/Ctrl+Shift+F)</button>
+                    <p><button class="winb" onclick="fesw('settingsdesk', 'settingsmain');">Back</button></p>
                 </div>
             </div>
         </div>
@@ -656,6 +663,7 @@
                         customCursor.id = "fucker";
                         hidef('fucker');
                         console.log(`<i> Is mobile, destroy cursor`);
+                        hidecls('nocell');
                     }
                     opapp('setup');
                     if (sandParam) {
@@ -667,9 +675,29 @@
                     if (btn === "f") {
                         abs = false;
                     }
-                    const btn = readpb('b');
-                    if (btn === "f") {
-                        abs = false;
+                    const btn2 = readpb('l');
+                    if (btn2 === "f") {
+                        gfx = false;
+                    } else {
+                        inbt(abuttons);
+                        console.log('<i> lowgfx is off, enable hover');
+                    }
+                    const cur = readpb('c');
+                    if (cur === "f") {
+                        hidef('fucker');
+                    } else {
+                        const styleElement = document.createElement('style');
+                        styleElement.id = 'anticur';
+                        styleElement.innerHTML = `
+                            * {
+                                cursor: none !important;
+                            }
+
+                            body {
+                                cursor: none !important;
+                            }`;
+                        document.body.appendChild(styleElement);
+
                     }
                     const setup = readpb('setupdone');
                     if (setup == "y") {
@@ -773,7 +801,7 @@
             opapp('recovery');
         }
         document.addEventListener('keydown', function (event) {
-            if (event.ctrlKey && event.key == "Shift" && event.key == 'r') {
+            if ((event.ctrlKey || event.metaKey) && event.shiftKey && event.key === 'F') {
                 event.preventDefault();
                 repop();
             }
