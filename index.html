@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="./assets/browser.css">
     <script>
         var ver = "0.0.9";
-        var lastedit = "Feb 21, 2024";
+        var lastedit = "Feb 22, 2024";
         var crashed = false;
         var mostrecerr = "No history."
         var forcedatac = true;
@@ -102,7 +102,7 @@
                     <button class="acb" style="background: rgb(40, 70, 235);" onclick="chacc('40, 70, 235');"></button>
                     <button class="acb" style="background: rgb(120, 60, 235);"
                         onclick="chacc('120, 60, 235');"></button>
-                    <button class="acb" style="background: rgb(200, 200, 200);"
+                    <button class="acb" style="background: rgb(180, 180, 180);"
                         onclick="chacc('200, 200, 200');"></button>
                     <p>Appearance</p>
                     <button class="b1 b2 light" onclick="appear('l');">Light</button><button class="b1 b2 dark"
@@ -110,9 +110,9 @@
                     <p><button class="b1" onclick="finishsetup();nametime('username');">Done!</button></p>
                 </div>
                 <div id="setup4" style="display: none;">
-                    <p class="h2">Setup is done!</p>
-                    <p>Finishing up a few things...</p>
-                    <button class="b1" onclick="window.location.reload();">Reload</button>
+                    <p class="h2">If you can read this, something's wrong.</p>
+                    <p>There's an issue with the database, or boot settings, that can't be fixed (from what I know).</p>
+                    <button class="b1" onclick="window.location.reload();">Reload</button><button class="b1" onclick="guestmode();">Guest</button>
                 </div>
                 <div id="mig" style="display: none;">
                     <p class="h2" id="lobotomy">Migration Assistant</p>
@@ -126,7 +126,7 @@
                 <div id="load">
                     <p class="h2">Loading...</p>
                     <p>If this gets stuck or takes too long, reload.</p>
-                    <div class="line-wobble"></div>
+                    <div class="line-wobble center"></div>
                     <button class="b1" onclick="recovery();">Recovery</button><button class="b1"
                         onclick="reboot();">Reload</button>
                 </div>
@@ -196,7 +196,7 @@
                     <button class="acb" style="background: rgb(40, 70, 235);" onclick="chacc('40, 70, 235');"></button>
                     <button class="acb" style="background: rgb(120, 60, 235);"
                         onclick="chacc('120, 60, 235');"></button>
-                    <button class="acb" style="background: rgb(200, 200, 200);"
+                    <button class="acb" style="background: rgb(180, 180, 180);"
                         onclick="chacc('200, 200, 200');"></button>
                     <p><button class="b1 light" onclick="appear('l');">Light</button><button style="margin-left: 3px;"
                             class="b1 dark" onclick="appear();">Dark</button></p>
@@ -553,7 +553,7 @@
         </div>
         <!--End of auth-->
         <!--Desktop nav-->
-        <button id="mainbtn" class="cent n" onclick="toggle('mainmenu');playc();"><svg
+        <button id="mainbtn" class="cent n" onclick="toggle('mainmenu');"><svg
                 xmlns="http://www.w3.org/2000/svg" width="24" height="16" viewBox="0 0 24 16" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                 class="lucide lucide-more-horizontal">
@@ -624,6 +624,7 @@
     <script src="./assets/code/rec.js"></script>
     <script src="./assets/code/opfile.js"></script>
     <script src="./assets/code/locker.js"></script>
+    
     <script>
         let started = false;
         var customCursor = document.createElement("div");
@@ -633,6 +634,7 @@
                     console.log('<!> Rejected doc.onreadychange (shortened)');
                     return;
                 } else {
+                    console.log(`<i> Starting boot stage 1...`);
                     started = true;
                     const bl = await readpb('bootload');
                     if (bl) {
@@ -667,7 +669,7 @@
                     }
                     opapp('setup');
                     if (sandParam) {
-                        dest('setup1'); showf('yowetrapped');
+                        dest('setup1'); dest('load'); showf('yowetrapped');
                         writevar('username', 'User');
                         return;
                     }
@@ -722,6 +724,7 @@
 
         async function boots2() {
             if (locked === false) {
+                console.log(`<i> Password applied. Starting stage 2.`);
                 showcls('whar');
                 const wd = await readvar('wd');
                 const accent = await readvar('accent');
@@ -761,7 +764,7 @@
                 masschange('lastedit', lastedit);
                 masschange('ver', ver);
                 // applications here
-                console.log('<i> Successful boot!');
+                console.log('<i> Successful boot, welcome to WebDesk!');
             } else {
                 panic(`Tried finishing boot without pass confirm`);
             }

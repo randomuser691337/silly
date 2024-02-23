@@ -247,36 +247,10 @@ function browsergo() {
     id2.src = url;
 }
 
-async function resizew(elemID, name1, name2) {
-    const element = document.getElementById(elemID);
-    let rafId = null;
-    let resizeStarted = false;
-
-    function onResize() {
-        if (!resizeStarted) {
-            resizeStarted = true;
-        }
-
-        if (rafId !== null) {
-            cancelAnimationFrame(rafId);
-        }
-
-        rafId = requestAnimationFrame(function () {
-            const resizeW = element.offsetWidth;
-            const resizeH = element.offsetHeight;
-            writevar(name1, resizeW);
-            writevar(name2, resizeH);
-            resizeStarted = false;
-        });
-    }
-
-    window.addEventListener('resize', onResize);
-}
-
 function detectWordAndReturn(wordToDetect, arrayOfWords) {
     for (const word of arrayOfWords) {
         if (word === wordToDetect) {
-            mkw(`<p>You're possibly writing to a system variable.</p><p>If you didn't cause this, you <a>should erase</a> or <a>reboot</a>, as someone has access to your WebDesk.</p>`, 'WebDesk Security', '340px');
+            panic(`Panicked due to a forbidden execution`);
         }
     }
 }
