@@ -1,16 +1,16 @@
 function isFileTooLarge(file) {
     // Convert file size to megabytes
     const fileSizeInMB = file.size / (1024 * 1024);
-    return fileSizeInMB > 12;
+    return fileSizeInMB > 15;
 }
 
-var valuesToCheck = [".jpg", ".png", ".svg", ".jpeg", ".webp", ".mp3", ".mp4", ".webm", ".gif", ".avi"];
+var valuesToCheck = [".jpg", ".png", ".svg", ".jpeg", ".webp", ".mp3", ".mp4", ".webm"];
 
 // Function to handle file upload
 async function handleFileUpload(file) {
     try {
         if (isFileTooLarge(file)) {
-            snack('File size exceeds 12MB limit. Skipping upload.', '4000');
+            snack('File size exceeds 15MB limit. Skipping upload.', '4000');
             return;
         }
         const reader = new FileReader();
@@ -92,7 +92,7 @@ window.updateLockerList = async function () {
                         const content = await readvar(key);
                         viewmed(content, fileName, 'i');
                     });
-                } else if (found == ".mp4" || found == ".webm" || found == ".gif" || found == ".avi") {
+                } else if (found == ".mp4" || found == ".webm") {
                     viewBtn.textContent = "View";
                     viewBtn.className = "winb";
                     viewBtn.addEventListener('click', async () => {

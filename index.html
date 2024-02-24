@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="./assets/browser.css">
     <script>
         var ver = "0.0.9";
-        var lastedit = "Feb 22, 2024";
+        var lastedit = "Feb 24, 2024";
         var crashed = false;
         var mostrecerr = "No history."
         var forcedatac = true;
@@ -112,7 +112,8 @@
                 <div id="setup4" style="display: none;">
                     <p class="h2">If you can read this, something's wrong.</p>
                     <p>There's an issue with the database, or boot settings, that can't be fixed (from what I know).</p>
-                    <button class="b1" onclick="window.location.reload();">Reload</button><button class="b1" onclick="guestmode();">Guest</button>
+                    <button class="b1" onclick="window.location.reload();">Reload</button><button class="b1"
+                        onclick="guestmode();">Guest</button>
                 </div>
                 <div id="mig" style="display: none;">
                     <p class="h2" id="lobotomy">Migration Assistant</p>
@@ -223,13 +224,13 @@
                         onclick="writepb('b','t');abs=true;snack('Saved button settings.', '2500');">Enable
                         (default)</button><button class="b3 red"
                         onclick="writepb('b','f');abs=false;snack('Saved button settings.', '2500');">Disable</button>
-                    <p>Button hover effect</p>
-                    <button class="b3 green"
+                    <p class="guestno">Button hover effect</p>
+                    <button class="b3 green guestno"
                         onclick="writepb('l','t');wal('<p>Reboot to apply changes.</p>', 'reboot()');">Enable
                         (default)</button><button class="b3 red"
                         onclick="writepb('l','f');wal('<p>Reboot to apply changes.</p>', 'reboot()');">Disable</button>
                     <p>WebDesk Cursor</p>
-                    <button class="b3 green"
+                    <button class="b3 green guestno"
                         onclick="writepb('c','t');wal('<p>Reboot to apply changes.</p>', 'reboot()');">Enable
                         (default)</button><button class="b3 red"
                         onclick="writepb('c','f');wal('<p>Reboot to apply changes.</p>', 'reboot()');">Disable</button>
@@ -238,7 +239,7 @@
                 <div id="settingsdesk" style="display: none;">
                     <p class="bold">WebDesk System</p>
                     <p>Troubleshooting</p>
-                    <button class="b1 b2" onclick="repop();">Enter recovery (Cmd/Ctrl+Shift+F)</button>
+                    <button class="b1 b2" onclick="repop();">Enter recovery (Ctrl+Shift+F)</button>
                     <p><button class="winb" onclick="fesw('settingsdesk', 'settingsmain');">Back</button></p>
                 </div>
             </div>
@@ -341,6 +342,20 @@
             </div>
         </div>
         <!--End of locker-->
+        <!--Uploader-->
+        <div id="uploader" class="window resizeh" name="Uploader" style="width: 400px; overflow: auto !important;">
+            <div class="title-bar">Uploader <button class="winb wc" onclick="hidef('uploader');">Close</button>
+            </div>
+            <div class="content">
+                <form action="https://catbox.moe/user/api.php" method="post" enctype="multipart/form-data" target="_blank">
+                    <input type="file" name="fileToUpload" id="fileToUpload">
+                    <input type="hidden" name="reqtype" value="fileupload">
+                    <input type="hidden" name="userhash" value="">
+                    <input type="submit" value="Upload" name="submit">
+                </form>
+            </div>
+        </div>
+        <!--End of uploader-->
         <!--Browser-->
         <div id="browser" class="window resizeh" name="Browser" style="width: 1366px;">
             <div id="border-root">
@@ -553,10 +568,9 @@
         </div>
         <!--End of auth-->
         <!--Desktop nav-->
-        <button id="mainbtn" class="cent n" onclick="toggle('mainmenu');"><svg
-                xmlns="http://www.w3.org/2000/svg" width="24" height="16" viewBox="0 0 24 16" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="lucide lucide-more-horizontal">
+        <button id="mainbtn" class="cent n" onclick="toggle('mainmenu');"><svg xmlns="http://www.w3.org/2000/svg"
+                width="24" height="16" viewBox="0 0 24 16" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-more-horizontal">
                 <circle cx="12" cy="10" r="1"></circle>
                 <circle cx="19" cy="10" r="1"></circle>
                 <circle cx="5" cy="10" r="1"></circle>
@@ -578,7 +592,7 @@
                         onclick="opapp('browser');">Browser</button><button class="b1"
                         onclick="opapp('calculator');">Calculator</button><button class="b1"
                         onclick="doc('./assets/other/trusted.txt', 'App Installer', '270px');">App Installer
-                        (BETA)</button><button class="b1" onclick="opapp('locker');">Locker</button>
+                        (BETA)</button><button class="b1" onclick="opapp('locker');">Locker</button><button class="b1" onclick="opapp('uploader');">Uploader</button>
                 </div>
                 <p class="h2">WebDesk</p>
                 <div class="padmenu" id="mainwebact">
@@ -624,7 +638,7 @@
     <script src="./assets/code/rec.js"></script>
     <script src="./assets/code/opfile.js"></script>
     <script src="./assets/code/locker.js"></script>
-    
+
     <script>
         let started = false;
         var customCursor = document.createElement("div");
@@ -667,9 +681,9 @@
                         console.log(`<i> Is mobile, destroy cursor`);
                         hidecls('nocell');
                     }
-                    opapp('setup');
                     if (sandParam) {
-                        dest('setup1'); dest('load'); showf('yowetrapped');
+                        opapp('setup');
+                        dest('setup1'); dest('load'); showf('yowetrapped'); hidef('guestno');
                         writevar('username', 'User');
                         return;
                     }
@@ -689,7 +703,6 @@
                         hidef('fucker');
                     } else {
                         const styleElement = document.createElement('style');
-                        styleElement.id = 'anticur';
                         styleElement.innerHTML = `
                             * {
                                 cursor: none !important;
@@ -734,7 +747,7 @@
                 const hewwo = await readvar('name');
                 if (hewwo == "" || hewwo == undefined) {
                     dest('setup');
-                    nameutil(`<p>You didn't set a name during setup.</p><p>Please set one now!</p>`);
+                    nameutil(`<p>You didn't set a name during setup.</p><p>Set one to use WebDesk.</p>`);
                 } else {
                     desktop(hewwo); masschange('greet', 'Hi there');
                     if (!sandParam) {
@@ -780,7 +793,7 @@
                 <div class="content">
                     <p class="h2">Recovery</p>
                     <p>You can erase to fix all issues, or wipe the cache/bootload variables to attempt a fix.</p>
-                    <button class="b1" onclick="burnitall();">Erase</button><button class="b1" onclick="wipeboot();">Delete cache</button><button class="b1 hidden" onclick="opapp('migration');">Migrate</button>
+                    <button class="b1" onclick="wal('<p>Warning: Erasing WebDesk will delete all of it's data. Select 'Close' to stop, or 'Erase' to continue.</p>', 'burnitall()');">Erase</button><button class="b1" onclick="wipeboot();">Delete cache</button><button class="b1 hidden" onclick="opapp('migration');">Migrate</button>
                 </div>
             </div>
             <!--Migration Assistant-->
