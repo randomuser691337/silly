@@ -93,7 +93,7 @@ function chacc(clr1) {
 }
 function dest(d1) {
     const dr1 = document.getElementById(d1);
-    $(dr1).fadeOut(170, function () { dr1.remove });
+    $(dr1).fadeOut(170, function () { dr1.remove(); });
 }
 function snack(cont, t) {
     var snackElement = document.createElement("div");
@@ -103,11 +103,9 @@ function snack(cont, t) {
     snackElement.innerHTML = cont;
     document.body.appendChild(snackElement);
     snackElement.onclick = function () {
-        dest(fuckyou); 
-    }
-    setTimeout(function () {
         dest(fuckyou);
-    }, t);
+    }
+    setTimeout(function () {dest(fuckyou);}, t);
 }
 function sv() {
     snack('Saved!', '2000');
@@ -128,6 +126,12 @@ function masschange(classn, val) {
         usernameElements[i].textContent = val;
     }
 }
+function masshtml(classn, val) {
+    const usernameElements = document.getElementsByClassName(classn);
+    for (let i = 0; i < usernameElements.length; i++) {
+        usernameElements[i].innerHTML = val;
+    }
+}
 function embed(src, name, width, height) {
     const random = gen(8);
     const embed = `<embed class="embed" id="${random}" src="${src}", height="${height}"></embed>`
@@ -138,13 +142,49 @@ function redir(url2) {
     <p>Select "Close" to cancel, or "Accept" to continue.</p>`
     wal(ye, `golink('${url2}');`);
 }
+function getstr() {
+    const progressBarElements = document.querySelectorAll('.struse');
+    const usageTextElements = document.querySelectorAll('.usage-text');
+
+    if ('storage' in navigator && 'estimate' in navigator.storage) {
+        navigator.storage.estimate().then(function (estimate) {
+            const usedGB = (estimate.usage / (1024 * 1024 * 1024)).toFixed(2);
+            const quotaGB = (estimate.quota / (1024 * 1024 * 1024)).toFixed(2);
+
+            usageTextElements.forEach(function (usageText) {
+                usageText.innerHTML = `Used <span class="med">${usedGB}</span> GB out of <span class="med">${quotaGB}</span> GB`;
+            });
+
+            progressBarElements.forEach(function (progressBar) {
+                const usageInPercent = (estimate.usage / estimate.quota) * 100;
+                progressBar.style.width = usageInPercent + '%';
+            });
+        });
+    } else {
+       panic(`Can't open db!`);
+    }
+}
+
+setInterval(getstr, 2000);
+
 function about(value) {
-    const about = `<img style="border: none; width: 100px; height: 100px;" src="./assets/img/favicon.png"></img>
-        <p>Version: <span class="ver">one sec</span></p>
-        <p>Last edit: <span class="lastedit">one sec</span></p>
-        <a onclick="embed('https://meower.xyz', 'About Embed', '520px', '340px');">Dev's Site</a> <a onclick="doc('./assets/other/creds.txt', 'WebDesk Credits', '420px', 'auto');">Creds</a>`;
+    const about = `<div class="container">
+        <div class="logo">
+            <img style="width: 100%; box-sizing: border-box; height: auto;" src="./assets/img/favicon.png">
+            <p>Ver: <span class="ver med">one sec</span></p>
+        </div>
+        <div class="info">
+            <p>Last edit: <span class="lastedit med">one sec</span></p>
+            <p class="usage-text">One sec...</p>
+            <div class="progress-bar">
+                <div class="progress struse"></div>
+            </div>
+            <a onclick="embed('https://meower.xyz', 'About Embed', '520px', '340px');">Dev's Site</a> 
+            <a onclick="doc('./assets/other/creds.txt', 'WebDesk Credits', '420px', 'auto');">Creds</a>
+        </div>
+    </div>`;
     if (value === undefined) {
-        mkw(about, `About`, '190px', './assets/img/favicon.png');
+        mkw(about, `About`, '300px', './assets/img/favicon.png');
     }
 
     masschange('ver', ver);

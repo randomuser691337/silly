@@ -3,45 +3,52 @@ let weatherInterval; // To hold the interval reference
 
 function getWeather2(city2, system, bypass) {
     try {
-        let city;
-        if (document.getElementById(city2)) {
-            city = document.getElementById(city2).value;
-        } else {
-            city = city2;
-        }
+        const city = document.getElementById(city2)?.value || city2;
         const apiKey = 'b1b534c96a287b05ee3d72fa79800ce1';
         const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=${system}&appid=${apiKey}`;
 
-        fetch(apiUrl)
-            .then(response => {
+        const fetchWeatherData = async () => {
+            try {
+                const response = await fetch(apiUrl);
                 if (!response.ok) {
-                    mkw(`<p>City not found!</p><button class="b1" onclick="opapp('weather');this.parentNode.parentNode.remove();">Open Weather</button>`, 'Weather', '200px;');
-                    fesw('weathers2', 'weathers1');
-                    console.log('<!> City not found!');
+                    throw new Error('City not found!');
                 }
-                return response.json();
-            })
-            .then(data => {
+                // We fetched the data, we're gonna use the data.
+                const data = await response.json();
                 const temperature = data.main.temp;
                 const conditions = data.weather[0].description;
                 const humidity = data.main.humidity;
                 const windSpeed = data.wind.speed;
-                const weatherInfo = `${temperature}*${system === 'metric' ? 'C' : 'F'}, ${conditions}, humidity: ${humidity}%, wind speed: ${windSpeed} m/s`;
-                const weatherInfo2 = `${temperature}*${system === 'metric' ? 'C' : 'F'}, ${conditions}`;
+                const visibility = data.visibility ? (data.visibility / 1000).toFixed(1) + ' km' : 'N/A';
+                const pressure = data.main.pressure;
+                const sunriseTime = new Date(data.sys.sunrise * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                const sunsetTime = new Date(data.sys.sunset * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                const cloudiness = data.clouds.all;
+                const rainfall = data.rain ? data.rain['1h'] + ' mm' : 'N/A';
+                const temperatureUnit = system === 'metric' ? 'C' : 'F';
+                const weatherInfo = `<p><span class="med">Temperature: </span>${temperature.toFixed(1)}*${temperatureUnit}</p>
+                    <p><span class="med">Weather: </span>${conditions}</p>
+                    <p><span class="med">Humidity: </span>${humidity}% - <span class="med">Wind speed: </span>${windSpeed} m/s</p>
+                    <p><span class="med">Visibility: </span>${visibility} - <span class="med">Pressure: </span>${pressure} hPa</p>
+                    <p><span class="med">Sunrise: </span>${sunriseTime} - <span class="med">Sunset: </span>${sunsetTime}</p>
+                    <p><span class="med">Cloudiness: </span>${cloudiness}% - <span class="med">Rainfall: </span>${rainfall}</p>`;
+                const weatherInfo2 = `${temperature.toFixed(1)}*${temperatureUnit}, ${conditions}`;
                 masschange('weather', weatherInfo2);
-                masschange('weathera', weatherInfo);
+                masshtml('weathera', weatherInfo);
                 console.log('<i> getWeather ran with no errors.');
-            })
-            .catch(error => {
+            } catch (error) {
                 masschange('weather', 'An error occurred, check the console.');
                 console.log(`<!> ${error}`);
-            });
+            }
+        };
+
+        fetchWeatherData();
         writevar('city', city);
         writevar('unit', system);
         writevar('wd', 'noice');
         fesw('weathers1', 'weathers2');
     } catch (error) {
-        mkw(`<p>An error occured with the weather.</p><button class="b1" onclick="walert('${error}', 'Error Details', '300px');">View Error Details</button>`, 'Weather', '300px');
+        mkw(`<p>An error occurred with the weather.</p><button class="b1" onclick="walert('${error}', 'Error Details', '300px');">View Error Details</button>`, 'Weather', '300px');
     }
 }
 

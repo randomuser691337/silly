@@ -8,23 +8,30 @@ var valuesToCheck = [".jpg", ".png", ".svg", ".jpeg", ".webp", ".mp3", ".mp4", "
 
 // Function to handle file upload
 async function handleFileUpload(file) {
-    try {
-        if (isFileTooLarge(file)) {
-            snack('File size exceeds 15MB limit. Skipping upload.', '4000');
-            return;
+    const silly = await readvar('allowbu');
+    if (locked === false) {
+        try {
+            if (!silly === "y") {
+                if (isFileTooLarge(file)) {
+                    snack('File size exceeds 15MB limit. Skipping upload.', '4000');
+                    return;
+                }
+            }
+            const reader = new FileReader();
+            reader.onload = async () => {
+                const fileName = 'locker_' + file.name;
+                const content = reader.result;
+                await writevar(fileName, content);
+                window.updateLockerList();
+            };
+            reader.readAsDataURL(file);
+            snack('Uploaded file successfully! WebDesk might have frozen if the file was large, wait for it to unfreeze.', '3000');
+        } catch (error) {
+            snack(`Locker error: ${error}`, '3500');
+            console.log(error);
         }
-        const reader = new FileReader();
-        reader.onload = async () => {
-            const fileName = 'locker_' + file.name;
-            const content = reader.result;
-            await writevar(fileName, content);
-            window.updateLockerList();
-        };
-        reader.readAsDataURL(file);
-        snack('Uploaded file successfully! WebDesk might have frozen if the file was large, wait for it to unfreeze.', '3000');
-    } catch (error) {
-        snack(`Locker error: ${error}`, '3500');
-        console.log(error);
+    } else {
+        snack(`Unlock WebDesk to upload.`, '3500');
     }
 }
 

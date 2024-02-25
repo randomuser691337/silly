@@ -236,7 +236,7 @@ input:placeholder {
 }
 
 .shadow {
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 10px 36px 0px, rgba(0, 0, 0, 0.15) 0px 0px 0px 1px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 36px 0px, rgba(0, 0, 0, 0.15) 0px 0px 0px 1px;
 }
 
 .window {
@@ -539,6 +539,20 @@ a:active {
     cursor: pointer;
 }
 
+.progress-bar {
+    width: 100%;
+    box-sizing: border-box;
+    height: 20px;
+    border: 2px solid var(--lightdarkb);
+    border-radius: var(--rad2);
+}
+
+.progress {
+    height: 100%;
+    background-color: rgba(var(--accent), 0.20);
+    width: 0%;
+}
+
 @keyframes fade {
     0% {
         padding: 10px;
@@ -550,4 +564,21 @@ a:active {
         padding: 10px;
         bottom: 15px;
     }
+}
+
+.container {
+    display: flex;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+    border: none;
+}
+
+.info {
+    margin-left: 8px;
+    max-width: calc(100% - 80px - 8px);
 }
