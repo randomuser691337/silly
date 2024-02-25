@@ -223,3 +223,55 @@ async function appear(mode) {
         await writevar('appear', 'd');
     }
 }
+function allthatsillyshit() {
+    function isMobileDevice() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+    if (!isMobileDevice()) {
+        customCursor.classList.add("custom-cursor");
+        document.body.appendChild(customCursor);
+        document.addEventListener("mousemove", function (event) {
+            customCursor.style.left = event.clientX + "px";
+            customCursor.style.top = event.clientY + "px";
+        });
+        customCursor.id = "fucker";
+    } else {
+        customCursor.id = "fucker";
+        hidef('fucker');
+        console.log(`<i> Is mobile, destroy cursor`);
+        hidecls('nocell');
+    }
+    if (sandParam) {
+        opapp('setup');
+        dest('setup1'); dest('load'); showf('yowetrapped'); hidef('guestno');
+        writevar('username', 'User');
+        return;
+    }
+    const btn = readpb('b');
+    if (btn === "f") {
+        abs = false;
+    }
+    const btn2 = readpb('l');
+    if (btn2 === "f") {
+        gfx = false;
+    } else {
+        inbt(abuttons);
+        console.log('<i> lowgfx is off, enable hover');
+    }
+    const cur = readpb('c');
+    if (cur === "f") {
+        hidef('fucker');
+        wcur = false;
+    } else {
+        const styleElement = document.createElement('style');
+        styleElement.innerHTML = `
+            * {
+                cursor: none !important;
+            }
+
+            body {
+                cursor: none !important;
+            }`;
+        document.body.appendChild(styleElement);
+    }
+}

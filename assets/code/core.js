@@ -76,7 +76,7 @@ async function nameutil(cont) {
 }
 
 async function passutil(cont) {
-    mkw(`${cont}<p><input class="i1" placeholder="New password" id="seconduserbox"></input><button class="b1" onclick="passtimedesk('seconduserbox');mkw('<p>Set pass successfully.</p>', 'WebDesk Login Manager');">Set password</button></p>`, 'WebDesk Login Manager', '270px');
+    mkw(`${cont}<p><input class="i1" placeholder="New password" id="seconduserbox"></input><button class="b1" onclick="passtimedesk('seconduserbox');">Set password</button></p>`, 'WebDesk Login Manager', '270px');
 }
 
 async function guestmode() {
@@ -168,7 +168,6 @@ function passtimedesk(el) {
     if (elID === "") {
         snack('Enter a password!', '3000');
     } else {
-        pass = elID;
         passchange(elID);
     }
 }
@@ -236,15 +235,6 @@ function updateClock() {
     for (let i = 0; i < elements.length; i++) {
         elements[i].innerText = formattedTime;
     }
-}
-
-function browsergo() {
-    let url = document.getElementById('browserlink').value;
-    const id2 = document.getElementById('browserframe');
-    if (!/^https?:\/\//i.test(url) && !/^www?:\/\//i.test(url)) {
-        url = "https://" + url;
-    }
-    id2.src = url;
 }
 
 function detectWordAndReturn(wordToDetect, arrayOfWords) {

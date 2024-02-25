@@ -212,6 +212,7 @@ async function burnitall(er) {
 }
 
 async function passchange(newpass) {
+    snack('Changing pass, DO NOT RELOAD!', '4000');
     try {
         // Decrypt the entire database using the old password
         const db = await initDB();
@@ -248,7 +249,7 @@ async function passchange(newpass) {
             encryptedVariables.forEach(variable => {
                 writeObjectStore.put(variable);
             });
-
+            snack('Pass changed successfully!', '3500');
             console.log('Database password changed successfully.');
         };
 
