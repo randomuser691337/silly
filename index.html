@@ -7,9 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="stylesheet" href="./assets/core.css">
     <link rel="stylesheet" href="./assets/browser.css">
+    <script src="./assets/code/enc.js"></script>
     <script>
         var ver = "0.0.9";
-        var lastedit = "Feb 25, 2024";
+        var lastedit = "Feb 26, 2024";
         var crashed = false;
         var mostrecerr = "No history."
         var forcedatac = true;
@@ -521,10 +522,11 @@
         </div>
         <!--End of calculator-->
         <!--auth-->
-        <div id="auth" class="window" style="width: 320px;">
+        <div id="auth" class="window" style="width: 370px;">
             <div class="title-bar">WebDesk Security
                 <button class="winb wc whar" onclick="hidef('auth');">Close</button><button class="winb"
-                    onclick="doc('./assets/other/logon.txt', 'WebDesk Security', '270px');">I forgot</button>
+                    onclick="doc('./assets/other/logon.txt', 'WebDesk Security', '270px');">I forgot</button><button class="winb"
+                    onclick="doc('./assets/other/new.txt', 'WebDesk Security', '270px');" id="notworklock">Not working</button>
             </div>
             <div class="content">
                 <p class="passtxt">Enter your password</p>

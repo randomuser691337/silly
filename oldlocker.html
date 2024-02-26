@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>WebDesk</title>
+    <link rel="shortcut icon" href="./assets/img/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="./assets/core.css">
+    <link rel="stylesheet" href="./assets/browser.css">
+    <script src="./assets/code/enc.js"></script>
+    <script>
+        var ver = "0.0.9";
+        var lastedit = "Feb 26, 2024";
+        var crashed = false;
+        var mostrecerr = "No history."
+        var forcedatac = true;
+        var promptreboot = false;
+        var locked = true;
+        var abs = true;
+        var gfx = true;
+        var wcur = true;
+        document.addEventListener('touchstart', function (event) {
+            if (event.touches.length > 1) {
+                event.preventDefault();
+            }
+        }, { passive: false });
+        async function panic(cont) {
+            if (crashed === false) {
+                delvar('bootload');
+                writevar('panic', cont, 'r');
+                crashed = true;
+                send(`Crash: ${cont}`);
+            } else {
+                console.log('<!> Already panicking!');
+            }
+        }
+        window.addEventListener('beforeunload', function (e) {
+            if (promptreboot === true) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
+        console.log(`%c /\\_/\\  WebDesk ${ver}
+%c( o.o ) Edited ${lastedit}
+%c > ^ <  randomuser691337`, 'color: orange', 'color: orange', 'color: orange');
+
+        console.log(`<!> Do not paste anything here, as doing so may allow anyone full access to this WebDesk.`);
+        console.log(`<!> If Sandbox is running, anything ran in here will still affect your main WebDesk!`);
+    </script>
+</head>
+
+<body>
+    <div class="fullbg" id="nest">
+        <!--Locker-->
+        <div id="locker" class="window resizeh" name="Locker" style="width: 400px; overflow: auto !important;">
+            <div class="title-bar">Locker <button class="winb wc" onclick="burnitall();">Move</button>
+            </div>
+            <div class="content">
+                <p>You need to move to the new encryption, which will erase WebDesk.</p>
+                <p>Before you move, you can download your Locker files.</p>
+                <p>When you're ready to erase and switch, click "Move".</p>
+            </div>
+            <div class="content" id="locker-list" style="margin-top: 0px !important;">
+            </div>
+        </div>
+        <!--End of locker-->
+        <!--auth-->
+        <div id="auth" class="window" style="width: 330px;">
+            <div class="title-bar">WebDesk Security <button class="winb"
+                    onclick="doc('./assets/other/new.txt', 'WebDesk Security', '270px');">Not working</button>
+            </div>
+            <div class="content">
+                <p class="passtxt">Enter your password</p>
+                <input class="i1" id="passboxauth" placeholder="Enter password" type="password" />
+                <button class="b1" onclick="clr2();">Clear</button><button onclick="checkpass();" class="b1"
+                    id="authgo">OK</button>
+            </div>
+            <script>
+                var alright = "mkw('<p>Nothing is defined, but password was correct.</p>', 'WebDesk Security');"
+                async function checkpass() {
+                    passtime('passboxauth');
+                    const check = await readvar('check');
+                    if (check === "passed") {
+                        locked = false;
+                        clr2();
+                        try {
+                            eval(alright);
+                        } catch (error) {
+                            console.log('<!> ' + error);
+                        }
+                        hidef('auth');
+                    } else {
+                        clr2();
+                        snack('Incorrect password.', '3000');
+                    }
+                }
+
+                function clr2() {
+                    document.getElementById("passboxauth").value = "";
+                }
+
+                async function passp(passt, func) {
+                    if (pass === "43fsj329t151afjds") {
+                        eval(func);
+                    } else {
+                        alright = func;
+                        masschange('passtxt', passt);
+                        opapp('auth');
+                    }
+                }
+
+                const inputField = document.getElementById('passboxauth');
+                const submitButton = document.getElementById('authgo');
+                inputField.addEventListener('keyup', function (event) {
+                    if (event.keyCode === 13) {
+                        submitButton.click();
+                    }
+                });
+            </script>
+        </div>
+        <!--End of auth-->
+        <!--Desktop nav-->
+        <button id="mainbtn" class="cent n" onclick="toggle('mainmenu');"><svg xmlns="http://www.w3.org/2000/svg"
+                width="24" height="16" viewBox="0 0 24 16" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-more-horizontal">
+                <circle cx="12" cy="10" r="1"></circle>
+                <circle cx="19" cy="10" r="1"></circle>
+                <circle cx="5" cy="10" r="1"></circle>
+            </svg> <span class="time">Time</span></button>
+        <audio id="hSound">
+            <source src="./assets/other/h.mp3" type="audio/mpeg">
+            Your browser does not support the audio element, if you're actually seeing this PLEASE use a different
+            browser.
+        </audio>
+        <audio id="cSound">
+            <source src="./assets/other/c.mp3" type="audio/mpeg">
+            Your browser does not support the audio element, if you're actually seeing this PLEASE use a different
+            browser.
+        </audio>
+        <!--End of desktop nav-->
+    </div>
+    <script src="./assets/apps/loosecode.js"></script>
+    <script src="./assets/code/jq.js"></script>
+    <script src="./assets/other/idbo.js"></script>
+    <script src="./assets/code/core.js"></script>
+    <script src="./assets/code/ui.js"></script>
+    <script src="./assets/code/peer.js"></script>
+    <script src="./assets/code/opfile.js"></script>
+    <script src="./assets/other/lockero.js"></script>
+
+    <script>
+        let started = false;
+        var customCursor = document.createElement("div");
+        document.onreadystatechange = async function () {
+            try {
+                if (started === true) {
+                    console.log('<!> Rejected doc.onreadychange (shortened)');
+                    return;
+                } else {
+                    console.log(`<i> Starting boot stage 1...`);
+                    started = true;
+                    const setup = readpb('setupdone');
+                    if (setup == "y") {
+                        passp('Enter your password to continue.', 'boots2()');
+                    }
+                }
+            } catch (error) {
+                console.log('<!> A critical error occured, run fuck() for help.');
+                mostrecerr = error;
+                mkw(`<p>WebDesk encountered a critical error.</p><p>You can use Recovery, or try again.</p><button class="b1" onclick="mkw('${error}', 'Error Details', '280px');">View Error</button><button class="b1" onclick="recovery();">Recovery</button><button class="b1" onclick="reboot();">Retry</button>`, 'Startup Error', '320px');
+            }
+        }
+
+        async function boots2() {
+            if (locked === false) {
+                opapp('locker');dest('auth');
+            } else {
+                panic(`Tried finishing boot without pass confirm`);
+            }
+        }
+
+        async function recovery() {
+            console.log(`<!> Recovery opened! Initializing...`);
+            promptreboot = false;
+            await writevar('recovery', 'y');
+            document.getElementById('nest').innerHTML = `
+            <div class="window" id="recovery" style="width: 340px;">
+                <div class="title-bar">Recovery <button class="winb" onclick="reboot();">Exit</button></div>
+                <div class="content">
+                    <p class="h2">Recovery</p>
+                    <p>You can erase to fix all issues, or wipe the cache/bootload variables to attempt a fix.</p>
+                    <button class="b1" onclick="wal('<p>Warning: Erasing WebDesk will delete all of it's data. Select 'Close' to stop, or 'Erase' to continue.</p>', 'burnitall()');">Erase</button><button class="b1" onclick="wipeboot();">Delete cache</button><button class="b1 hidden" onclick="opapp('migration');">Migrate</button>
+                </div>
+            </div>
+            <!--Migration Assistant-->
+            <div class="window" id="migration" style="width: 420px;">
+                <div class="title-bar" id="titleBar">Migration Assistant (Rescue) <button class="winb wc"
+                        onclick="hidef('migration');">Close</button></div>
+                <div class="content">
+                    <p>Enter the code you see on the other WebDesk.</p>
+                    <p>Note that no cache/onload vars will copy, to prevent copying the same issue to the other WebDesk.</p> 
+                    <input type="text" id="peerIdInput" class="i1" placeholder="Other peer's ID">
+                    <button id="connectButton" class="b1">Connect</button>
+                </div>
+            </div>
+            <!--End of Migration Assistant-->`;
+            console.log('<i> Starting recovery apps...');
+            const recoveryWindow = document.getElementById('recovery');
+            const migrationWindow = document.getElementById('migration');
+            winrec(recoveryWindow);
+            winrec(migrationWindow);
+            initializePeerConnection();
+            opapp('recovery');
+        }
+        document.addEventListener('keydown', function (event) {
+            if ((event.ctrlKey || event.metaKey) && event.shiftKey && event.key === 'F') {
+                event.preventDefault();
+                repop();
+            }
+        });
+        if (sandParam) {
+            fesw('setup1', 'yowetrapped');
+            fesw('mainwebact', 'mainsandact'); showf('sandwarn');
+            document.getElementById('sandbox').innerHTML = `<p class="h3">You can't run Sandbox in Sandbox!</p><button class="b1" onclick="hidef('sandbox');">Back</button>`;
+            hidecls('sandnoapp'); showcls('sandapp');
+        } else {
+            console.log(`<i> Not in Sandbox mode`);
+            window.addEventListener("message", receiveMessage, false);
+            function receiveMessage(event) {
+                if (event.data === "hide") {
+                    console.log('<i> Suspending sandbox...');
+                    hidef('sandbox');
+                    if (wcur === true) {
+                        showf('fucker');
+                    }
+                } else if (event.data === "end") {
+                    console.log('<i> Ending sandbox...');
+                    hidef('sandbox');
+                    document.getElementById('sandboxframe').src = "./assets/sandbox.html";
+                    if (wcur === true) {
+                        showf('fucker');
+                    }
+                }
+            }
+        }
+        function sth(con) {
+            window.parent.postMessage(con, "*");
+        }
+    </script>
+</body>
+</html>

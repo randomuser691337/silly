@@ -1,0 +1,3 @@
+<p>This is because of the move from Caeser encryption to AES encryption.</p>
+<p>To access your files, <a href="./oldlocker.html">Use Locker by itself</a>, then erase to switch to the new encryption.</p>
+<button class="b1 b2" onclick="burnitall('justreload');">Erase all data</button>

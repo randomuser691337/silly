@@ -64,10 +64,8 @@ function encrypt(value) {
         console.log(`<!> STOP: Password is unset. Attempted write: ${value}`);
         return;
     }
-    let encrypted = '';
-    for (let i = 0; i < value.length; i++) {
-        encrypted += String.fromCharCode(value.charCodeAt(i) ^ pass.charCodeAt(i % pass.length));
-    }
+
+    const encrypted = CryptoJS.AES.encrypt(value, pass).toString();
     return encrypted;
 }
 
@@ -76,11 +74,14 @@ function decrypt(value) {
         console.log(`<!> STOP: Password is unset. Attempted read: ${value}`);
         return;
     }
-    let decrypted = '';
-    for (let i = 0; i < value.length; i++) {
-        decrypted += String.fromCharCode(value.charCodeAt(i) ^ pass.charCodeAt(i % pass.length));
+
+    try {
+        const decrypted = CryptoJS.AES.decrypt(value, pass).toString(CryptoJS.enc.Utf8);
+        return decrypted;
+    } catch (error) {
+        console.error('Decryption error:', error.message);
+        return null;
     }
-    return decrypted;
 }
 
 // Read a variable from the database
