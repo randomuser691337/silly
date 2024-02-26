@@ -25,7 +25,7 @@ function framecon(cont) {
     mkw(iframe, 'Locker - Website', '600px');
 }
 
-function playaud(base64Content) {
+function playaud(base64Content, contentType) {
     const binaryContent = atob(base64Content.split(',')[1]);
     const arrayBuffer = new ArrayBuffer(binaryContent.length);
     const view = new Uint8Array(arrayBuffer);
@@ -33,10 +33,27 @@ function playaud(base64Content) {
         view[i] = binaryContent.charCodeAt(i);
     }
 
-    const blob = new Blob([arrayBuffer], { type: 'audio/mp3' });
+    let mimeType;
+    switch (contentType) {
+        case '.mpeg':
+            mimeType = 'audio/mpeg';
+            break;
+        case '.mp3':
+            mimeType = 'audio/mpeg';
+            break;
+        case '.wav':
+            mimeType = 'audio/wav';
+            break;
+        // Add support for more audio formats as needed
+        default:
+            throw new Error('Unsupported audio format');
+    }
+
+    const blob = new Blob([arrayBuffer], { type: mimeType });
     const url = URL.createObjectURL(blob);
     const audio = new Audio();
     audio.src = url;
+    audio.type = contentType; 
     audio.play();
     const e1 = gen(7);
     const e2 = gen(7);
@@ -71,8 +88,8 @@ function playaud(base64Content) {
 
     closeBtn.addEventListener('click', function () {
         audio.pause();
-        URL.revokeObjectURL(blobUrl);
-        blobUrl = null;
+        URL.revokeObjectURL(blob);
+        blob = null;
     });
 
     scrubber.addEventListener('input', function () {

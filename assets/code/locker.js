@@ -4,7 +4,7 @@ function isFileTooLarge(file) {
     return fileSizeInMB > 15;
 }
 
-var valuesToCheck = [".jpg", ".png", ".svg", ".jpeg", ".webp", ".mp3", ".mp4", ".webm"];
+var valuesToCheck = [".jpg", ".png", ".svg", ".jpeg", ".webp", ".mp3", ".mp4", ".webm", '.wav', '.mpeg', '.gif'];
 
 // Function to handle file upload
 async function handleFileUpload(file) {
@@ -92,7 +92,7 @@ window.updateLockerList = async function () {
                 listItem.className = "list";
                 let found = valuesToCheck.find(value => key.includes(value));
                 const viewBtn = document.createElement('button');
-                if (found == ".png" || found == ".jpg" || found == ".jpeg" || found == ".svg" || found == ".webp") {
+                if (found == ".png" || found == ".jpg" || found == ".jpeg" || found == ".svg" || found == ".webp" || found == ".gif") {
                     viewBtn.textContent = "View";
                     viewBtn.className = "winb";
                     viewBtn.addEventListener('click', async () => {
@@ -106,12 +106,12 @@ window.updateLockerList = async function () {
                         const content = await readvar(key);
                         viewmed(content, fileName, 'v');
                     });
-                } else if (found === ".mp3") {
+                } else if (found === ".mp3" || found === ".wav" || found === ".mpeg") {
                     viewBtn.textContent = "Play";
                     viewBtn.className = "winb";
                     viewBtn.addEventListener('click', async () => {
                         const content = await readvar(key);
-                        playaud(content);
+                        playaud(content, found);
                     });
                 } else {
                     viewBtn.textContent = "Open...";
