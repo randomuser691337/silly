@@ -179,8 +179,8 @@ function about(value) {
             <div class="progress-bar">
                 <div class="progress struse"></div>
             </div>
-            <a onclick="embed('https://meower.xyz', 'About Embed', '520px', '340px');">Dev's Site</a> 
-            <a onclick="doc('./assets/other/creds.txt', 'WebDesk Credits', '420px', 'auto');">Creds</a>
+            <a class="fucku" onclick="embed('https://meower.xyz', 'About Embed', '520px', '340px');">Dev's Site</a> 
+            <a class="fucku" onclick="doc('./assets/other/creds.txt', 'WebDesk Credits', '420px', 'auto');">Creds</a>
         </div>
     </div>`;
     if (value === undefined) {
