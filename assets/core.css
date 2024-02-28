@@ -543,14 +543,16 @@ a:active {
     width: 100%;
     box-sizing: border-box;
     height: 20px;
-    border: 2px solid var(--lightdarkb);
+    padding: 3px;
+    background: var(--lightdarkb);
     border-radius: var(--rad2);
 }
 
 .progress {
     height: 100%;
-    background-color: rgba(var(--accent), 0.20);
+    background-color: rgba(var(--accent), 0.30);
     width: 0%;
+    border-radius: 5px;
 }
 
 @keyframes fade {

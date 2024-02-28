@@ -18,18 +18,13 @@ function getWeather2(city2, system, bypass) {
                 const temperature = data.main.temp;
                 const conditions = data.weather[0].description;
                 const humidity = data.main.humidity;
-                const windSpeed = data.wind.speed;
-                const visibility = data.visibility ? (data.visibility / 1000).toFixed(1) + ' km' : 'N/A';
-                const pressure = data.main.pressure;
                 const sunriseTime = new Date(data.sys.sunrise * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                 const sunsetTime = new Date(data.sys.sunset * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                 const cloudiness = data.clouds.all;
                 const rainfall = data.rain ? data.rain['1h'] + ' mm' : 'N/A';
                 const temperatureUnit = system === 'metric' ? 'C' : 'F';
-                const weatherInfo = `<p><span class="med">Temperature: </span>${temperature.toFixed(1)}*${temperatureUnit}</p>
+                const weatherInfo = `<p><span class="med">Temperature: </span>${temperature.toFixed(1)}*${temperatureUnit} - <span class="med">Humidity: </span>${humidity}%</p>
                     <p><span class="med">Weather: </span>${conditions}</p>
-                    <p><span class="med">Humidity: </span>${humidity}% - <span class="med">Wind speed: </span>${windSpeed} m/s</p>
-                    <p><span class="med">Visibility: </span>${visibility} - <span class="med">Pressure: </span>${pressure} hPa</p>
                     <p><span class="med">Sunrise: </span>${sunriseTime} - <span class="med">Sunset: </span>${sunsetTime}</p>
                     <p><span class="med">Cloudiness: </span>${cloudiness}% - <span class="med">Rainfall: </span>${rainfall}</p>`;
                 const weatherInfo2 = `${temperature.toFixed(1)}*${temperatureUnit}, ${conditions}`;
