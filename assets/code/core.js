@@ -316,6 +316,7 @@ function playc() {
         audio.play();
     }
 }
+var cur = document.getElementById('fucker');
 function inbt(buttons) {
     buttons.forEach((button) => {
         button.addEventListener("mouseenter", playh);
@@ -328,7 +329,7 @@ function inbt(buttons) {
                     const buttonY = rect.y + rect.height / 2;
                     const deltaX = e.clientX - buttonX;
                     const deltaY = e.clientY - buttonY;
-                    button.style.transform = `translate(${deltaX / 25}px, ${deltaY / 25}px) scale(1.04)`;
+                    button.style.transform = `translate(${deltaX / 32}px, ${deltaY / 32}px) scale(1.06)`;
                 });
                 function resetButtonStyles() {
                     button.style.transform = "translate(0, 0) scale(1.0)";
@@ -341,9 +342,15 @@ function inbt(buttons) {
                 });
                 button.addEventListener("mouseenter", () => {
                     button.classList.add("shadow");
+                    if (cur) {
+                        fucker.style.display = "none";
+                    }
                 });
                 button.addEventListener("mouseleave", () => {
                     button.classList.remove("shadow");
+                    if (cur) {
+                        fucker.style.display = "block";
+                    }
                 });
             }
         } else {

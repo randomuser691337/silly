@@ -10,12 +10,12 @@
     <script src="./assets/code/enc.js"></script>
     <script>
         var ver = "0.0.9";
-        var lastedit = "Feb 28, 2024";
+        var lastedit = "Feb 26, 2024";
         var crashed = false;
         var mostrecerr = "No history."
         var forcedatac = true;
         var promptreboot = false;
-        var locked = false;
+        var locked = true;
         var abs = true;
         var gfx = true;
         var wcur = true;
@@ -96,13 +96,14 @@
                     <p class="h2">Personalize</p>
                     <p>Accent color</p>
                     <button class="acb" style="background: rgb(210, 30, 30);" onclick="chacc('210, 30, 30');"></button>
-                    <button class="acb" style="background: rgb(240, 125, 10);"
-                        onclick="chacc('240, 125, 10');"></button>
+                    <button class="acb" style="background: rgb(210, 120, 30);"
+                        onclick="chacc('210, 120, 30');"></button>
                     <button class="acb" style="background: rgb(210, 180, 20);"
                         onclick="chacc('210, 180, 20');"></button>
                     <button class="acb" style="background: rgb(50, 160, 20);" onclick="chacc('50, 160, 20');"></button>
                     <button class="acb" style="background: rgb(40, 70, 235);" onclick="chacc('40, 70, 235');"></button>
-                    <button class="acb" style="background: rgb(120, 60, 235);" onclick="('120, 60, 235');"></button>
+                    <button class="acb" style="background: rgb(120, 60, 235);"
+                        onclick="chacc('120, 60, 235');"></button>
                     <button class="acb" style="background: rgb(180, 180, 180);"
                         onclick="chacc('200, 200, 200');"></button>
                     <p>Appearance</p>
@@ -111,8 +112,8 @@
                     <p><button class="b1" onclick="finishsetup();nametime('username');">Done!</button></p>
                 </div>
                 <div id="setup4" style="display: none;">
-                    <p class="h2">If you can read this, something's wrong.</p>
-                    <p>Close all other WebDesk sessions, and clear your browser cache.</p>
+                    <p class="h2">Close other WebDesks</p>
+                    <p>Another WebDesk tab is open in this browser. Close it, then click "Reload" if WebDesk doesn't finish setup.</p>
                     <button class="b1" onclick="window.location.reload();">Reload</button><button class="b1"
                         onclick="guestmode();">Guest</button>
                 </div>
@@ -190,8 +191,8 @@
                 <div id="settingsappear" style="display: none;">
                     <p class="bold" style="margin: 0px !important;">Accent / Appearance</p>
                     <button class="acb" style="background: rgb(210, 30, 30);" onclick="chacc('210, 30, 30');"></button>
-                    <button class="acb" style="background: rgb(240, 125, 10);"
-                        onclick="chacc('240, 125, 10');"></button>
+                    <button class="acb" style="background: rgb(210, 120, 30);"
+                        onclick="chacc('210, 120, 30');"></button>
                     <button class="acb" style="background: rgb(210, 180, 20);"
                         onclick="chacc('210, 180, 20');"></button>
                     <button class="acb" style="background: rgb(50, 160, 20);" onclick="chacc('50, 160, 20');"></button>
@@ -200,21 +201,10 @@
                         onclick="chacc('120, 60, 235');"></button>
                     <button class="acb" style="background: rgb(180, 180, 180);"
                         onclick="chacc('200, 200, 200');"></button>
-                    <div id="moreacc" class="hide" style="margin-bottom: 2px;">
-                        <p style="margin: 0px !important;">More accents</p>
-                        <button class="acb" style="background: rgb(255, 20, 70);"
-                            onclick="chacc('255, 20, 70');"></button>
-                        <button class="acb" style="background: rgb(10, 240, 190);"
-                            onclick="chacc('10, 240, 190');"></button>
-                        <button class="acb"
-                            style="background: rgb(10, 10, 255);" onclick="chacc('10, 10, 255');"></button>
-                    </div>
-                    <p style="margin-top: 2px;"><button class="b1 light" onclick="appear('l');">Light</button><button style="margin-left: 3px;"
-                            class="b1 dark" onclick="appear();">Dark</button><button style="margin-left: 3px;"
-                            class="b1" onclick="appear();">Auto</button></p>
+                    <p><button class="b1 light" onclick="appear('l');">Light</button><button style="margin-left: 3px;"
+                            class="b1 dark" onclick="appear();">Dark</button></p>
                     <p>Other</p>
-                    <p><button class="winb" onclick="toggle('moreacc');">More</button><button class="winb"
-                            onclick="customacc();">Custom accent</button><button class="winb"
+                    <p><button class="winb" onclick="customacc();">Custom accent...</button><button class="winb"
                             onclick="fesw('settingsappear', 'settingsmain');">Back</button></p>
                 </div>
                 <div id="settingspriv" style="display: none;">
@@ -535,9 +525,8 @@
         <div id="auth" class="window" style="width: 370px;">
             <div class="title-bar">WebDesk Security
                 <button class="winb wc whar" onclick="hidef('auth');">Close</button><button class="winb"
-                    onclick="doc('./assets/other/logon.txt', 'WebDesk Security', '270px');">I forgot</button><button
-                    class="winb" onclick="doc('./assets/other/new.txt', 'WebDesk Security', '270px');">Not
-                    working</button>
+                    onclick="doc('./assets/other/logon.txt', 'WebDesk Security', '270px');">I forgot</button><button class="winb"
+                    onclick="doc('./assets/other/new.txt', 'WebDesk Security', '270px');">Not working</button>
             </div>
             <div class="content">
                 <p class="passtxt">Enter your password</p>
@@ -651,8 +640,8 @@
         </audio>
         <!--End of desktop nav-->
     </div>
-    <script src="./assets/apps/loosecode.js"></script>
     <script src="./assets/code/jq.js"></script>
+    <script src="./assets/apps/loosecode.js"></script>
     <script src="./assets/code/idb.js"></script>
     <script src="./assets/code/core.js"></script>
     <script src="./assets/code/ui.js"></script>

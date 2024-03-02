@@ -1,32 +1,41 @@
 // huge pile of shit mixed with decent code
 // if you have any optimizations/better code for this pls dm me: @illchangethislater on discord
+
 const DB_NAME = "WebDeskStore";
 const STORE_NAME = "WebDeskDB";
 let NTName = "database"; // Default value
+// Open IndexedDB
+// Initialize the IndexedDB
 let dbPromise = null;
-let pass = "def"; // Default password
-
-async function initDB() {
+var pass = "def" // prepare for encryption
+function initDB() {
     if (dbPromise) {
         return dbPromise;
     }
 
     dbPromise = new Promise((resolve, reject) => {
-        const request = indexedDB.open(NTName, 1);
+        setTimeout(() => {
+            const request = indexedDB.open(NTName, 1);
 
-        request.onerror = (event) => {
-            reject(`Couldn't open IDB! Error: ${event.target.errorCode}`);
-            panic(`Couldn't open IDB, which is a critical part of WebDesk.`);
-        };
+            request.onerror = (event) => {
+                reject(`<!> Couldn't open IDB! Run fuck() for details.`);
+                mostrecerr = event.target.errorCode;
+                panic(`Coudn't open IDB, which is a critical part of WebDesk.`);
+            };
 
-        request.onsuccess = (event) => {
-            resolve(event.target.result);
-        };
+            request.onsuccess = (event) => {
+                const db = event.target.result;
+                resolve(db);
+            };
 
-        request.onupgradeneeded = (event) => {
-            const db = event.target.result;
-            db.createObjectStore('settings', { keyPath: 'name' });
-        };
+            request.onupgradeneeded = (event) => {
+                const db = event.target.result;
+                const objectStore = db.createObjectStore('settings', { keyPath: 'name' });
+                objectStore.transaction.oncomplete = () => {
+                    resolve(db);
+                };
+            };
+        }, 200);
     });
 
     return dbPromise;
@@ -77,35 +86,40 @@ function decrypt(value) {
 
 // Read a variable from the database
 async function readvar(varName) {
-    try {
-        const db = await initDB();
-        const transaction = db.transaction('settings', 'readonly');
-        const objectStore = transaction.objectStore('settings');
-        const request = objectStore.get(varName);
+    if (crashed == true) {
+        console.log('Rejected FS action: Panic!');
+        return;
+    } else {
+        try {
+            const db = await initDB();
+            const transaction = db.transaction('settings', 'readonly');
+            const objectStore = transaction.objectStore('settings');
+            const request = objectStore.get(varName);
 
-        return new Promise((resolve, reject) => {
-            request.onsuccess = (event) => {
-                const encryptedData = event.target.result ? event.target.result.value : undefined;
-                if (!encryptedData) {
-                    resolve(undefined); // No data found
-                    return;
-                }
+            return new Promise(async (resolve, reject) => {
+                request.onsuccess = async (event) => {
+                    const encryptedData = event.target.result ? event.target.result.value : undefined;
+                    if (!encryptedData) {
+                        resolve(undefined); // No data found
+                        return;
+                    }
 
-                try {
-                    const decryptedData = decrypt(encryptedData);
-                    resolve(decryptedData);
-                } catch (error) {
-                    reject("[ERR] Error decrypting variable: " + error);
-                }
-            };
+                    try {
+                        const decryptedData = decrypt(encryptedData);
+                        resolve(decryptedData);
+                    } catch (error) {
+                        reject("[ERR] Error decrypting variable: " + error);
+                    }
+                };
 
-            request.onerror = (event) => {
-                reject("[ERR] Error reading variable: " + event.target.errorCode);
-            };
-        });
-    } catch (error) {
-        console.error(error);
-        return undefined;
+                request.onerror = (event) => {
+                    reject("[ERR] Error reading variable: " + event.target.errorCode);
+                };
+            });
+        } catch (error) {
+            console.error(error);
+            return undefined;
+        }
     }
 }
 // finally killing security theater????
@@ -113,21 +127,25 @@ var cleartowr = true;
 // Write a variable to the database
 async function writevar(varName, value, op) {
     try {
-        const db = await initDB();
-        const transaction = db.transaction('settings', 'readwrite');
-        const objectStore = transaction.objectStore('settings');
-        const value2 = encrypt(value);
-        const request = objectStore.put({ name: varName, value: value2 });
+        if (crashed == true) {
+            console.log('Rejected FS action: Panic!'); return;
+        } else {
+            const db = await initDB();
+            const transaction = db.transaction('settings', 'readwrite');
+            const objectStore = transaction.objectStore('settings');
+            const value2 = encrypt(value);
+            const request = objectStore.put({ name: varName, value: value2 });
 
-        request.onerror = (event) => {
-            console.error("[ERR] Error writing variable: " + event.target.errorCode);
-        };
+            request.onerror = (event) => {
+                console.error("[ERR] Error writing variable: " + event.target.errorCode);
+            };
 
-        transaction.oncomplete = function () {
-            if (op === "r") {
-                reboot();
-            }
-        };
+            transaction.oncomplete = function () {
+                if (op == "r") {
+                    reboot();
+                }
+            };
+        }
     } catch (error) {
         console.error(error);
     }
@@ -135,14 +153,16 @@ async function writevar(varName, value, op) {
 
 async function delvar(varName) {
     try {
-        const db = await initDB();
-        const transaction = db.transaction('settings', 'readwrite');
-        const objectStore = transaction.objectStore('settings');
-        objectStore.delete(varName);
-
-        transaction.onerror = (event) => {
-            console.error("[ERR] Error deleting variable: " + event.target.errorCode);
-        };
+        if (crashed == true) { console.log('Rejected FS action: Panic!'); } else {
+            const db = await initDB();
+            
+            const transaction = db.transaction('settings', 'readwrite');
+            const objectStore = transaction.objectStore('settings');
+            objectStore.delete(varName);
+            transaction.onerror = (event) => {
+                console.error("[ERR] Error deleting variable: " + event.target.errorCode);
+            };
+        }
     } catch (error) {
         console.error(error);
     }
@@ -195,6 +215,7 @@ async function burnitall(er) {
 async function passchange(newpass) {
     snack('Changing pass, DO NOT RELOAD!', '4000');
     try {
+        // Decrypt the entire database using the old password
         const db = await initDB();
         const transaction = db.transaction('settings', 'readonly');
         const objectStore = transaction.objectStore('settings');
@@ -202,24 +223,32 @@ async function passchange(newpass) {
 
         request.onsuccess = async (event) => {
             const variables = event.target.result;
+
+            // Decrypt variables using the current password
             const decryptedVariables = variables.map(variable => ({
                 name: variable.name,
                 value: decrypt(variable.value)
             }));
 
+            // Change the password
             pass = newpass;
 
+            // Encrypt variables using the new password
+            const encryptedVariables = decryptedVariables.map(variable => ({
+                name: variable.name,
+                value: encrypt(variable.value)
+            }));
+
+            // Clear the current database
             const clearTransaction = db.transaction('settings', 'readwrite');
             const clearObjectStore = clearTransaction.objectStore('settings');
             clearObjectStore.clear();
 
+            // Write the encrypted variables with the new password to the database
             const writeTransaction = db.transaction('settings', 'readwrite');
             const writeObjectStore = writeTransaction.objectStore('settings');
-            decryptedVariables.forEach(variable => {
-                writeObjectStore.put({
-                    name: variable.name,
-                    value: encrypt(variable.value)
-                });
+            encryptedVariables.forEach(variable => {
+                writeObjectStore.put(variable);
             });
             snack('Pass changed successfully!', '3500');
             console.log('Database password changed successfully.');
@@ -233,10 +262,6 @@ async function passchange(newpass) {
     }
 }
 
-function fsfucker() { mkw(`<p>Are you sure you want to run fsfucker?</p><p>It purposefully hammers the DB with data, and fills it up. WebDesk may crash, and your computer's resources will be used.</p><p>Note: A reset is required to undo fsfucker!</p><button class="b1" onclick="fsfuckerfinal();">Yes, fuck my FS</button>`, 'fsfucker', '300px')}
-async function fsfuckerfinal() {
-    for (let i = 0; i < 10000; i++) { console.log('<i> fsfucker: still alive'); await writevar(`locker_${i}`, 'x'.repeat(10 * 1024 * 50)); } 
-}
 const dbParam = urlParams.get("db");
 
 if (dbParam) {

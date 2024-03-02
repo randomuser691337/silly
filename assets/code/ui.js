@@ -237,7 +237,7 @@ function allthatsillyshit() {
         customCursor.id = "fucker";
     } else {
         customCursor.id = "fucker";
-        hidef('fucker');
+        dest('fucker');
         console.log(`<i> Is mobile, destroy cursor`);
         hidecls('nocell');
     }
@@ -260,7 +260,7 @@ function allthatsillyshit() {
     }
     const cur = readpb('c');
     if (cur === "f") {
-        hidef('fucker');
+        dest('fucker');
         wcur = false;
     } else {
         const styleElement = document.createElement('style');
