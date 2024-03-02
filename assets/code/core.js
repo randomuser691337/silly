@@ -80,10 +80,13 @@ async function passutil(cont) {
 }
 
 async function guestmode() {
+    locked = false;
+    pass = "pass";
     mkw(`<p>You're in Guest Mode.</p><p>Upon reload/restart, WebDesk will auto-erase.</p>`, 'Setup Assistant', '320px');
     desktop('Guest');
     writepb('setupdone', 'guest');
     hidecls('guestno');
+    showcls('dwarn');
 }
 
 function customacc() {
@@ -316,7 +319,6 @@ function playc() {
         audio.play();
     }
 }
-var cur = document.getElementById('fucker');
 function inbt(buttons) {
     buttons.forEach((button) => {
         button.addEventListener("mouseenter", playh);
@@ -329,7 +331,7 @@ function inbt(buttons) {
                     const buttonY = rect.y + rect.height / 2;
                     const deltaX = e.clientX - buttonX;
                     const deltaY = e.clientY - buttonY;
-                    button.style.transform = `translate(${deltaX / 32}px, ${deltaY / 32}px) scale(1.06)`;
+                    button.style.transform = `translate(${deltaX / 42}px, ${deltaY / 42}px) scale(1.06)`;
                 });
                 function resetButtonStyles() {
                     button.style.transform = "translate(0, 0) scale(1.0)";
@@ -342,14 +344,18 @@ function inbt(buttons) {
                 });
                 button.addEventListener("mouseenter", () => {
                     button.classList.add("shadow");
-                    if (cur) {
+                    try {
                         fucker.style.display = "none";
-                    }
+                    } catch (error) {
+                        // i dont fucking know i just wanna shut it up
+                    }    
                 });
                 button.addEventListener("mouseleave", () => {
                     button.classList.remove("shadow");
-                    if (cur) {
+                    try {
                         fucker.style.display = "block";
+                    } catch (error) {
+                        // i dont fucking know i just wanna shut it up
                     }
                 });
             }

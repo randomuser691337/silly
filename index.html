@@ -113,7 +113,8 @@
                 </div>
                 <div id="setup4" style="display: none;">
                     <p class="h2">Close other WebDesks</p>
-                    <p>Another WebDesk tab is open in this browser. Close it, then click "Reload" if WebDesk doesn't finish setup.</p>
+                    <p>Another WebDesk tab is open in this browser. Close it, then click "Reload" if WebDesk doesn't
+                        finish setup.</p>
                     <button class="b1" onclick="window.location.reload();">Reload</button><button class="b1"
                         onclick="guestmode();">Guest</button>
                 </div>
@@ -244,9 +245,9 @@
                     <button class="b1 b2" onclick="repop();">Enter recovery (Ctrl+Shift+F)</button>
                     <p>Allow Locker uploads above 15mb</p>
                     <p class="smt">Disabled to stop slowdowns on low-end devices. Doesn't affect current files.</p>
-                    <button class="b3 green guestno"
+                    <button class="b3 green"
                         onclick="writevar('allowbu', 'y');snack('Enabled large uploads successfully.', '3500');">Allow</button><button
-                        class="b3 red guestno"
+                        class="b3 red"
                         onclick="writevar('allowbu', 'n');snack('Disabled large upload successfully.', '3500');">Disable
                         (default)</button>
                     <p><button class="winb" onclick="fesw('settingsdesk', 'settingsmain');">Back</button></p>
@@ -338,19 +339,6 @@
             </div>
         </div>
         <!--End of weather-->
-        <!--Locker-->
-        <div id="locker" class="window resizeh" name="Locker" style="width: 400px; overflow: auto !important;">
-            <div class="title-bar">Locker <button class="winb wc" onclick="hidef('locker');">Close</button><button
-                    class="winb" onclick="upload();">Upload</button><button class="winb"
-                    onclick="window.fucklocker();">Erase locker</button>
-            </div>
-            <div class="content" id="locker-list">
-            </div>
-            <div class="content hide" id="lockerdel">
-                <p class="locker_del">Starting...</p>
-            </div>
-        </div>
-        <!--End of locker-->
         <!--Uploader-->
         <div id="uploader" class="window resizeh" name="Uploader" style="width: 400px; overflow: auto !important;">
             <div class="title-bar">Uploader <button class="winb wc" onclick="hidef('uploader');">Close</button>
@@ -367,7 +355,7 @@
         </div>
         <!--End of uploader-->
         <!--Browser-->
-        <div id="browser" class="window resizeh" name="Browser" style="width: 1366px;">
+        <div id="browser" class="window resizeh" name="Browser" style="width: 80vw;">
             <div id="border-root">
                 <div id="border-titlebar" class="title-bar-ns">
                     <div id="border-tab-menu">
@@ -525,8 +513,9 @@
         <div id="auth" class="window" style="width: 370px;">
             <div class="title-bar">WebDesk Security
                 <button class="winb wc whar" onclick="hidef('auth');">Close</button><button class="winb"
-                    onclick="doc('./assets/other/logon.txt', 'WebDesk Security', '270px');">I forgot</button><button class="winb"
-                    onclick="doc('./assets/other/new.txt', 'WebDesk Security', '270px');">Not working</button>
+                    onclick="doc('./assets/other/logon.txt', 'WebDesk Security', '270px');">I forgot</button><button
+                    class="winb" onclick="doc('./assets/other/new.txt', 'WebDesk Security', '270px');">Not
+                    working</button>
             </div>
             <div class="content">
                 <p class="passtxt">Enter your password</p>
@@ -579,15 +568,17 @@
         </div>
         <!--End of auth-->
         <!--Desktop nav-->
-        <button id="mainbtn" class="cent n" onclick="toggle('mainmenu');"><svg xmlns="http://www.w3.org/2000/svg"
+        <div class="cent" style="position: fixed; bottom: 4px; animation: mainbtn 1s; display: none;" id="mainbtn">
+            <button class="mainbtn n" onclick="showf('mainmenu');fesw('mainmenulock', 'mainmenuapp');"><svg xmlns="http://www.w3.org/2000/svg"
                 width="24" height="16" viewBox="0 0 24 16" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-more-horizontal">
                 <circle cx="12" cy="10" r="1"></circle>
                 <circle cx="19" cy="10" r="1"></circle>
                 <circle cx="5" cy="10" r="1"></circle>
-            </svg> <span class="time">Time</span></button>
+            </svg> <span class="time">Time</span></button><button class="mainbtn n" style="margin-left: 2px;" onclick="showf('mainmenu');fesw('mainmenuapp', 'mainmenulock');">Locker</button>
+        </div>
         <div id="mainmenu">
-            <div class="content"
+            <div class="content" id="mainmenuapp"
                 style="padding: 6px; border-radius: var(--rad2); background-color: rgba(var(--accent), 0.12);">
                 <p class="h3 sandnoapp"><span class="greet">Welcome to WebDesk</span>, <span class="user"></span>!</p>
                 <p class="h3 sandapp">WebDesk Sandbox</p>
@@ -603,22 +594,32 @@
                         onclick="opapp('browser');">Browser</button><button class="b1"
                         onclick="opapp('calculator');">Calculator</button><button class="b1"
                         onclick="doc('./assets/other/trusted.txt', 'App Installer', '270px');">App Installer
-                        (BETA)</button><button class="b1" onclick="opapp('locker');">Locker</button><button class="b1"
-                        onclick="opapp('uploader');">Uploader</button>
+                        (BETA)</button><button class="b1" onclick="opapp('uploader');">Uploader</button>
                 </div>
                 <p class="h2">WebDesk</p>
                 <div class="padmenu" id="mainwebact">
                     <button class="b1 b2" onclick="about();hidef('mainmenu');">About WebDesk</button>
                     <button class="b1 b2" onclick="reboot();">Reboot</button>
                     <button class="b1 fucku" onclick="cleantop();">Clean Desktop</button><button class="b1 fucku"
-                        onclick="sandbox();">Open Sandbox</button><button class="b1 fucku"
+                        onclick="sandbox();">Open Sandbox</button><button class="b1"
+                        onclick="fesw('mainmenuapp', 'mainmenulock');">Locker</button><button class="b1 fucku"
                         onclick="hidef('mainmenu');">Close</button>
                 </div>
                 <div class="padmenu hide" id="mainsandact">
                     <button class="b1" onclick="exsand();">Exit Sandbox</button><button class="b1"
                         onclick="sth('hide');">Suspend Sandbox</button><button class="b1"
+                        onclick="fesw('mainmenuapp', 'mainmenulock');">Locker</button><button class="b1"
                         onclick="hidef('mainmenu');">Close</button>
                 </div>
+            </div>
+            <div class="padmenu hide" id="mainmenulock">
+                <p class="h2">Locker</p>
+                <p class="dwarn">Note: Anything stored in Locker will be deleted!</p>
+                <div id="locker-list">
+                </div>
+                <p class="fucku"><button class="b1" onclick="fesw('mainmenulock', 'mainmenuapp');">Back</button><button class="b1" onclick="hidef('mainmenu');fesw('mainmenulock', 'mainmenuapp');">Close</button><button
+                    class="b1" onclick="upload();">Upload</button><button class="b1"
+                    onclick="window.fucklocker();">Erase all</button></p>
             </div>
         </div>
         <div id="sandbox"

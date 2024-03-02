@@ -175,7 +175,6 @@ window.updateLockerList = async function () {
 };
 
 window.fucklocker = async function () {
-    fesw('locker_list', 'lockerdel');
     const db = await initDB();
     const transaction = db.transaction('settings', 'readonly');
     const objectStore = transaction.objectStore('settings');
@@ -185,11 +184,9 @@ window.fucklocker = async function () {
         let anyKeyFound = false;
         const keys = event.target.result;
         keys.forEach(key => {
-            const fileName = key.slice(7);
             if (key.startsWith('locker_')) {
-                anyKeyFound = true; // Set the flag to true if a key is found
+                anyKeyFound = true; 
                 delvar(key);
-                window.updateLockerList();
             }
         });
 
@@ -197,7 +194,6 @@ window.fucklocker = async function () {
             window.updateLockerList(); snack(`Erased locker successfully.`, '3400');
         }
     };
-
 
     request.onerror = (event) => {
         console.error("[ERR] Error fetching locker variables: " + event.target.errorCode);
