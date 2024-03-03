@@ -327,7 +327,8 @@ button {
     transform: translate(-50%, -50%);
     display: none;
     z-index: 4;
-    overflow: auto !important;
+    overflow-x: none !important;
+    overflow-y: auto !important;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.17);
     animation: mainm 0.25s;
     resize: both;

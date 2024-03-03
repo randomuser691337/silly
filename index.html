@@ -10,7 +10,7 @@
     <script src="./assets/code/enc.js"></script>
     <script>
         var ver = "0.0.9";
-        var lastedit = "Mar 2, 2024";
+        var lastedit = "Mar 3, 2024";
         var crashed = false;
         var mostrecerr = "No history."
         var forcedatac = true;
@@ -79,7 +79,7 @@
                         encrypted.)</p>
                     <input type="password" id="oobepin" class="i1" placeholder="Enter a password" autocomplete="off">
                     <button class="b1" onclick="fesw('setupnew', 'setup1');">Back</button><button
-                        onclick="passtime('oobepin');fesw('setupnew', 'setup2');" class="b1">Set password, next</button>
+                        onclick="holyfuck();" class="b1">Set password, next</button>
                 </div>
                 <div id="setup2" style="display: none;">
                     <p class="h2">User Setup</p>
@@ -90,7 +90,7 @@
                         (Select to learn more)</p>
                     <button class="b3 green" onclick="forceondata();">Allow (default)</button><button class="b3 red"
                         onclick="forceoffdata();">Disable</button>
-                    <p><button class="b1" onclick="fesw('setup2', 'setup3');">Done!</button></p>
+                    <p><button class="b1" onclick="holyshit();">Done!</button></p>
                 </div>
                 <div id="setup3" style="display: none;">
                     <p class="h2">Personalize</p>
@@ -109,7 +109,7 @@
                     <p>Appearance</p>
                     <button class="b1 b2 light" onclick="appear('l');">Light</button><button class="b1 b2 dark"
                         onclick="appear();">Dark</button>
-                    <p><button class="b1" onclick="finishsetup();nametime('username');">Done!</button></p>
+                    <p><button class="b1" onclick="finishsetup();">Done!</button></p>
                 </div>
                 <div id="setup4" style="display: none;">
                     <p class="h2">Close other WebDesks</p>
@@ -184,7 +184,7 @@
                 <div id="settingsuser" style="display: none;">
                     <p style="margin: 0px !important;" class="bold">Username / Password</p>
                     <button class="b1 b2" onclick="nameutil(`<p>Enter new username</p>`);">Change
-                        username</button><button class="b1 b2" onclick="passutil('<p>Enter new password</p>');">Change
+                        username</button><button class="b1 b2" onclick="passutil('<p>Enter new password, WebDesk may freeze for a bit.</p><p>Do not reload WebDesk until it unfreezes, or you will lose all data.</p>');">Change
                         pass</button>
                     <p>Other</p>
                     <p><button class="winb" onclick="fesw('settingsuser', 'settingsmain');">Back</button></p>
@@ -510,7 +510,7 @@
         </div>
         <!--End of calculator-->
         <!--auth-->
-        <div id="auth" class="window" style="width: 370px;">
+        <div id="auth" class="window" style="width: 370px; z-index: 9999;">
             <div class="title-bar">WebDesk Security
                 <button class="winb wc whar" onclick="hidef('auth');">Close</button><button class="winb"
                     onclick="doc('./assets/other/logon.txt', 'WebDesk Security', '270px');">I forgot</button><button
@@ -569,13 +569,15 @@
         <!--End of auth-->
         <!--Desktop nav-->
         <div class="cent" style="position: fixed; bottom: 4px; animation: mainbtn 1s; display: none;" id="mainbtn">
-            <button class="mainbtn n" onclick="showf('mainmenu');fesw('mainmenulock', 'mainmenuapp');"><svg xmlns="http://www.w3.org/2000/svg"
-                width="24" height="16" viewBox="0 0 24 16" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-more-horizontal">
-                <circle cx="12" cy="10" r="1"></circle>
-                <circle cx="19" cy="10" r="1"></circle>
-                <circle cx="5" cy="10" r="1"></circle>
-            </svg> <span class="time">Time</span></button><button class="mainbtn n" style="margin-left: 2px;" onclick="showf('mainmenu');fesw('mainmenuapp', 'mainmenulock');">Locker</button>
+            <button class="mainbtn n" onclick="showf('mainmenu');fesw('mainmenulock', 'mainmenuapp');"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="16" viewBox="0 0 24 16" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-more-horizontal">
+                    <circle cx="12" cy="10" r="1"></circle>
+                    <circle cx="19" cy="10" r="1"></circle>
+                    <circle cx="5" cy="10" r="1"></circle>
+                </svg> <span class="time">Time</span></button><button class="mainbtn n" style="margin-left: 2px;"
+                onclick="showf('mainmenu');fesw('mainmenuapp', 'mainmenulock');">Locker</button>
         </div>
         <div id="mainmenu">
             <div class="content" id="mainmenuapp"
@@ -617,18 +619,21 @@
                 <p class="dwarn">Note: Anything stored in Locker will be deleted!</p>
                 <div id="locker-list">
                 </div>
-                <p class="fucku"><button class="b1" onclick="fesw('mainmenulock', 'mainmenuapp');">Back</button><button class="b1" onclick="hidef('mainmenu');fesw('mainmenulock', 'mainmenuapp');">Close</button><button
-                    class="b1" onclick="upload();">Upload</button><button class="b1"
-                    onclick="window.fucklocker();">Erase all</button></p>
+                <p class="fucku"><button class="b1" onclick="fesw('mainmenulock', 'mainmenuapp');">Back</button><button
+                        class="b1"
+                        onclick="hidef('mainmenu');fesw('mainmenulock', 'mainmenuapp');">Close</button><button
+                        class="b1" onclick="upload();">Upload</button><button class="b1"
+                        onclick="window.fucklocker();">Erase all</button></p>
             </div>
         </div>
         <div id="sandbox"
-            style="position: fixed; left: 0px; right: 0px; top: 0px; bottom: 0px; z-index: 9999; background-color: var(--background);"
+            style="position: fixed; left: 0px; right: 0px; top: 0px; bottom: 0px; z-index: 9997; background-color: var(--background);"
             class="hide">
             <embed style="width: 100%; height: 100%; box-sizing: border-box; border: none; z-index: 1;"
                 src="./assets/sandbox.html" id="sandboxframe">Sandbox is
             booting...</embed>
         </div>
+        <div class="fullbg hide" style="background-color: var(--lightdark); z-index: 9998;"></div>
         <audio id="hSound">
             <source src="./assets/other/h.mp3" type="audio/mpeg">
             Your browser does not support the audio element, if you're actually seeing this PLEASE use a different

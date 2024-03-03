@@ -72,11 +72,11 @@ function fuck() {
 }
 
 async function nameutil(cont) {
-    mkw(`${cont}<p><input class="i1" placeholder="Username here" id="seconduserbox"></input><button class="b1" onclick="nametime('seconduserbox', 'y');">Set name & reload</button></p>`, 'WebDesk Login Manager', '270px');
+    mkw(`${cont}<p><input class="i1" placeholder="Username here" id="seconduserbox"></input><button class="b1" onclick="nametime('seconduserbox', 'y');">Set name & reload</button></p>`, 'WebDesk Login Manager', '300px');
 }
 
 async function passutil(cont) {
-    mkw(`${cont}<p><input class="i1" placeholder="New password" id="seconduserbox"></input><button class="b1" onclick="passtimedesk('seconduserbox');">Set password</button></p>`, 'WebDesk Login Manager', '270px');
+    mkw(`${cont}<p><input class="i1" placeholder="New password" id="seconduserbox"></input><button class="b1" onclick="passtimedesk('seconduserbox');">Set password</button></p>`, 'WebDesk Login Manager', '300px');
 }
 
 async function guestmode() {
@@ -144,25 +144,27 @@ function stm(winc, winn, wins) {
 
 async function nametime(el, reb) {
     const elID = document.getElementById(el).value;
-    console.log(el);
-    console.log(elID);
     if (elID === "") {
-        mkw(`<p>Please type a username.</p>`, 'Error Message', '200px');
+        snack('Enter a username!', '3000');
+        return false;
     } else {
         if (reb === "y") {
             await writevar('name', elID, 'r');
         } else {
             await writevar('name', elID);
         }
+        return true;
     }
 }
 
 function passtime(el) {
     const elID = document.getElementById(el).value;
     if (elID === "") {
-        mkw('Enter a password!', 'Error');
+        snack('Enter a password!', '3000');
+        return false;
     } else {
         pass = elID;
+        return true;
     }
 }
 
@@ -325,14 +327,25 @@ function inbt(buttons) {
         button.addEventListener("mousedown", playc);
         if (gfx) {
             if (!button.classList.contains("n")) {
-                button.addEventListener("mousemove", (e) => {
-                    const rect = button.getBoundingClientRect();
-                    const buttonX = rect.x + rect.width / 2;
-                    const buttonY = rect.y + rect.height / 2;
-                    const deltaX = e.clientX - buttonX;
-                    const deltaY = e.clientY - buttonY;
-                    button.style.transform = `translate(${deltaX / 42}px, ${deltaY / 42}px) scale(1.06)`;
-                });
+                if (button.classList.contains('b2')) {
+                    button.addEventListener("mousemove", (e) => {
+                        const rect = button.getBoundingClientRect();
+                        const buttonX = rect.x + rect.width / 2;
+                        const buttonY = rect.y + rect.height / 2;
+                        const deltaX = e.clientX - buttonX;
+                        const deltaY = e.clientY - buttonY;
+                        button.style.transform = `translate(${deltaX / 35}px, ${deltaY / 35}px) scale(1.06)`;
+                    });
+                } else {
+                    button.addEventListener("mousemove", (e) => {
+                        const rect = button.getBoundingClientRect();
+                        const buttonX = rect.x + rect.width / 2;
+                        const buttonY = rect.y + rect.height / 2;
+                        const deltaX = e.clientX - buttonX;
+                        const deltaY = e.clientY - buttonY;
+                        button.style.transform = `translate(${deltaX / 20}px, ${deltaY / 20}px) scale(1.06)`;
+                    });
+                }
                 function resetButtonStyles() {
                     button.style.transform = "translate(0, 0) scale(1.0)";
                     button.classList.remove("shadow");
@@ -348,7 +361,7 @@ function inbt(buttons) {
                         fucker.style.display = "none";
                     } catch (error) {
                         // i dont fucking know i just wanna shut it up
-                    }    
+                    }
                 });
                 button.addEventListener("mouseleave", () => {
                     button.classList.remove("shadow");

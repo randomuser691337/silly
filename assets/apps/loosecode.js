@@ -14,11 +14,24 @@ async function forceondata() {
 
 async function exsandcon() {
     if (sandParam) {
-       burnitall();
-       sth('end');  
+        burnitall();
+        sth('end');
     }
 }
 
 function exsand() {
     mkw(`<p>Are you sure you want to exit Sandbox?</p><p>All data in Sandbox will be erased, select 'Close' to cancel or 'Okay' to continue.</p><button class="b1" onclick="exsandcon();">Okay</button>`, 'Sandbox', '350px');
+}
+
+async function holyfuck() {
+    const yeah = await passtime('oobepin');
+    if (yeah === true) {
+        fesw('setupnew', 'setup2');
+    }
+}
+async function holyshit() {
+    const yeah = await nametime('username');
+    if (yeah === true) {
+        fesw('setup2', 'setup3');
+    }
 }
