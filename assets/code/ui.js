@@ -14,7 +14,7 @@ function mkw(content, title, width, m, height, btnid) {
     if (btnid) {
         titleBar.innerHTML = title + ` <button class="winb wc" onclick="dest('${windowId}');" id="${btnid}">Close</button>`;
     } else {
-        titleBar.innerHTML = title + ` <button class="winb wc" onclick="dest('${windowId}');">Close</button>`;
+        titleBar.innerHTML = title + ` <button class="winb wc" onclick="showf('fucker');dest('${windowId}');">Close</button>`;
     }
     const contentContainer = document.createElement('div');
     contentContainer.className = 'content';
