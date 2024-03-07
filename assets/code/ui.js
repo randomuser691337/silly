@@ -172,16 +172,22 @@ async function di() {
 
 setInterval(getstr, 2000);
 
+function reid() {
+    const win = `<p>Get new DeskID?</p><p>A reboot is required, and you'll lose any other linked WebDesks.</p>
+    <button class="b1 b2" onclick="const id = gen(6);writepb('deskid', id);reboot();">Get New ID</button>`
+    mkw(win, 'New DeskID', '350px');
+}
+
 async function about(value) {
     const ok = await di();
     const about = `<div class="container">
         <div class="logo">
             <img style="width: 100%; box-sizing: border-box; height: auto;" src="./assets/img/favicon.png">
             <p style="cursor: pointer;" 
-            onclick="mkw('<p>Last update: <span class="lastedit med">one sec</span></p>', 'About');masschange('lastedit', lastedit);">Ver: <span class="ver med">one sec</span></p>
+            onclick="mkw('<p>Last update: <span class='lastedit med'>one sec</span></p>', 'About');masschange('lastedit', lastedit);">Ver: <span class="ver med">one sec</span></p>
         </div>
         <div class="info">
-            <p>DeskID: <span class="med">${ok}</span></p>
+            <p onclick="reid();" style="cursor: pointer;">DeskID: <span class="med">${ok}</span></p>
             <p class="usage-text">One sec...</p>
             <div class="progress-bar">
                 <div class="progress struse"></div>
