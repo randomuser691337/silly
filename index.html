@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="./assets/browser.css">
     <script src="./assets/code/enc.js"></script>
     <script>
-        var ver = "0.0.9 beta";
+        var ver = "0.0.9";
         var lastedit = "Mar 7, 2024";
         var crashed = false;
         var mostrecerr = "No history."
@@ -670,6 +670,12 @@
                 } else {
                     console.log(`<i> Starting boot stage 1...`);
                     started = true;
+                    const id1 = readpb('deskid');
+                    if (id1 === null) {
+                        const yeah = gen(6);
+                        writepb('deskid', yeah);
+                        reboot();
+                    }
                     const isTabOpen = sessionStorage.getItem('isTabOpen');
                     if (isTabOpen) {
                         wal(`<p>Only one WebDesk can be open at a time.</p><p>Use the other tab or close it and click "Okay".</p>`, 'reboot()');
@@ -707,8 +713,6 @@
                         burnitall('justreload');
                     } else {
                         eraseall();
-                        const id = gen(6);
-                        writepb('deskid', id);
                         fesw('load', 'setup1');
                         opapp('setup');
                     }
@@ -812,6 +816,7 @@
             fesw('mainwebact', 'mainsandact'); showf('sandwarn');
             document.getElementById('sandbox').innerHTML = `<p class="h3">You can't run Sandbox in Sandbox!</p><button class="b1" onclick="hidef('sandbox');">Back</button>`;
             hidecls('sandnoapp'); showcls('sandapp');
+            showcls('dwarn');
         } else {
             console.log(`<i> Not in Sandbox mode`);
             window.addEventListener("message", receiveMessage, false);
