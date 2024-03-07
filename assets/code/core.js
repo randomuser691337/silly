@@ -296,7 +296,7 @@ function send(cont) {
             console.log(`<i> Data collection disabled, so disable send.`);
         }
     } catch (error) {
-        console.log(`- Couldn't send: ${error}`);
+        console.log(`<!> Couldn't send: ${error}`);
     }
 }
 
@@ -321,7 +321,6 @@ function playc() {
         audio.play();
     }
 }
-var ctrlPressed = 0;
 function inbt(buttons) {
     buttons.forEach((button) => {
         button.addEventListener("mouseenter", playh);
@@ -353,10 +352,7 @@ function inbt(buttons) {
                 }
                 document.addEventListener("keydown", function (event) {
                     if (event.keyCode === 17) {
-                        if (++ctrlPressed === 2) {
-                            showf('fucker');
-                            ctrlPressed = 0;
-                        }
+                        showf('fucker');
                     }
                 });
                 button.addEventListener("mouseup", resetButtonStyles);

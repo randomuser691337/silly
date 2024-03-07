@@ -78,8 +78,8 @@
                     <p>Enter a strong password. The stronger the password, the better the security (WebDesk is
                         encrypted.)</p>
                     <input type="password" id="oobepin" class="i1" placeholder="Enter a password" autocomplete="off">
-                    <button class="b1" onclick="fesw('setupnew', 'setup1');">Back</button><button
-                        onclick="holyfuck();" class="b1">Set password, next</button>
+                    <button class="b1" onclick="fesw('setupnew', 'setup1');">Back</button><button onclick="holyfuck();"
+                        class="b1">Set password, next</button>
                 </div>
                 <div id="setup2" style="display: none;">
                     <p class="h2">User Setup</p>
@@ -184,7 +184,8 @@
                 <div id="settingsuser" style="display: none;">
                     <p style="margin: 0px !important;" class="bold">Username / Password</p>
                     <button class="b1 b2" onclick="nameutil(`<p>Enter new username</p>`);">Change
-                        username</button><button class="b1 b2" onclick="passutil('<p>Enter new password, WebDesk may freeze for a bit.</p><p>Do not reload WebDesk until it unfreezes, or you will lose all data.</p>');">Change
+                        username</button><button class="b1 b2"
+                        onclick="passutil('<p>Enter new password, WebDesk may freeze for a bit.</p><p>Do not reload WebDesk until it unfreezes, or you will lose all data.</p>');">Change
                         pass</button>
                     <p>Other</p>
                     <p><button class="winb" onclick="fesw('settingsuser', 'settingsmain');">Back</button></p>
@@ -320,6 +321,16 @@
             </div>
         </div>
         <!--End of terminal-->
+        <!--Styler-->
+        <div id="styler" class="window resizeh" name="Styler" style="width: 300px;">
+            <div class="title-bar">Styler <button class="winb wc" onclick="hidef('styler');">Close</button></div>
+            <div class="content">
+                <p>Note: Anything changed requires a restart to undo.</p>
+                <div id="stylerm">
+                </div>
+            </div>
+        </div>
+        <!--End of styler-->
         <!--Weather-->
         <div id="weather" class="window resizeh" name="Weather" style="width: 360px;">
             <div class="title-bar">Weather <button class="winb wc" onclick="hidef('weather');">Close</button><button
@@ -819,6 +830,9 @@
         function sth(con) {
             window.parent.postMessage(con, "*");
         }
+        document.addEventListener("DOMContentLoaded", function () {
+            refcss('stylerm');
+        });
     </script>
 </body>
 

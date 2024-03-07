@@ -12,7 +12,7 @@
     --fontc: #fff;
     --fontc2: #aaa;
     --slbl: blur(4px);
-    --mdbl: blur(10px);
+    --mdbl: blur(8px);
 }
 
 @font-face {
@@ -37,7 +37,6 @@
 .med {
     font-family: "PoppinsM";
 }
-
 body {
     padding: 0px;
     margin: 0px;

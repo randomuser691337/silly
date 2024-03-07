@@ -105,7 +105,7 @@ function snack(cont, t) {
     snackElement.onclick = function () {
         dest(fuckyou);
     }
-    setTimeout(function () {dest(fuckyou);}, t);
+    setTimeout(function () { dest(fuckyou); }, t);
 }
 function sv() {
     snack('Saved!', '2000');
@@ -161,7 +161,7 @@ function getstr() {
             });
         });
     } else {
-       panic(`Can't open db!`);
+        panic(`Can't open db!`);
     }
 }
 
@@ -274,4 +274,41 @@ function allthatsillyshit() {
             }`;
         document.body.appendChild(styleElement);
     }
+}
+
+function refcss() {
+    const root = document.documentElement;
+    const variablesContainer = document.getElementById('stylerm');
+
+    if (!variablesContainer) {
+        console.error(`Container element with ID '${containerId}' not found.`);
+        return;
+    }
+
+    const cssVariables = getComputedStyle(root);
+
+    Object.keys(cssVariables).forEach(propertyName => {
+        if (propertyName.startsWith('--')) {
+            const varName = propertyName;
+            const varValue = cssVariables.getPropertyValue(propertyName).trim();
+
+            const varContainer = document.createElement('div');
+            varContainer.innerHTML = `
+                <label>${varName}</label>
+                <input type="text" class="winb" value="${varValue}">
+                <button class="winb">Save</button>
+            `;
+
+            const inputField = varContainer.querySelector('input');
+            const saveButton = varContainer.querySelector('.winb');
+
+            saveButton.addEventListener('click', function () {
+                root.style.setProperty(varName, inputField.value);
+            });
+
+            variablesContainer.appendChild(varContainer);
+        } else {
+            console.log('<i> propname starts NOT --')
+        }
+    });
 }
