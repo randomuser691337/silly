@@ -181,7 +181,7 @@ async function about(value) {
             onclick="mkw('<p>Last update: <span class="lastedit med">one sec</span></p>', 'About');masschange('lastedit', lastedit);">Ver: <span class="ver med">one sec</span></p>
         </div>
         <div class="info">
-            <p>DeskID: <span class="med">${di}</span></p>
+            <p>DeskID: <span class="med">${ok}</span></p>
             <p class="usage-text">One sec...</p>
             <div class="progress-bar">
                 <div class="progress struse"></div>
