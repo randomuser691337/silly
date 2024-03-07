@@ -165,16 +165,23 @@ function getstr() {
     }
 }
 
+async function di() {
+    const d = readpb('deskid');
+    return d;
+}
+
 setInterval(getstr, 2000);
 
-function about(value) {
+async function about(value) {
+    const ok = await di();
     const about = `<div class="container">
         <div class="logo">
             <img style="width: 100%; box-sizing: border-box; height: auto;" src="./assets/img/favicon.png">
-            <p>Ver: <span class="ver med">one sec</span></p>
+            <p style="cursor: pointer;" 
+            onclick="mkw('<p>Last update: <span class="lastedit med">one sec</span></p>', 'About');masschange('lastedit', lastedit);">Ver: <span class="ver med">one sec</span></p>
         </div>
         <div class="info">
-            <p>Last edit: <span class="lastedit med">one sec</span></p>
+            <p>DeskID: <span class="med">${di}</span></p>
             <p class="usage-text">One sec...</p>
             <div class="progress-bar">
                 <div class="progress struse"></div>
@@ -186,9 +193,7 @@ function about(value) {
     if (value === undefined) {
         mkw(about, `About`, '300px', './assets/img/favicon.png');
     }
-
     masschange('ver', ver);
-    masschange('lastedit', lastedit);
 }
 function update(src, time) {
     // silly easter egg corrupted android reference
@@ -274,41 +279,4 @@ function allthatsillyshit() {
             }`;
         document.body.appendChild(styleElement);
     }
-}
-
-function refcss() {
-    const root = document.documentElement;
-    const variablesContainer = document.getElementById('stylerm');
-
-    if (!variablesContainer) {
-        console.error(`Container element with ID '${containerId}' not found.`);
-        return;
-    }
-
-    const cssVariables = getComputedStyle(root);
-
-    Object.keys(cssVariables).forEach(propertyName => {
-        if (propertyName.startsWith('--')) {
-            const varName = propertyName;
-            const varValue = cssVariables.getPropertyValue(propertyName).trim();
-
-            const varContainer = document.createElement('div');
-            varContainer.innerHTML = `
-                <label>${varName}</label>
-                <input type="text" class="winb" value="${varValue}">
-                <button class="winb">Save</button>
-            `;
-
-            const inputField = varContainer.querySelector('input');
-            const saveButton = varContainer.querySelector('.winb');
-
-            saveButton.addEventListener('click', function () {
-                root.style.setProperty(varName, inputField.value);
-            });
-
-            variablesContainer.appendChild(varContainer);
-        } else {
-            console.log('<i> propname starts NOT --')
-        }
-    });
 }

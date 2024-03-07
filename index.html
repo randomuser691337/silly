@@ -9,13 +9,13 @@
     <link rel="stylesheet" href="./assets/browser.css">
     <script src="./assets/code/enc.js"></script>
     <script>
-        var ver = "0.0.9";
-        var lastedit = "Mar 3, 2024";
+        var ver = "0.0.9 beta";
+        var lastedit = "Mar 7, 2024";
         var crashed = false;
         var mostrecerr = "No history."
         var forcedatac = true;
         var promptreboot = false;
-        var locked = true;
+        var locked = false;
         var abs = true;
         var gfx = true;
         var wcur = true;
@@ -173,6 +173,7 @@
             </div>
             <div class="content">
                 <div id="settingsmain">
+                    <p class="dwarn smt">*Options hidden due to Guest Mode or being in a sandbox.</p>
                     <button class="b1 b2 guestno"
                         onclick="passp('Enter password to access menu', 'imsosilly()');">Username &
                         Password</button><button class="b1 b2"
@@ -321,16 +322,6 @@
             </div>
         </div>
         <!--End of terminal-->
-        <!--Styler-->
-        <div id="styler" class="window resizeh" name="Styler" style="width: 300px;">
-            <div class="title-bar">Styler <button class="winb wc" onclick="hidef('styler');">Close</button></div>
-            <div class="content">
-                <p>Note: Anything changed requires a restart to undo.</p>
-                <div id="stylerm">
-                </div>
-            </div>
-        </div>
-        <!--End of styler-->
         <!--Weather-->
         <div id="weather" class="window resizeh" name="Weather" style="width: 360px;">
             <div class="title-bar">Weather <button class="winb wc" onclick="hidef('weather');">Close</button><button
@@ -605,7 +596,7 @@
                         onclick="opapp('terminal');">Terminal</button><button class="b1 sandnoapp"
                         onclick="opapp('weather');">Weather</button><button class="b1 sandnoapp"
                         onclick="opapp('browser');">Browser</button><button class="b1"
-                        onclick="opapp('calculator');">Calculator</button><button class="b1"
+                        onclick="opapp('calculator');">Calculator</button><button class="b1 hide"
                         onclick="doc('./assets/other/trusted.txt', 'App Installer', '270px');">App Installer
                         (BETA)</button><button class="b1" onclick="opapp('uploader');">Uploader</button>
                 </div>
@@ -679,6 +670,18 @@
                 } else {
                     console.log(`<i> Starting boot stage 1...`);
                     started = true;
+                    const isTabOpen = sessionStorage.getItem('isTabOpen');
+                    if (isTabOpen) {
+                        wal(`<p>Only one WebDesk can be open at a time.</p><p>Use the other tab or close it and click "Okay".</p>`, 'reboot()');
+                        console.log('<!> Other WebDesk tab open!');
+                        dest('auth');
+                        return;
+                    } else {
+                        sessionStorage.setItem('isTabOpen', true);
+                        window.addEventListener('beforeunload', function () {
+                            sessionStorage.removeItem('isTabOpen');
+                        });
+                    }
                     const bl = await readpb('bootload');
                     if (bl) {
                         console.log('<i> Bootload has code! Executing...');
@@ -704,6 +707,8 @@
                         burnitall('justreload');
                     } else {
                         eraseall();
+                        const id = gen(6);
+                        writepb('deskid', id);
                         fesw('load', 'setup1');
                         opapp('setup');
                     }
@@ -830,9 +835,6 @@
         function sth(con) {
             window.parent.postMessage(con, "*");
         }
-        document.addEventListener("DOMContentLoaded", function () {
-            refcss('stylerm');
-        });
     </script>
 </body>
 
