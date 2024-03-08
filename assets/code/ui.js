@@ -178,13 +178,17 @@ function reid() {
     mkw(win, 'New DeskID', '350px');
 }
 
+function lastup() {
+    mkw(`<p>Last update: <span class='lastedit med'>one sec</span></p>`, 'About'); masschange('lastedit', lastedit);
+}
+
 async function about(value) {
     const ok = await di();
     const about = `<div class="container">
         <div class="logo">
             <img style="width: 100%; box-sizing: border-box; height: auto;" src="./assets/img/favicon.png">
             <p style="cursor: pointer;" 
-            onclick="mkw('<p>Last update: <span class='lastedit med'>one sec</span></p>', 'About');masschange('lastedit', lastedit);">Ver: <span class="ver med">one sec</span></p>
+            onclick="lastup();">Ver: <span class="ver med">one sec</span></p>
         </div>
         <div class="info">
             <p onclick="reid();" style="cursor: pointer;">DeskID: <span class="med">${ok}</span></p>

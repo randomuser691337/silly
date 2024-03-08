@@ -678,10 +678,7 @@
                     }
                     const isTabOpen = sessionStorage.getItem('isTabOpen');
                     if (isTabOpen) {
-                        wal(`<p>Only one WebDesk can be open at a time.</p><p>Use the other tab or close it and click "Okay".</p>`, 'reboot()');
-                        console.log('<!> Other WebDesk tab open!');
-                        dest('auth');
-                        return;
+                        mkw('<p>WebDesk can have problems if more than one WebDesk is running in the same browser.</p><p>Continue at your own risk, or close all other WebDesk tabs.</p>', 'Multi-tab Warning', '300px');
                     } else {
                         sessionStorage.setItem('isTabOpen', true);
                         window.addEventListener('beforeunload', function () {
