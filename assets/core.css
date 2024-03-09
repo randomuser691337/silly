@@ -148,6 +148,7 @@ input:placeholder {
     color: var(--fontc);
     font-family: 'PoppinsM', Arial;
     margin: 1px;
+    padding: 0px !important;
     padding-left: 5px !important;
     padding-right: 5px !important;
     transition: 0.05s;
@@ -180,7 +181,6 @@ input:placeholder {
 
 .i1:focus {
     background-color: rgba(var(--accent), 0.55);
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 12px 36px 0px, rgba(0, 0, 0, 0.25) 0px 0px 0px 1px;
 }
 
 .hide,

@@ -10,12 +10,11 @@
     <script src="./assets/code/enc.js"></script>
     <script>
         var ver = "0.0.9";
-        var lastedit = "Mar 7, 2024";
+        var lastedit = "Mar 8, 2024";
         var crashed = false;
         var mostrecerr = "No history."
         var forcedatac = true;
-        var promptreboot = false;
-        var locked = false;
+        var locked = true;
         var abs = true;
         var gfx = true;
         var wcur = true;
@@ -34,12 +33,6 @@
                 console.log('<!> Already panicking!');
             }
         }
-        window.addEventListener('beforeunload', function (e) {
-            if (promptreboot === true) {
-                e.preventDefault();
-                e.returnValue = '';
-            }
-        });
         console.log(`%c /\\_/\\  WebDesk ${ver}
 %c( o.o ) Edited ${lastedit}
 %c > ^ <  randomuser691337`, 'color: orange', 'color: orange', 'color: orange');
@@ -173,7 +166,6 @@
             </div>
             <div class="content">
                 <div id="settingsmain">
-                    <p class="dwarn smt">*Options hidden due to Guest Mode or being in a sandbox.</p>
                     <button class="b1 b2 guestno"
                         onclick="passp('Enter password to access menu', 'imsosilly()');">Username &
                         Password</button><button class="b1 b2"
@@ -322,6 +314,16 @@
             </div>
         </div>
         <!--End of terminal-->
+        <!--Styler-->
+        <div id="styler" class="window resizeh" name="Styler" style="width: 300px;">
+            <div class="title-bar">Styler <button class="winb wc" onclick="hidef('styler');">Close</button></div>
+            <div class="content">
+                <p>Note: Anything changed requires a restart to undo.</p>
+                <div id="stylerm">
+                </div>
+            </div>
+        </div>
+        <!--End of styler-->
         <!--Weather-->
         <div id="weather" class="window resizeh" name="Weather" style="width: 360px;">
             <div class="title-bar">Weather <button class="winb wc" onclick="hidef('weather');">Close</button><button
@@ -596,7 +598,7 @@
                         onclick="opapp('terminal');">Terminal</button><button class="b1 sandnoapp"
                         onclick="opapp('weather');">Weather</button><button class="b1 sandnoapp"
                         onclick="opapp('browser');">Browser</button><button class="b1"
-                        onclick="opapp('calculator');">Calculator</button><button class="b1 hide"
+                        onclick="opapp('calculator');">Calculator</button><button class="b1"
                         onclick="doc('./assets/other/trusted.txt', 'App Installer', '270px');">App Installer
                         (BETA)</button><button class="b1" onclick="opapp('uploader');">Uploader</button>
                 </div>
@@ -670,21 +672,6 @@
                 } else {
                     console.log(`<i> Starting boot stage 1...`);
                     started = true;
-                    const id1 = readpb('deskid');
-                    if (id1 === null) {
-                        const yeah = gen(6);
-                        writepb('deskid', yeah);
-                        reboot();
-                    }
-                    const isTabOpen = sessionStorage.getItem('isTabOpen');
-                    if (isTabOpen) {
-                        mkw('<p>WebDesk can have problems if more than one WebDesk is running in the same browser.</p><p>Continue at your own risk, or close all other WebDesk tabs.</p>', 'Multi-tab Warning', '300px');
-                    } else {
-                        sessionStorage.setItem('isTabOpen', true);
-                        window.addEventListener('beforeunload', function () {
-                            sessionStorage.removeItem('isTabOpen');
-                        });
-                    }
                     const bl = await readpb('bootload');
                     if (bl) {
                         console.log('<i> Bootload has code! Executing...');
@@ -813,7 +800,6 @@
             fesw('mainwebact', 'mainsandact'); showf('sandwarn');
             document.getElementById('sandbox').innerHTML = `<p class="h3">You can't run Sandbox in Sandbox!</p><button class="b1" onclick="hidef('sandbox');">Back</button>`;
             hidecls('sandnoapp'); showcls('sandapp');
-            showcls('dwarn');
         } else {
             console.log(`<i> Not in Sandbox mode`);
             window.addEventListener("message", receiveMessage, false);
@@ -837,6 +823,9 @@
         function sth(con) {
             window.parent.postMessage(con, "*");
         }
+        document.addEventListener("DOMContentLoaded", function () {
+            refcss('stylerm');
+        });
     </script>
 </body>
 

@@ -1,4 +1,6 @@
+// graveyard of variables and functions, even some working ones are here
 var DoNotModifyUnlessYouKnowWhatYoureDoing = ["whatever"];
+var promptreboot = false;
 var urlParams = new URLSearchParams(window.location.search);
 var sandParam = urlParams.get("sand");
 async function forceoffdata() {

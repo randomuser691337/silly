@@ -180,8 +180,9 @@ function passtimedesk(el) {
 async function finishsetup() {
     fesw('setup3', 'setup4');
     writepb('setupdone', 'y');
+    const hai = await readvar('name');
+    desktop(hai);
     await writevar('check', 'passed');
-    reboot();
 }
 
 function reboot() {
@@ -386,6 +387,5 @@ function ib() {
     const abuttons2 = document.querySelectorAll("button");
     inbt(abuttons2);
 }
-
 updateClock();
 setInterval(updateClock, 1000);
