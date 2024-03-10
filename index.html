@@ -46,98 +46,108 @@
     <div class="fullbg" id="nest">
         <p class="h2 hide" style="margin-top: 12px;" id="sandwarn">Sandbox Desktop</p>
         <div id="setup" class="window" style="width: 350px;">
-            <div class="title-bar">Setup Assistant <button class="winb" onclick="about();">About</button></div>
-            <div class="content">
-                <div id="setup1" style="display: none;">
-                    <p class="h2">Welcome to WebDesk!</p>
-                    <p>In just a few steps, you'll be ready to go.</p>
-                    <p class="smt">- Select "Migrate" if you want to copy data</p>
-                    <p class="smt">- Select "Let's Go" to get started (normal)</p>
-                    <p class="smt">- Select "Guest" to skip setup or debug</p>
-                    <button class="b1" onclick="guestmode();">Guest</button><button class="b1"
-                        onclick="fesw('setup1', 'mig');initializePeerConnection();">Migrate</button><button class="b1"
-                        onclick="fesw('setup1', 'setupnew');">Let's go!</button>
-                </div>
-                <div id="yowetrapped" style="display: none;">
-                    <p class="h2">Sandbox</p>
-                    <p>Enter any password, NOT A USED ONE, to secure Sandbox with.</p>
-                    <input type="password" id="oobepin2" class="i1" placeholder="Enter a password" autocomplete="off">
-                    <button class="b1" onclick="sth('end');">Exit Sandbox</button><button
-                        onclick="passtime('oobepin2');desktop('User');writepb('setupdone', 'fuckingkillme');"
-                        class="b1">Set password, next</button>
-                </div>
-                <div id="setupnew" style="display: none;">
-                    <p class="h2">Password Setup</p>
-                    <p>Enter a strong password. The stronger the password, the better the security (WebDesk is
-                        encrypted.)</p>
-                    <input type="password" id="oobepin" class="i1" placeholder="Enter a password" autocomplete="off">
-                    <button class="b1" onclick="fesw('setupnew', 'setup1');">Back</button><button onclick="holyfuck();"
-                        class="b1">Set password, next</button>
-                </div>
-                <div id="setup2" style="display: none;">
-                    <p class="h2">User Setup</p>
-                    <p>Enter a username and select your preferences.</p>
-                    <input type="text" id="username" class="i1" placeholder="Enter a new username" autocomplete="off">
-                    <p style="cursor: pointer;"
-                        onclick="doc('./assets/other/data.txt', 'Data Collection', '350px', 'auto');">Data collection
-                        (Select to learn more)</p>
-                    <button class="b3 green" onclick="forceondata();">Allow (default)</button><button class="b3 red"
-                        onclick="forceoffdata();">Disable</button>
-                    <p><button class="b1" onclick="holyshit();">Done!</button></p>
-                </div>
-                <div id="setup3" style="display: none;">
-                    <p class="h2">Personalize</p>
-                    <p>Accent color</p>
-                    <button class="acb" style="background: rgb(210, 30, 30);" onclick="chacc('210, 30, 30');"></button>
-                    <button class="acb" style="background: rgb(210, 120, 30);"
-                        onclick="chacc('210, 120, 30');"></button>
-                    <button class="acb" style="background: rgb(210, 180, 20);"
-                        onclick="chacc('210, 180, 20');"></button>
-                    <button class="acb" style="background: rgb(50, 160, 20);" onclick="chacc('50, 160, 20');"></button>
-                    <button class="acb" style="background: rgb(40, 70, 235);" onclick="chacc('40, 70, 235');"></button>
-                    <button class="acb" style="background: rgb(120, 60, 235);"
-                        onclick="chacc('120, 60, 235');"></button>
-                    <button class="acb" style="background: rgb(180, 180, 180);"
-                        onclick="chacc('200, 200, 200');"></button>
-                    <p>Appearance</p>
-                    <button class="b1 b2 light" onclick="appear('l');">Light</button><button class="b1 b2 dark"
-                        onclick="appear();">Dark</button>
-                    <p><button class="b1" onclick="finishsetup();">Done!</button></p>
-                </div>
-                <div id="setup4" style="display: none;">
-                    <p class="h2">Close other WebDesks</p>
-                    <p>Another WebDesk tab is open in this browser. Close it, then click "Reload" if WebDesk doesn't
-                        finish setup.</p>
-                    <button class="b1" onclick="window.location.reload();">Reload</button><button class="b1"
-                        onclick="guestmode();">Guest</button>
-                </div>
-                <div id="mig" style="display: none;">
-                    <p class="h2" id="lobotomy">Migration Assistant</p>
-                    <p>Note: Safari can have issues migrating.</p>
-                    <p class="smt">- Go to your Everything Menu and open Migration Assistant on the other WebDesk.</p>
-                    <p class="smt">- Enter the code "<span id="codemig" style="color: #fff;"></span>" into the
-                        Assistant.
-                    </p>
-                    <button class="b1" onclick="fesw('mig', 'setup1');">Back</button>
-                </div>
-                <div id="load">
-                    <p class="h2">Loading...</p>
-                    <p>If this gets stuck or takes too long, reload.</p>
-                    <div class="line-wobble center"></div>
-                    <button class="b1" onclick="recovery();">Recovery</button><button class="b1"
-                        onclick="reboot();">Reload</button>
-                </div>
-                <div id="mdone" style="display: none;">
-                    <p class="h2">Migration Assistant</p>
-                    <p>Migration complete.</p>
-                    <p>Click "Done" to reboot into your WebDesk.</p>
-                    <button class="b1" onclick="reboot();">Done</button>
+            <div class="title-bar"
+                style="border-bottom: 0px !important; background-color: rgba(var(--accent), 0.07) !important;">
+                <div class="content" style="margin-bottom: 0px !important;">
+                    <div id="setup1" style="display: none;">
+                        <p class="h2">Welcome to WebDesk!</p>
+                        <p>In just a few steps, you'll be ready to go.</p>
+                        <p class="smt">- Select "Migrate" if you want to copy data</p>
+                        <p class="smt">- Select "Let's Go" to get started (normal)</p>
+                        <p class="smt">- Select "Guest" to skip setup or debug</p>
+                        <button class="b1" onclick="guestmode();">Guest</button><button class="b1"
+                            onclick="fesw('setup1', 'mig');initializePeerConnection();">Migrate</button><button
+                            class="b1" onclick="fesw('setup1', 'setupnew');">Let's go!</button>
+                    </div>
+                    <div id="yowetrapped" style="display: none;">
+                        <p class="h2">Sandbox</p>
+                        <p>Enter any password, NOT A USED ONE, to secure Sandbox with.</p>
+                        <input type="password" id="oobepin2" class="i1" placeholder="Enter a password"
+                            autocomplete="off">
+                        <button class="b1" onclick="sth('end');">Exit Sandbox</button><button
+                            onclick="passtime('oobepin2');desktop('User');writepb('setupdone', 'fuckingkillme');"
+                            class="b1">Set password, next</button>
+                    </div>
+                    <div id="setupnew" style="display: none;">
+                        <p class="h2">Password Setup</p>
+                        <p>Enter a strong password. The stronger the password, the better the security (WebDesk is
+                            encrypted.)</p>
+                        <input type="password" id="oobepin" class="i1" placeholder="Enter a password"
+                            autocomplete="off">
+                        <button class="b1" onclick="fesw('setupnew', 'setup1');">Back</button><button
+                            onclick="holyfuck();" class="b1">Set password, next</button>
+                    </div>
+                    <div id="setup2" style="display: none;">
+                        <p class="h2">User Setup</p>
+                        <p>Enter a username and select your preferences.</p>
+                        <input type="text" id="username" class="i1" placeholder="Enter a new username"
+                            autocomplete="off">
+                        <p style="cursor: pointer;"
+                            onclick="doc('./assets/other/data.txt', 'Data Collection', '350px', 'auto');">Data
+                            collection
+                            (Select to learn more)</p>
+                        <button class="b3 green" onclick="forceondata();">Allow (default)</button><button class="b3 red"
+                            onclick="forceoffdata();">Disable</button>
+                        <p><button class="b1" onclick="holyshit();">Done!</button></p>
+                    </div>
+                    <div id="setup3" style="display: none;">
+                        <p class="h2">Personalize</p>
+                        <p>Accent color</p>
+                        <button class="acb" style="background: rgb(210, 30, 30);"
+                            onclick="chacc('210, 30, 30');"></button>
+                        <button class="acb" style="background: rgb(210, 120, 30);"
+                            onclick="chacc('210, 120, 30');"></button>
+                        <button class="acb" style="background: rgb(210, 180, 20);"
+                            onclick="chacc('210, 180, 20');"></button>
+                        <button class="acb" style="background: rgb(50, 160, 20);"
+                            onclick="chacc('50, 160, 20');"></button>
+                        <button class="acb" style="background: rgb(40, 70, 235);"
+                            onclick="chacc('40, 70, 235');"></button>
+                        <button class="acb" style="background: rgb(120, 60, 235);"
+                            onclick="chacc('120, 60, 235');"></button>
+                        <button class="acb" style="background: rgb(180, 180, 180);"
+                            onclick="chacc('200, 200, 200');"></button>
+                        <p>Appearance</p>
+                        <button class="b1 b2 light" onclick="appear('l');">Light</button><button class="b1 b2 dark"
+                            onclick="appear();">Dark</button>
+                        <p><button class="b1" onclick="finishsetup();">Done!</button></p>
+                    </div>
+                    <div id="setup4" style="display: none;">
+                        <p class="h2">Close other WebDesks</p>
+                        <p>Another WebDesk tab is open in this browser. Close it, then click "Reload" if WebDesk doesn't
+                            finish setup.</p>
+                        <button class="b1" onclick="window.location.reload();">Reload</button><button class="b1"
+                            onclick="guestmode();">Guest</button>
+                    </div>
+                    <div id="mig" style="display: none;">
+                        <p class="h2" id="lobotomy">Migration Assistant</p>
+                        <p>Close all other WebDesk tabs before continuing.</p>
+                        <p class="smt">- Go to your Everything Menu and open Migration Assistant on the other WebDesk.
+                        </p>
+                        <p class="smt">- Enter the code "<span id="codemig" style="color: #fff;"></span>" into the
+                            Assistant.
+                        </p>
+                        <button class="b1" onclick="fesw('mig', 'setup1');">Back</button>
+                    </div>
+                    <div id="load">
+                        <p class="h2">Loading...</p>
+                        <p>If this gets stuck or takes too long, reload.</p>
+                        <div class="line-wobble center"></div>
+                        <button class="b1" onclick="recovery();">Recovery</button><button class="b1"
+                            onclick="reboot();">Reload</button>
+                    </div>
+                    <div id="mdone" style="display: none;">
+                        <p class="h2">Migration Assistant</p>
+                        <p>Migration complete.</p>
+                        <p>Click "Done" to reboot into your WebDesk.</p>
+                        <button class="b1" onclick="reboot();">Done</button>
+                    </div>
                 </div>
             </div>
         </div>
         <!--Migration Assistant-->
         <div class="window" id="migration" style="width: 350px;">
-            <div class="title-bar" id="titleBar">Migration Assistant <button class="winb wc"
+            <div class="title-bar">Migration Assistant <button class="winb wc"
                     onclick="hidef('migration');">Close</button></div>
             <div class="content">
                 <p>Enter the ID of the other WebDesk.</p>
@@ -664,7 +674,7 @@
     <script>
         let started = false;
         var customCursor = document.createElement("div");
-        document.onreadystatechange = async function () {
+        async function boots1() {
             try {
                 if (started === true) {
                     console.log('<!> Rejected doc.onreadychange (shortened)');
@@ -687,7 +697,7 @@
                         }
                     }
                     allthatsillyshit();
-                    const setup = readpb('setupdone');
+                    const setup = await readpb('setupdone');
                     if (setup == "y") {
                         passp('Enter your password to continue.', 'boots2()');
                         dest('setup');
@@ -700,6 +710,17 @@
                         fesw('load', 'setup1');
                         opapp('setup');
                     }
+                    localStorage.openpages = Date.now();
+                    var onLocalStorageEvent = function (e) {
+                        if (e.key == "openpages") {
+                            localStorage.page_available = Date.now();
+                        }
+                        if (e.key == "page_available") {
+                            mkw(`<p>You have another WebDesk tab open.</p><p>Close it, then reboot to continue.</p><button class="b1" onclick="reboot();">Reboot</button>`, 'WebDesk Boot', '320px');
+                            dest('setup'); dest('auth');
+                        }
+                    };
+                    window.addEventListener('storage', onLocalStorageEvent, false);
                 }
             } catch (error) {
                 console.log('<!> A critical error occured, run fuck() for help.');
@@ -707,6 +728,8 @@
                 mkw(`<p>WebDesk encountered a critical error.</p><p>You can use Recovery, or try again.</p><button class="b1" onclick="mkw('${error}', 'Error Details', '280px');">View Error</button><button class="b1" onclick="recovery();">Recovery</button><button class="b1" onclick="reboot();">Retry</button>`, 'Startup Error', '320px');
             }
         }
+
+        document.onload = boots1();
 
         async function boots2() {
             if (locked === false) {
@@ -800,6 +823,10 @@
             fesw('mainwebact', 'mainsandact'); showf('sandwarn');
             document.getElementById('sandbox').innerHTML = `<p class="h3">You can't run Sandbox in Sandbox!</p><button class="b1" onclick="hidef('sandbox');">Back</button>`;
             hidecls('sandnoapp'); showcls('sandapp');
+<<<<<<< HEAD
+            customCursor.style.opacity = "0%";
+=======
+>>>>>>> cf287433baf348581b0fb0ae8abd9ed3be01bbc6
         } else {
             console.log(`<i> Not in Sandbox mode`);
             window.addEventListener("message", receiveMessage, false);
@@ -815,7 +842,7 @@
                     hidef('sandbox');
                     document.getElementById('sandboxframe').src = "./assets/sandbox.html";
                     if (wcur === true) {
-                        showf('fucker');
+                        customCursor.style.opacity = "100%";
                     }
                 }
             }

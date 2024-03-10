@@ -206,9 +206,7 @@ function centerel(el) {
 
 async function sandbox() {
     showf('sandbox');
-    const hewwo = await readvar('name');
-    send(`Someone is sandboxing as ${hewwo} from `);
-    hidef('fucker');
+    customCursor.style.opacity = "0%";
 }
 
 function doc(path, title, width, height) {
@@ -321,67 +319,81 @@ function playc() {
         audio.play();
     }
 }
-function inbt(buttons) {
+var btnSense = readpb('sense');
+
+async function inbt(buttons) {
+    if (!btnSense) {
+        btnSense = 14;
+    }
     buttons.forEach((button) => {
-        button.addEventListener("mouseenter", playh);
-        button.addEventListener("mousedown", playc);
-        if (gfx) {
-            if (!button.classList.contains("n")) {
-                if (button.classList.contains('b2')) {
-                    button.addEventListener("mousemove", (e) => {
-                        const rect = button.getBoundingClientRect();
-                        const buttonX = rect.x + rect.width / 2;
-                        const buttonY = rect.y + rect.height / 2;
-                        const deltaX = e.clientX - buttonX;
-                        const deltaY = e.clientY - buttonY;
-                        button.style.transform = `translate(${deltaX / 32}px, ${deltaY / 32}px) scale(1.06)`;
-                    });
-                } else {
-                    button.addEventListener("mousemove", (e) => {
-                        const rect = button.getBoundingClientRect();
-                        const buttonX = rect.x + rect.width / 2;
-                        const buttonY = rect.y + rect.height / 2;
-                        const deltaX = e.clientX - buttonX;
-                        const deltaY = e.clientY - buttonY;
-                        button.style.transform = `translate(${deltaX / 18}px, ${deltaY / 18}px) scale(1.06)`;
-                    });
+        if (!button.dataset.listenersApplied) {
+            button.dataset.listenersApplied = true; 
+
+            button.addEventListener("mouseenter", playh);
+            button.addEventListener("mousedown", playc);
+
+            if (gfx) {
+                if (!button.classList.contains("n")) {
+                    if (button.classList.contains('b2')) {
+                        button.addEventListener("mousemove", (e) => {
+                            applyMouseMoveEffect(button, e, 30);
+                        });
+                    } else {
+                        button.addEventListener("mousemove", (e) => {
+                            applyMouseMoveEffect(button, e, btnSense);
+                        });
+                    }
                 }
-                function resetButtonStyles() {
-                    button.style.transform = "translate(0, 0) scale(1.0)";
-                    button.classList.remove("shadow");
-                }
-                document.addEventListener("keydown", function (event) {
-                    if (event.keyCode === 17) {
-                        showf('fucker');
-                    }
-                });
-                button.addEventListener("mouseup", resetButtonStyles);
-                button.addEventListener("mouseout", resetButtonStyles);
-                button.addEventListener("mousedown", () => {
-                    button.style.transform = "scale(0.95)";
-                });
-                button.addEventListener("mouseenter", () => {
-                    button.classList.add("shadow");
-                    try {
-                        fucker.style.display = "none";
-                    } catch (error) {
-                        // i dont fucking know i just wanna shut it up
-                    }
-                });
-                button.addEventListener("mouseleave", () => {
-                    button.classList.remove("shadow");
-                    try {
-                        fucker.style.display = "block";
-                    } catch (error) {
-                        // i dont fucking know i just wanna shut it up
-                    }
-                });
+            } else {
+                console.log('<i> lowgfx on, btn hover disabled');
             }
-        } else {
-            console.log('<i> lowgfx on, btn hover disabled');
+
+            button.addEventListener("mouseup", resetButtonStyles);
+            button.addEventListener("mouseout", resetButtonStyles);
+            button.addEventListener("mousedown", () => {
+                button.style.transform = "scale(0.95)";
+            });
+            button.addEventListener("mouseenter", () => {
+                button.classList.add("shadow");
+                try {
+                    fucker.style.display = "none";
+                } catch (error) {
+                }
+            });
+            button.addEventListener("mouseleave", () => {
+                button.classList.remove("shadow");
+                try {
+                    fucker.style.display = "block";
+                } catch (error) {
+                }
+            });
         }
     });
 }
+
+function applyMouseMoveEffect(button, e, sense) {
+    const rect = button.getBoundingClientRect();
+    const buttonX = rect.x + rect.width / 2;
+    const buttonY = rect.y + rect.height / 2;
+    const deltaX = e.clientX - buttonX;
+    const deltaY = e.clientY - buttonY;
+    button.style.transform = `translate(${deltaX / sense}px, ${deltaY / sense}px) scale(1.06)`;
+    button.style.zIndex = "2";
+}
+
+function resetButtonStyles() {
+    const button = this; // 'this' refers to the button element triggering the event
+    button.style.transform = "translate(0, 0) scale(1.0)";
+    button.style.zIndex = "1";
+    button.classList.remove("shadow");
+}
+
+document.addEventListener("keydown", function (event) {
+    if (event.keyCode === 17) {
+        showf('fucker');
+    }
+});
+
 
 function ib() {
     const abuttons2 = document.querySelectorAll("button");

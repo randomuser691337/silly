@@ -223,7 +223,7 @@ async function appear(mode) {
         await writevar('appear', 'd');
     }
 }
-function allthatsillyshit() {
+async function allthatsillyshit() {
     function isMobileDevice() {
         return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
@@ -247,18 +247,18 @@ function allthatsillyshit() {
         writevar('username', 'User');
         return;
     }
-    const btn = readpb('b');
+    const btn = await readpb('b');
     if (btn === "f") {
         abs = false;
     }
-    const btn2 = readpb('l');
+    const btn2 = await readpb('l');
     if (btn2 === "f") {
         gfx = false;
     } else {
-        inbt(abuttons);
+        await inbt(abuttons);
         console.log('<i> lowgfx is off, enable hover');
     }
-    const cur = readpb('c');
+    const cur = await readpb('c');
     if (cur === "f") {
         dest('fucker');
         wcur = false;
