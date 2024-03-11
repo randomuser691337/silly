@@ -13,6 +13,7 @@
     --fontc2: #aaa;
     --slbl: blur(4px);
     --mdbl: blur(8px);
+    --winc: rgba(var(--accent), 0.06);
 }
 
 @font-face {
@@ -273,10 +274,10 @@ input:placeholder {
     border-bottom: 2px solid var(--bordercolor);
     cursor: move;
     user-select: none;
-    background-color: rgba(var(--accent), 0.07);
+    background-color: rgba(var(--accent), 0.1);
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
-    transition: 0.1s;
+    transition: 0.09s;
     position: sticky;
 }
 
@@ -287,7 +288,8 @@ input:placeholder {
 
 .content {
     padding: 8px;
-    padding-bottom: 10px;
+    padding-bottom: 9px;
+    background-color: var(--winc);
 }
 
 .b3 {
@@ -502,29 +504,29 @@ a:active {
 }
 
 .light {
-    background-color: rgb(240, 240, 240, 1.0);
+    background-color: rgb(230, 230, 230, 1.0);
     color: #000;
 }
 
 .light:hover {
-    background-color: rgb(255, 255, 255, 1.0);
+    background-color: rgb(210, 210, 210, 1.0);
 }
 
 .light:active {
-    background-color: rgb(255, 255, 255, 0.6);
+    background-color: rgb(180, 180, 180, 0.6);
 }
 
 .dark {
-    background-color: rgb(40, 40, 40, 1.0);
+    background-color: rgb(60, 60, 60, 1.0);
     color: #fff;
 }
 
 .dark:hover {
-    background-color: rgb(40, 40, 40, 1.0);
+    background-color: rgb(60, 60, 60, 1.0);
 }
 
 .dark:active {
-    background-color: rgb(40, 40, 40, 0.6);
+    background-color: rgb(60, 60, 60, 0.6);
 }
 
 .snack {

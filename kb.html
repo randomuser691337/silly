@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Keyboard</title>
+    <style>
+        @font-face {
+            font-family: 'Poppins';
+            src: url(./fonts/Poppins-Regular.ttf);
+        }
+
+        @font-face {
+            font-family: 'PoppinsB';
+            src: url(./fonts/Poppins-Bold.ttf);
+        }
+
+        @font-face {
+            font-family: 'PoppinsM';
+            src: url(./fonts/Poppins-Medium.ttf);
+        }
+
+        body {
+            padding: 0px;
+            margin: 0px;
+            background-color: var(--background);
+            font-family: 'Poppins', Arial;
+            font-size: var(--fz1);
+            color: var(--fontc);
+            text-align: center;
+            transition: 0.1s;
+        }
+
+        :root {
+            --background: #000;
+            --accent: 40, 70, 235;
+            --lightdark: #1a1a1a;
+            --lightdarkb: #2a2a2a;
+            --bordercolor: #3a3a3a;
+            --rad1: 14px;
+            --rad2: 9px;
+            --fz1: 16px;
+            --fz2: 14px;
+            --fz3: 12px;
+            --fontc: #fff;
+            --fontc2: #aaa;
+            --slbl: blur(4px);
+            --mdbl: blur(8px);
+            --winc: rgba(var(--accent), 0.06);
+        }
+
+        /* Styling for the virtual keyboard */
+        #keyboard {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--lightdark);
+            display: none;
+            border-top: 1px solid rgba(var(--accent), 0.3);
+        }
+
+        .row {
+            display: flex;
+        }
+
+        .key {
+            flex: 1;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+            background-color: var(--lightdark);
+            border: 1px solid rgba(var(--accent), 0.3);
+            cursor: pointer;
+            color: var(--fontc);
+            font-size: 1.2em;
+        }
+
+        .key:active {
+            background-color: var(--lightdarkb);
+        }
+    </style>
+</head>
+
+<body>
+    <input type="text" id="inputField1" class="inputField" readonly>
+    <input type="text" id="inputField2" class="inputField" readonly>
+    <!-- Add more input fields as needed -->
+
+    <div id="keyboard">
+        <div class="row">
+            <div class="key" onclick="addChar('1')">1</div>
+            <div class="key" onclick="addChar('2')">2</div>
+            <div class="key" onclick="addChar('3')">3</div>
+            <div class="key" onclick="addChar('4')">4</div>
+            <div class="key" onclick="addChar('5')">5</div>
+            <div class="key" onclick="addChar('6')">6</div>
+            <div class="key" onclick="addChar('7')">7</div>
+            <div class="key" onclick="addChar('8')">8</div>
+            <div class="key" onclick="addChar('9')">9</div>
+            <div class="key" onclick="addChar('0')">0</div>
+        </div>
+        <div class="row">
+            <div class="key" onclick="addChar('q')">Q</div>
+            <div class="key" onclick="addChar('w')">W</div>
+            <div class="key" onclick="addChar('e')">E</div>
+            <div class="key" onclick="addChar('r')">R</div>
+            <div class="key" onclick="addChar('t')">T</div>
+            <div class="key" onclick="addChar('y')">Y</div>
+            <div class="key" onclick="addChar('u')">U</div>
+            <div class="key" onclick="addChar('i')">I</div>
+            <div class="key" onclick="addChar('o')">O</div>
+            <div class="key" onclick="addChar('p')">P</div>
+        </div>
+        <div class="row">
+            <div class="key" onclick="addChar('a')">A</div>
+            <div class="key" onclick="addChar('s')">S</div>
+            <div class="key" onclick="addChar('d')">D</div>
+            <div class="key" onclick="addChar('f')">F</div>
+            <div class="key" onclick="addChar('g')">G</div>
+            <div class="key" onclick="addChar('h')">H</div>
+            <div class="key" onclick="addChar('j')">J</div>
+            <div class="key" onclick="addChar('k')">K</div>
+            <div class="key" onclick="addChar('l')">L</div>
+        </div>
+        <div class="row">
+            <div class="key" onclick="addChar('z')">Z</div>
+            <div class="key" onclick="addChar('x')">X</div>
+            <div class="key" onclick="addChar('c')">C</div>
+            <div class="key" onclick="addChar('v')">V</div>
+            <div class="key" onclick="addChar('b')">B</div>
+            <div class="key" onclick="addChar('n')">N</div>
+            <div class="key" onclick="addChar('m')">M</div>
+            <div class="key" onclick="backspace()">←</div>
+        </div>
+        <div class="row">
+            <div class="key" onclick="addChar('Enter')">/</div>
+            <div class="key" onclick="addChar(' ')">Space</div>
+            <div class="key" onclick="addChar('.')">.</div>
+            <div class="key" onclick="addChar('Enter')">Enter</div>
+        </div>
+    </div>
+
+    <script>
+        var focusedInput = null; // Variable to store the currently focused input field
+
+        // Function to show the virtual keyboard when any input field is clicked
+        var inputFields = document.getElementsByClassName('inputField');
+        for (var i = 0; i < inputFields.length; i++) {
+            inputFields[i].addEventListener('click', function () {
+                focusedInput = this; // Set the currently focused input field
+                document.getElementById('keyboard').style.display = 'block';
+            });
+        }
+
+        // Function to add characters to the clicked input field
+        function addChar(char) {
+            if (focusedInput) {
+                focusedInput.value += char;
+            }
+        }
+
+        // Function to handle backspace
+        function backspace() {
+            if (focusedInput) {
+                var value = focusedInput.value;
+                focusedInput.value = value.substring(0, value.length - 1);
+            }
+        }
+    </script>
+</body>
+
+</html>

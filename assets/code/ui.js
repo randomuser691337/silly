@@ -30,7 +30,7 @@ function mkw(content, title, width, m, height, btnid) {
     hidef('mainmenu'); ib(); return windowId;
 }
 
-function wal(content, btn1) {
+function wal(content, btn1, n) {
     const windowId = gen(6);
     const windowContainer = document.createElement('div');
     windowContainer.className = 'window';
@@ -43,7 +43,10 @@ function wal(content, btn1) {
     titleBar.className = 'title-bar';
     titleBar.style.border = "none";
     titleBar.style.borderRadius = "12px";
-    titleBar.innerHTML = content + `<p><button class="b1 wc" onclick="dest('${windowId}');">Close</button><button class="b1 wc" onclick="dest('${windowId}');${btn1}">Okay</button></p>`;
+    if (!n) {
+       n = "Okay"
+    }
+    titleBar.innerHTML = content + `<p><button class="b1 wc" onclick="dest('${windowId}');">Close</button><button class="b1 wc" onclick="dest('${windowId}');${btn1}">${n}</button></p>`;
     windowContainer.appendChild(titleBar);
     document.getElementById('nest').appendChild(windowContainer);
     centerel(windowId); winrec(windowContainer);
@@ -87,6 +90,10 @@ function changevar(varName, varValue) {
     const root = document.documentElement;
     root.style.setProperty(`--${varName}`, `${varValue}`);
     writevar(varName, varValue);
+}
+// A smaller remap for say, onclicks where you want to keep your code small
+function cv(name, val) {
+   changevar(name, val);
 }
 function chacc(clr1) {
     changevar('accent', clr1);

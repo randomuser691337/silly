@@ -112,13 +112,6 @@
                             onclick="appear();">Dark</button>
                         <p><button class="b1" onclick="finishsetup();">Done!</button></p>
                     </div>
-                    <div id="setup4" style="display: none;">
-                        <p class="h2">Close other WebDesks</p>
-                        <p>Another WebDesk tab is open in this browser. Close it, then click "Reload" if WebDesk doesn't
-                            finish setup.</p>
-                        <button class="b1" onclick="window.location.reload();">Reload</button><button class="b1"
-                            onclick="guestmode();">Guest</button>
-                    </div>
                     <div id="mig" style="display: none;">
                         <p class="h2" id="lobotomy">Migration Assistant</p>
                         <p>Close all other WebDesk tabs before continuing.</p>
@@ -241,6 +234,12 @@
                         onclick="writepb('c','t');wal('<p>Reboot to apply changes.</p>', 'reboot()');">Enable
                         (default)</button><button class="b3 red guestno"
                         onclick="writepb('c','f');wal('<p>Reboot to apply changes.</p>', 'reboot()');">Disable</button>
+                    <p>Window tinting</p>
+                    <p class="smt">Adds a slight accent to windows. Disable on lower-end devices.</p>
+                    <button class="b3 green"
+                        onclick="writepb('wb','t');cv('winc', 'rgba(var(--accent), 0.06)');snack('Saved window settings.', '2500');">Enable
+                        (default)</button><button class="b3 red"
+                        onclick="writepb('wb','f');cv('winc', 'transparent');snack('Saved window settings.', '2500');">Disable</button>
                     <p><button class="winb" onclick="fesw('settingsgen', 'settingsmain');">Back</button></p>
                 </div>
                 <div id="settingsdesk" style="display: none;">
@@ -670,7 +669,6 @@
     <script src="./assets/code/rec.js"></script>
     <script src="./assets/code/opfile.js"></script>
     <script src="./assets/code/locker.js"></script>
-
     <script>
         let started = false;
         var customCursor = document.createElement("div");
@@ -741,7 +739,7 @@
                 const appear2 = await readvar('appear');
                 const forcedata = await readvar('forcedata');
                 const hewwo = await readvar('name');
-                if (hewwo == "" || hewwo == undefined) {
+                if (hewwo === "" || hewwo === undefined) {
                     dest('setup');
                     nameutil(`<p>You didn't set a name during setup.</p><p>Set one to use WebDesk.</p>`);
                 } else {
@@ -749,6 +747,10 @@
                     if (!sandParam) {
                         send(`Someone is using WebDesk as "${hewwo}" from`);
                     }
+                }
+                const wb = await readpb('wb');
+                if (wb === "f") {
+                    cv('winc', 'transparent');
                 }
                 if (forcedata == "off") {
                     forcedatac = false;
