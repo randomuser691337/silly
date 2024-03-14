@@ -62,17 +62,17 @@ function opapp(d1) {
 function fesw(d1, d2) {
     const dr1 = document.getElementById(d1);
     const dr2 = document.getElementById(d2);
-    $(dr1).fadeOut(150, function () { $(dr2).fadeIn(150); });
+    $(dr1).fadeOut(140, function () { $(dr2).fadeIn(140); });
 }
 function hidef(d1) {
     const dr1 = document.getElementById(d1);
     if (dr1) {
-        $(dr1).fadeOut(150);
+        $(dr1).fadeOut(170);
     }
 }
 function showf(d1) {
     const dr1 = document.getElementById(d1);
-    $(dr1).fadeIn(150);
+    $(dr1).fadeIn(170);
 }
 function hidecls(className) {
     var elements = document.getElementsByClassName(className);
@@ -175,7 +175,7 @@ function getstr() {
 setInterval(getstr, 2000);
 
 function about(value) {
-    const about = `<div class="container">
+    const win = `<div class="container">
         <div class="logo">
             <img style="width: 100%; box-sizing: border-box; height: auto;" src="./assets/img/favicon.png">
             <p>Ver: <span class="ver med">one sec</span></p>
@@ -186,16 +186,29 @@ function about(value) {
             <div class="progress-bar">
                 <div class="progress struse"></div>
             </div>
-            <a class="fucku" onclick="embed('https://meower.xyz', 'About Embed', '520px', '340px');">Dev's Site</a> 
+            <a class="fucku" onclick="aboutm();">More Info</a>
             <a class="fucku" onclick="doc('./assets/other/creds.txt', 'WebDesk Credits', '420px', 'auto');">Creds</a>
         </div>
     </div>`;
     if (value === undefined) {
-        mkw(about, `About`, '300px', './assets/img/favicon.png');
+        mkw(win, `About`, '300px', './assets/img/favicon.png');
     }
 
     masschange('ver', ver);
     masschange('lastedit', lastedit);
+}
+async function aboutm() {
+    let so = await readvar('setupon');
+    if (so === null || so === undefined) {
+        so = "Unknown";
+    }
+    let ve = await readvar('ogver');
+    if (ve === null || ve === undefined) {
+        ve = "Unknown";
+    }
+    const win = `<p><span class="med">Set up on: </span>${so}</p>
+    <p><span class="med">Original version: </span>${ve}</p>`
+    mkw(win, 'About', '300px');
 }
 function update(src, time) {
     // silly easter egg corrupted android reference
@@ -215,7 +228,7 @@ async function appear(mode) {
     if (mode === "l") {
         changevar('background', '#fff');
         changevar('lightdark', '#fff');
-        changevar('lightdarkb', '#F0F0F0');
+        changevar('lightdarkb', '#E7E7E7');
         changevar('fontc', '#000');
         changevar('fontc2', "#333");
         changevar('bordercolor', "#DFDFDF");

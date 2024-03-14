@@ -87,6 +87,7 @@ async function guestmode() {
     writepb('setupdone', 'guest');
     hidecls('guestno');
     showcls('dwarn');
+    dispo = true;
 }
 
 function customacc() {
@@ -118,7 +119,7 @@ function prr(val) {
 }
 
 async function desktop(name) {
-    showf('mainbtn'); dest('setup');
+    showf('mainbtn'); dest('setup'); showf('nest');
     masschange('user', name);
     const pan = await readvar('panic');
     if (pan) {
@@ -177,17 +178,94 @@ function passtimedesk(el) {
     }
 }
 
+async function unlock2() {
+    console.log(`<i> Password correct. Unlocking...`);
+    showcls('whar'); hidecls('whar2'); showf('nest');
+}
+
+async function lock() {
+    if (dispo === false) {
+        pass = "def";
+        locked = true;
+        document.getElementById('lscreen').style.display = "block";
+        setTimeout(function () {
+            opapp('auth');
+            passp('Enter pass to unlock WebDesk', 'unlock2()');
+            showcls('whar2'); hidecls('whar');
+            document.getElementById('nest').style.display = "none";
+        }, 300);
+    }
+}
+
+async function unlock() {
+    const fullBg = document.getElementById('lscreen');
+    const windowHeight = window.innerHeight;
+    const transitionEndPromise = new Promise(resolve => {
+        fullBg.addEventListener('transitionend', function transitionEndHandler() {
+            fullBg.removeEventListener('transitionend', transitionEndHandler); // Remove the event listener
+            resolve();
+        });
+    });
+
+    fullBg.style.transition = `transform 0.5s ease`;
+    fullBg.style.transform = `translateY(-${windowHeight}px)`;
+    await transitionEndPromise;
+    fullBg.style.display = 'none';
+    fullBg.style.transform = 'translateY(0)';
+}
+
 async function finishsetup() {
     fesw('setup3', 'setup4');
-    writepb('setupdone', 'y');
+    await writepb('setupdone', 'y');
     const hai = await readvar('name');
     desktop(hai);
+    mkw(`<p>It's recommended to reboot before using WebDesk for the first time.</p><button class="b1" onclick="reboot();">Reboot</button>`, 'Setup Assistant', '270px');
     await writevar('check', 'passed');
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const currentDate = new Date();
+    const month = months[currentDate.getMonth()];
+    const day = currentDate.getDate();
+    const year = currentDate.getFullYear();
+    await writevar('setupon', `${month} ${day}, ${year}`);
+    await writevar('ogver', ver);
 }
 
 function reboot() {
     window.location.reload();
 }
+
+const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+let i = 0;
+document.addEventListener('keydown', e => {
+    if (e.key === konamiCode[i++]) {
+        if (i === konamiCode.length) {
+            const win = `<p>Debug Menu</p>
+            <p>This is meant for developers, or maybe you were curious. Don't click anything, if you don't know what it does.</p>
+            <button class="b1 b2" onclick="burnitall('justreload');">Erase Now</button><button class="b1 b2" onclick="">Terminal</button>`
+            i = 0;
+        }
+    } else {
+        i = 0;
+    }
+});
+
+let timeoutId;
+let timeoutDuration = 300000;
+
+function resetTimeout() {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(lock, timeoutDuration);
+}
+
+function timeoutChange(timeInMs) {
+    timeoutDuration = timeInMs;
+    resetTimeout();
+    snack('Changed lock timeout successfully.', '3300');
+}
+
+document.addEventListener("mousemove", resetTimeout);
+document.addEventListener("keypress", resetTimeout);
+resetTimeout();
 
 function centerel(el) {
     const element = document.getElementById(el);
@@ -327,7 +405,7 @@ async function inbt(buttons) {
     }
     buttons.forEach((button) => {
         if (!button.dataset.listenersApplied) {
-            button.dataset.listenersApplied = true; 
+            button.dataset.listenersApplied = true;
 
             button.addEventListener("mouseenter", playh);
             button.addEventListener("mousedown", playc);

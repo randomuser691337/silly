@@ -23,7 +23,7 @@ function nocam() {
 
         video.srcObject = null;
     } catch (error) {
-        console.log(`<!> Camera isn't started, or got nuked.`)
+        console.log(`<!> Camera isn't started, or got nuked.`);
     }
 }
 
@@ -52,7 +52,7 @@ function savetodev() {
     try {
         var link = document.createElement('a');
         link.href = canvas.toDataURL('image/png');
-        const num = gen(4); // Assuming gen() generates a random number
+        const num = gen(4);
         link.download = `WebDesk Capture ${num}.png`;
         link.click();
     } catch (error) {
@@ -60,14 +60,19 @@ function savetodev() {
     }
 }
 
-async function savetolocker() {
+async function savetofiles() {
     try {
         const silly = canvas.toDataURL('image/png');
-        const num = gen(4); // Assuming gen() generates a random number
-        writevar(`locker_WebDesk Capture ${num}.png`, silly);
-        await window.updateLockerList();
-        snack('Saved picture to locker', '3000');
+        const num = gen(4);
+        const bruh = `WebDesk Capture ${num}.png`;
+        const wowzers = `locker_` + bruh;
+        writevar(wowzers, silly);
+        await window.updatefilesList();
+        snack('Saved picture to files', '3000');
+        const content = await readvar(wowzers);
+        viewmed(content, bruh, 'i');
     } catch (error) {
-        console.error(`Error saving to locker: ${error}`);
+        mkw(`<p>An error happened. Save to device?</p>`, 'Camera - Error');
+        console.error(`Error saving to files: ${error}`);
     }
 }

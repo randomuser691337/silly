@@ -22,7 +22,7 @@ function viewmed(val, name, mediaType) {
 function framecon(cont) {
     const random = gen(8);
     const iframe = `<iframe class="embed" id="${random}" srcdoc="${cont}" height="500px"></iframe>`;
-    mkw(iframe, 'Locker - Website', '600px');
+    mkw(iframe, 'Files - Website', '600px');
 }
 
 function playaud(base64Content, contentType) {
