@@ -32,6 +32,10 @@
     src: url(./fonts/Poppins-Medium.ttf);
 }
 
+html, body {
+  overscroll-behavior: none;
+}
+
 .bold {
     font-family: "PoppinsB";
 }
