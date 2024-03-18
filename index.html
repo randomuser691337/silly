@@ -10,7 +10,7 @@
     <script src="./assets/code/enc.js"></script>
     <script>
         var ver = "0.0.9";
-        var lastedit = "Mar 17, 2024";
+        var lastedit = "Mar 18, 2024";
         var crashed = false;
         var mostrecerr = "No history."
         var forcedatac = true;
@@ -561,25 +561,17 @@
             </div>
             <!--End of calculator-->
             <!--Desktop nav-->
-            <div style="position: fixed; bottom: 4px; left: 4px; right: 4px; animation: mainbtn 1s; display: none;"
+            <div style="position: fixed; bottom: 0px; left: 0px; right: 0px; animation: mainbtn 1s; display: none; background-color: rgba(var(--accent), 0.12); padding: 5px;"
                 id="mainbtn">
-                <button class="mainbtn n" onclick="showf('mainmenu');fesw('mainmenulock', 'mainmenuapp');"><svg
-                        xmlns="http://www.w3.org/2000/svg" width="24" height="16" viewBox="0 0 24 16" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="lucide lucide-more-horizontal">
-                        <circle cx="12" cy="10" r="1"></circle>
-                        <circle cx="19" cy="10" r="1"></circle>
-                        <circle cx="5" cy="10" r="1"></circle>
-                    </svg> <span class="time">Time</span></button><button class="mainbtn n" style="margin-left: 2px;"
-                    onclick="showf('mainmenu');fesw('mainmenuapp', 'mainmenulock');">Files</button><button
-                    class="mainbtn n" style="margin-left: 2px;" onclick="lock();">Lock</button>
+                <button class="mainbtn n" style="left: 4px; position: fixed;" onclick="showf('mainmenu');fesw('mainmenulock', 'mainmenuapp');">Apps</button><button
+                    class="mainbtn n" style="margin-left: 2px;" onclick="lock();">Lock</button><button class="time mainbtn n" style="right: 4px; position: fixed;" onclick="showf('mainmenu');fesw('mainmenuapp', 'mainmenulock');">Time</button>
             </div>
             <div id="mainmenu">
                 <div class="content" id="mainmenuapp"
                     style="padding: 6px; border-radius: var(--rad2); background-color: rgba(var(--accent), 0.12);">
                     <p class="h3 sandnoapp"><span class="greet">Welcome to WebDesk</span>, <span class="user"></span>!
                     </p>
-                    <p class="h3 sandapp">WebDesk Sandbox</p>
+                    <p class="h3 dwarn">WebDesk Sandbox</p>
                     <p class="smt weather sandnoapp" onclick="opapp('weather');" style="cursor: pointer;">Select to set
                         up
                         weather</p>
@@ -889,7 +881,7 @@
             fesw('setup1', 'yowetrapped');
             fesw('mainwebact', 'mainsandact'); showf('dwarn');
             document.getElementById('sandbox').innerHTML = `<p class="h3">You can't run Sandbox in Sandbox!</p><button class="b1" onclick="hidef('sandbox');">Back</button>`;
-            hidecls('sandnoapp'); showcls('sandapp');
+            hidecls('sandnoapp'); showcls('dwarn');
             customCursor.style.opacity = "0%";
             dispo = true;
         } else {
