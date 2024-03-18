@@ -118,11 +118,11 @@ function prr(val) {
     mkw(`<p>Please reboot to ${val}</p><button class="b1 b2" onclick="reboot();">Reboot</button>`, 'WebDesk', '270px');
 }
 
-async function desktop(name) {
+async function desktop(name, fuckstart) {
     showf('mainbtn'); dest('setup'); showf('nest');
     masschange('user', name);
     const pan = await readvar('panic');
-    if (pan) {
+    if (pan || fuckstart === "fuckoff") {
         mkw(`<p>WebDesk crashed. Details:</p><p>${pan}</p>`, 'WebDesk Desktop', '300px');
         await delvar('panic');
     } else {
@@ -181,10 +181,30 @@ function passtimedesk(el) {
 async function unlock2() {
     console.log(`<i> Password correct. Unlocking...`);
     showcls('whar'); hidecls('whar2'); showf('nest');
+    const audio = document.getElementById("unlock");
+    audio.currentTime = 0;
+    audio.volume = 1.0;
+    audio.play();
+}
+
+function cm(cont, t) {
+    const snackElement = document.createElement("div");
+    snackElement.className = "cm";
+    const fuckyou = gen(7);
+    snackElement.id = fuckyou;
+    snackElement.innerHTML = cont;
+    document.body.appendChild(snackElement);
+    snackElement.onclick = function () {
+        setTimeout(function () {dest(fuckyou);}, 100);
+    }
 }
 
 async function lock() {
-    if (dispo === false) {
+    if (dispo === false && started === "full") {
+        const audio = document.getElementById("lock");
+        audio.currentTime = 0;
+        audio.volume = 1.0;
+        audio.play();
         pass = "def";
         locked = true;
         document.getElementById('lscreen').style.display = "block";
@@ -218,7 +238,7 @@ async function finishsetup() {
     fesw('setup3', 'setup4');
     await writepb('setupdone', 'y');
     const hai = await readvar('name');
-    desktop(hai);
+    desktop(hai, 'fuckoff');
     mkw(`<p>It's recommended to reboot before using WebDesk for the first time.</p><button class="b1" onclick="reboot();">Reboot</button>`, 'Setup Assistant', '270px');
     await writevar('check', 'passed');
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -414,7 +434,7 @@ async function inbt(buttons) {
                 if (!button.classList.contains("n")) {
                     if (button.classList.contains('b2')) {
                         button.addEventListener("mousemove", (e) => {
-                            applyMouseMoveEffect(button, e, 30);
+                            applyMouseMoveEffect(button, e, 22);
                         });
                     } else {
                         button.addEventListener("mousemove", (e) => {
@@ -455,7 +475,7 @@ function applyMouseMoveEffect(button, e, sense) {
     const buttonY = rect.y + rect.height / 2;
     const deltaX = e.clientX - buttonX;
     const deltaY = e.clientY - buttonY;
-    button.style.transform = `translate(${deltaX / sense}px, ${deltaY / sense}px) scale(1.06)`;
+    button.style.transform = `translate(${deltaX / sense}px, ${deltaY / sense}px) scale(1.05)`;
     button.style.zIndex = "2";
 }
 

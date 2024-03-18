@@ -30,7 +30,7 @@ class Border {
     #tabNb = 0;
     #tabId = [];
     #browserBody;
-    version = "1.10";
+    version = "1.0";
     protocols = {
         newtab: `
         <!DOCTYPE html>

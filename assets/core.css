@@ -14,6 +14,7 @@
     --slbl: blur(4px);
     --mdbl: blur(8px);
     --winc: rgba(var(--accent), 0.08);
+    --wins: 0 0 34px rgba(0, 0, 0, 0.22);
 }
 
 @font-face {
@@ -40,14 +41,14 @@
 }
 
 body {
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
     background-color: var(--background);
     font-family: 'Poppins', Arial;
     font-size: var(--fz1);
     color: var(--fontc);
     text-align: center;
-    transition: 0.1s;
+    transition: background-color 0.1s ease;
 }
 
 .custom-cursor {
@@ -253,8 +254,10 @@ input:placeholder {
     border-radius: var(--rad1);
     position: absolute;
     display: none;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.17);
+    box-shadow: var(--wins);
     animation: yeah 0.32s;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
 }
 
 @keyframes yeah {
@@ -270,6 +273,7 @@ input:placeholder {
 }
 
 .title-bar {
+    position: sticky !important;
     color: var(--fontc);
     padding: 5px;
     border-bottom: 2px solid var(--bordercolor);
@@ -279,7 +283,6 @@ input:placeholder {
     border-top-right-radius: 11.5px;
     border-top-left-radius: 11.5px;
     transition: 0.09s;
-    position: sticky;
 }
 
 .title-bar:active {
@@ -294,6 +297,34 @@ input:placeholder {
     border-radius: 13px;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
+}
+
+#fileToUpload {
+    font-family: 'Poppins', sans-serif !important;
+    display: inline-block;
+    text-align: center !important;
+    cursor: pointer;
+    padding: 4px;
+    width: 260px;
+    resize: horizontal;
+    overflow: auto;
+}
+
+#responseFrame {
+    background-color: rgba(var(--accent), 0.4);
+    border-radius: 8px;
+    width: 90%;
+    box-sizing: border-box;
+    height: 40px;
+    border: 1px solid #999999;
+    border: none;
+    margin-top: 2px;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .b3 {
@@ -387,7 +418,7 @@ button {
 
 @keyframes mainbtn {
     0% {
-        bottom: -30px;
+        bottom: -32px;
     }
 
     100% {
@@ -428,12 +459,14 @@ a:active {
 .fullbg {
     position: fixed;
     z-index: -1;
-    left: 0px;
-    right: 0px;
-    top: 0px;
-    bottom: 0px;
-    background-color: rgba(var(--accent), 0.24);
-    transition: 0.1s;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(var(--accent), 0.20);
+    transition: background-color 0.1s ease; 
+    will-change: transform;
+    overscroll-behavior: none; 
 }
 
 #lscreen {
@@ -443,8 +476,13 @@ a:active {
 }
 
 @keyframes lscreen {
-  0% {opacity: 0%;}
-  100% {opacity: 100%;}
+    0% {
+        opacity: 0%;
+    }
+
+    100% {
+        opacity: 100%;
+    }
 }
 
 .embed {
@@ -476,6 +514,17 @@ a:active {
     height: auto;
     border-radius: 9px;
     border: none;
+}
+
+.cm {
+    position: fixed;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--lightdarkb);
+    border: 2px solid rgba(var(--accent), 0.3);
+    z-index: 9990;
+    padding: 10px;
+    border-radius: var(--rad1);
 }
 
 .acb {

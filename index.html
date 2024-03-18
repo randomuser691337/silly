@@ -10,7 +10,7 @@
     <script src="./assets/code/enc.js"></script>
     <script>
         var ver = "0.0.9";
-        var lastedit = "Mar 14, 2024";
+        var lastedit = "Mar 17, 2024";
         var crashed = false;
         var mostrecerr = "No history."
         var forcedatac = true;
@@ -227,38 +227,53 @@
                     <div id="settingsgen" style="display: none;">
                         <p class="bold">General</p>
                         <button class="b1 b2" onclick="fesw('settingsgen', 'settingsui');">Change UI settings</button>
-                        <button class="b1 b2 guestno" onclick="fesw('settingsgen', 'settingslock');">Lock timeout</button>
+                        <button class="b1 b2 guestno" onclick="fesw('settingsgen', 'settingslock');">Lock
+                            timeout</button>
                         <p><button class="winb" onclick="fesw('settingsgen', 'settingsmain');">Back</button></p>
                     </div>
                     <div id="settingsui" style="display: none;">
                         <p class="bold">UI settings</p>
                         <p>Button sound effects</p>
+                        <p class="smt">Sound effects when using a button. Disable on Safari.</p>
                         <button class="b3 green"
                             onclick="writepb('b','t');abs=true;snack('Saved button settings.', '2500');">Enable
                             (default)</button><button class="b3 red"
                             onclick="writepb('b','f');abs=false;snack('Saved button settings.', '2500');">Disable</button>
                         <p class="guestno">Button hover effect</p>
+                        <p class="smt guestno">Buttons interact with the cursor. Disable on low-end devices.</p>
                         <button class="b3 green guestno"
                             onclick="writepb('l','t');wal('<p>Reboot to apply changes.</p>', 'reboot()');">Enable
                             (default)</button><button class="b3 red guestno"
                             onclick="writepb('l','f');wal('<p>Reboot to apply changes.</p>', 'reboot()');">Disable</button>
                         <p class="guestno">WebDesk Cursor</p>
+                        <p class="smt guestno">WebDesk's circular cursor. Disable to use normal cursor.</p>
                         <button class="b3 green guestno"
                             onclick="writepb('c','t');wal('<p>Reboot to apply changes.</p>', 'reboot()');">Enable
                             (default)</button><button class="b3 red guestno"
                             onclick="writepb('c','f');wal('<p>Reboot to apply changes.</p>', 'reboot()');">Disable</button>
                         <p>Window tinting</p>
-                        <p class="smt">Adds a slight accent to windows. Disable on lower-end devices.</p>
+                        <p class="smt">Adds a slight accent to windows. Disable on low-end devices.</p>
                         <button class="b3 green"
                             onclick="writepb('wb','t');cv('winc', 'rgba(var(--accent), 0.08)');snack('Saved window settings.', '2500');">Enable
                             (default)</button><button class="b3 red"
                             onclick="writepb('wb','f');cv('winc', 'transparent');snack('Saved window settings.', '2500');">Disable</button>
+                        <p>Window shadows</p>
+                        <p class="smt">Disable on low-end devices, or for better window dragging.</p>
+                        <button class="b3 green"
+                            onclick="writepb('ws','t');cv('wins', '0 0 34px rgba(0, 0, 0, 0.22)');snack('Saved window settings.', '2500');">Enable
+                            (default)</button><button class="b3 red"
+                            onclick="writepb('ws','f');cv('wins', 'none');snack('Saved window settings.', '2500');">Disable</button>
                         <p><button class="winb" onclick="fesw('settingsui', 'settingsgen');">Back</button></p>
                     </div>
                     <div id="settingslock" style="display: none;">
                         <p class="bold">Lock Timeout</p>
                         <p class="smt">The amount of time before WebDesk auto-locks.</p>
-                        <button class="b1 b2" onclick="timeoutChange(20000)">20 seconds</button><button class="b1 b2" onclick="timeoutChange(60000)">1 minute</button><button class="b1 b2" onclick="timeoutChange(300000)">5 minutes</button><button class="b1 b2" onclick="timeoutChange(600000)">10 minutes</button><button class="b1 b2" onclick="timeoutChange(900000)">15 minutes</button><button class="b1 b2" onclick="timeoutChange(1200000)">20 minutes</button>
+                        <button class="b1 b2" onclick="timeoutChange(20000)">20 seconds</button><button class="b1 b2"
+                            onclick="timeoutChange(60000)">1 minute</button><button class="b1 b2"
+                            onclick="timeoutChange(300000)">5 minutes</button><button class="b1 b2"
+                            onclick="timeoutChange(600000)">10 minutes</button><button class="b1 b2"
+                            onclick="timeoutChange(900000)">15 minutes</button><button class="b1 b2"
+                            onclick="timeoutChange(1200000)">20 minutes</button>
                         <p><button class="winb" onclick="fesw('settingslock', 'settingsgen');">Back</button></p>
                     </div>
                     <div id="settingsdesk" style="display: none;">
@@ -344,16 +359,6 @@
                 </div>
             </div>
             <!--End of terminal-->
-            <!--Styler-->
-            <div id="styler" class="window resizeh" name="Styler" style="width: 300px;">
-                <div class="title-bar">Styler <button class="winb wc" onclick="hidef('styler');">Close</button></div>
-                <div class="content">
-                    <p>Note: Anything changed requires a restart to undo.</p>
-                    <div id="stylerm">
-                    </div>
-                </div>
-            </div>
-            <!--End of styler-->
             <!--Weather-->
             <div id="weather" class="window resizeh" name="Weather" style="width: 360px;">
                 <div class="title-bar">Weather <button class="winb wc" onclick="hidef('weather');">Close</button><button
@@ -373,17 +378,25 @@
                 </div>
             </div>
             <!--End of weather-->
-            <!--Uploader-->
-            <div id="uploader" class="window resizeh" name="Uploader" style="width: 400px; overflow: auto !important;">
-                <div class="title-bar">Uploader <button class="winb wc" onclick="hidef('uploader');">Close</button>
+            <!--Uploader, basically unchanged since 0.0.6 except for slight UI changes-->
+            <div id="uploader" class="window resizeh" style="width: 380px;" name="Uploader">
+                <div class="title-bar">Catbox Uploader <button class="winb" onclick="hidef('uploader');">Close</button>
                 </div>
                 <div class="content">
-                    <form action="https://catbox.moe/user/api.php" method="post" enctype="multipart/form-data"
-                        target="_blank">
-                        <input type="file" name="fileToUpload" id="fileToUpload">
+                    <p>Uploads up to 200 MB are allowed. Read Catbox's <button class="winb"
+                            onclick="redir('https://catbox.moe/faq.php');">FAQ.</button></p>
+                    <p>Note: After upload completes, you will be sent to a new tab with your file link.</p>
+                    <p class="bold">Note: Once uploaded, files cannot be deleted!</p>
+                    <form id="uploadForm" action="https://catbox.moe/user/api.php" method="post"
+                        enctype="multipart/form-data" target="_blank">
+                        <div class="flex">
+                            <input type="file" class="b1" name="fileToUpload" id="fileToUpload">
+                            <button onclick="document.getElementById('submitmedaddy').click();"
+                                class="b1">Upload</button>
+                        </div>
                         <input type="hidden" name="reqtype" value="fileupload">
                         <input type="hidden" name="userhash" value="">
-                        <input type="submit" value="Upload" name="submit">
+                        <input type="hidden" id="submitmedaddy" name="submit">
                     </form>
                 </div>
             </div>
@@ -398,7 +411,7 @@
                                     fill="none">
                                     <path
                                         d="M10 6.2963L3.7037 0L0 3.7037L6.2963 10L0 16.2963L3.7037 20L10 13.7037L16.2963 20L20 16.2963L13.7037 10L20 3.7037L16.2963 0L10 6.2963Z"
-                                        fill="rgba(var(--accent), 0.95)" />
+                                        fill="rgba(var(--accent), 0.95)"></path>
                                 </svg>
                             </div>
                             <div id="border-tab-container">
@@ -548,7 +561,8 @@
             </div>
             <!--End of calculator-->
             <!--Desktop nav-->
-            <div class="cent" style="position: fixed; bottom: 4px; animation: mainbtn 1s; display: none;" id="mainbtn">
+            <div style="position: fixed; bottom: 4px; left: 4px; right: 4px; animation: mainbtn 1s; display: none;"
+                id="mainbtn">
                 <button class="mainbtn n" onclick="showf('mainmenu');fesw('mainmenulock', 'mainmenuapp');"><svg
                         xmlns="http://www.w3.org/2000/svg" width="24" height="16" viewBox="0 0 24 16" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -565,7 +579,7 @@
                     style="padding: 6px; border-radius: var(--rad2); background-color: rgba(var(--accent), 0.12);">
                     <p class="h3 sandnoapp"><span class="greet">Welcome to WebDesk</span>, <span class="user"></span>!
                     </p>
-                    <p class="h3 sandapp">WebDesk Sandbox</p>
+                    <p class="h3 dwarn">WebDesk Sandbox</p>
                     <p class="smt weather sandnoapp" onclick="opapp('weather');" style="cursor: pointer;">Select to set
                         up
                         weather</p>
@@ -617,6 +631,16 @@
                 booting...</embed>
             </div>
             <div class="fullbg hide" style="background-color: var(--lightdark); z-index: 9998;"></div>
+            <audio id="lock">
+                <source src="./assets/other/lock.mp3" type="audio/mpeg">
+                Your browser does not support the audio element, if you're actually seeing this PLEASE use a different
+                browser.
+            </audio>
+            <audio id="unlock">
+                <source src="./assets/other/unlock.mp3" type="audio/mpeg">
+                Your browser does not support the audio element, if you're actually seeing this PLEASE use a different
+                browser.
+            </audio>
             <audio id="hSound">
                 <source src="./assets/other/h.mp3" type="audio/mpeg">
                 Your browser does not support the audio element, if you're actually seeing this PLEASE use a different
@@ -632,7 +656,7 @@
         <!--auth-->
         <div id="auth" class="window" style="width: 370px; z-index: 9999; animation: none !important;">
             <div class="title-bar">WebDesk Security
-                <button class="winb wc whar2" onclick="lock();">Close</button><button class="winb wc whar"
+                <button class="winb wc whar2 hide" onclick="lock();">Close</button><button class="winb wc whar"
                     onclick="hidef('auth');">Close</button><button class="winb"
                     onclick="doc('./assets/other/logon.txt', 'WebDesk Security', '270px');">I forgot</button>
             </div>
@@ -688,7 +712,7 @@
             </script>
         </div>
         <!--End of auth-->
-        <div class="fullbg hide" id="lscreen" onclick="unlock();">
+        <div class="fullbg hide" id="lscreen" onmousedown="unlock();">
             <div style="top: 50%; left: 50%; position: fixed; transform: translate(-50%, -50%);">
                 <img style="width: 100px; height: 100px; border: none;" src="./assets/img/lock.svg">
                 <p class="h2 time" style="color: #fff !important;"></p>
@@ -768,6 +792,7 @@
         async function boots2() {
             if (locked === false) {
                 console.log(`<i> Password applied. Starting stage 2.`);
+                started = "full";
                 showcls('whar'); hidecls('whar2');
                 const wd = await readvar('wd');
                 const accent = await readvar('accent');
@@ -787,6 +812,10 @@
                 const wb = await readpb('wb');
                 if (wb === "f") {
                     cv('winc', 'transparent');
+                }
+                const ws = await readpb('ws');
+                if (ws === "f") {
+                    cv('wins', 'none');
                 }
                 if (forcedata == "off") {
                     forcedatac = false;
@@ -858,10 +887,11 @@
         });
         if (sandParam) {
             fesw('setup1', 'yowetrapped');
-            fesw('mainwebact', 'mainsandact'); showf('sandwarn');
+            fesw('mainwebact', 'mainsandact'); showf('dwarn');
             document.getElementById('sandbox').innerHTML = `<p class="h3">You can't run Sandbox in Sandbox!</p><button class="b1" onclick="hidef('sandbox');">Back</button>`;
-            hidecls('sandnoapp'); showcls('sandapp');
+            hidecls('sandnoapp'); showcls('dwarn');
             customCursor.style.opacity = "0%";
+            dispo = true;
         } else {
             console.log(`<i> Not in Sandbox mode`);
             window.addEventListener("message", receiveMessage, false);
@@ -885,9 +915,6 @@
         function sth(con) {
             window.parent.postMessage(con, "*");
         }
-        document.addEventListener("DOMContentLoaded", function () {
-            refcss('stylerm');
-        });
     </script>
 </body>
 

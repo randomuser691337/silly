@@ -210,13 +210,16 @@ async function aboutm() {
     <p><span class="med">Original version: </span>${ve}</p>`
     mkw(win, 'About', '300px');
 }
-function update(src, time) {
-    // silly easter egg corrupted android reference
-    mkw(`Updating ${src}, <span style="color: #ff2222;">DO NOT REBOOT!</span>`, 'Flashing (DO NOT REBOOT!)', '300px');
-    setTimeout(function () {
-        document.body.style.background = "#000";
-        document.body.innerHTML = `<img id="sillypenguin" src="./assets/img/tux.png"></img>`;
-    }, time)
+function cm(cont) {
+    const snackElement = document.createElement("div");
+    snackElement.className = "cm";
+    const fuckyou = gen(7);
+    snackElement.id = fuckyou;
+    snackElement.innerHTML = cont;
+    document.body.appendChild(snackElement);
+    snackElement.onclick = function () {
+        setTimeout(function () {dest(fuckyou);}, 100);
+    }
 }
 function sall(className) {
     var buttons = document.getElementsByClassName(className);
@@ -294,41 +297,4 @@ async function allthatsillyshit() {
             }`;
         document.body.appendChild(styleElement);
     }
-}
-
-function refcss() {
-    const root = document.documentElement;
-    const variablesContainer = document.getElementById('stylerm');
-
-    if (!variablesContainer) {
-        console.error(`Container element with ID '${containerId}' not found.`);
-        return;
-    }
-
-    const cssVariables = getComputedStyle(root);
-
-    Object.keys(cssVariables).forEach(propertyName => {
-        if (propertyName.startsWith('--')) {
-            const varName = propertyName;
-            const varValue = cssVariables.getPropertyValue(propertyName).trim();
-
-            const varContainer = document.createElement('div');
-            varContainer.innerHTML = `
-                <label>${varName}</label>
-                <input type="text" class="winb" value="${varValue}">
-                <button class="winb">Save</button>
-            `;
-
-            const inputField = varContainer.querySelector('input');
-            const saveButton = varContainer.querySelector('.winb');
-
-            saveButton.addEventListener('click', function () {
-                root.style.setProperty(varName, inputField.value);
-            });
-
-            variablesContainer.appendChild(varContainer);
-        } else {
-            console.log('<i> propname starts NOT --')
-        }
-    });
 }

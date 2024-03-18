@@ -92,12 +92,12 @@ async function readvar(varName) {
                     const decryptedData = decrypt(encryptedData);
                     resolve(decryptedData);
                 } catch (error) {
-                    reject("[ERR] Error decrypting variable: " + error.message);
+                    reject("<!> Error decrypting variable: " + error.message);
                 }
             };
 
             request.onerror = (event) => {
-                reject("[ERR] Error reading variable: " + event.target.errorCode);
+                reject("<!> Error reading variable: " + event.target.errorCode);
             };
         });
     } catch (error) {
@@ -114,7 +114,7 @@ async function delvar(varName) {
         const objectStore = transaction.objectStore('settings');
         objectStore.delete(varName);
     } catch (error) {
-        console.error("[ERR] Error deleting variable: " + error.message);
+        console.error("<!> Error deleting variable: " + error.message);
     }
 }
 
