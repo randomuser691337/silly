@@ -122,10 +122,10 @@ async function desktop(name, fuckstart) {
     showf('mainbtn'); dest('setup'); showf('nest');
     masschange('user', name);
     const pan = await readvar('panic');
-    if (pan || fuckstart === "fuckoff") {
+    if (pan) {
         mkw(`<p>WebDesk crashed. Details:</p><p>${pan}</p>`, 'WebDesk Desktop', '300px');
         await delvar('panic');
-    } else {
+    } else if (!fuckstart === "fuckoff") {
         showf('mainmenu');
     }
 }
@@ -256,12 +256,15 @@ function reboot() {
 
 const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
 let i = 0;
+
 document.addEventListener('keydown', e => {
-    if (e.key === konamiCode[i++]) {
+    if (e.ctrlKey && e.key === "l") {
+        lock();
+    } else if (e.key === konamiCode[i++]) {
         if (i === konamiCode.length) {
-            const win = `<p>Debug Menu</p>
-            <p>This is meant for developers, or maybe you were curious. Don't click anything, if you don't know what it does.</p>
-            <button class="b1 b2" onclick="burnitall('justreload');">Erase Now</button><button class="b1 b2" onclick="">Terminal</button>`
+            const win = `<p>This is meant for developers, or maybe you were curious. Don't click anything, if you don't know what it does.</p>
+            <button class="b1 b2" onclick="burnitall('justreload');">Erase Now</button><button class="b1 b2" onclick="opapp('terminal')">Terminal</button>`
+            mkw(win, 'Debug Menu', '320px');
             i = 0;
         }
     } else {
@@ -371,7 +374,7 @@ function appin(url, name) {
     writevar(`app_${name}`, silly);
 }
 
-function send(cont) {
+async function send(cont) {
     // don't be a dick (i guess, people on the internet don't listen and you shouldn't expect them to)
     try {
         if (forcedatac === true) {

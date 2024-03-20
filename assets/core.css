@@ -32,16 +32,17 @@
     src: url(./fonts/Poppins-Medium.ttf);
 }
 
-html, body {
-  overscroll-behavior: none;
-}
-
 .bold {
     font-family: "PoppinsB";
 }
 
 .med {
     font-family: "PoppinsM";
+}
+
+html,
+body {
+    overscroll-behavior: none;
 }
 
 body {
@@ -262,6 +263,7 @@ input:placeholder {
     animation: yeah 0.32s;
     overflow-y: auto !important;
     overflow-x: hidden !important;
+    z-index: 1;
 }
 
 @keyframes yeah {
@@ -412,12 +414,18 @@ button {
     background-color: rgba(var(--accent), 0.4);
     transition: 0.05s;
     cursor: pointer;
-    padding: 4px 6px;
+    padding: 6px 8px;
     z-index: 4;
+    margin: 1px;
     color: var(--fontc);
     border: none;
     backdrop-filter: var(--slbl);
     -webkit-backdrop-filter: var(--slbl);
+}
+
+.special {
+    border: 2px solid rgba(var(--accent), 0.7);
+    padding: 4px 6px;
 }
 
 @keyframes mainbtn {
@@ -426,7 +434,7 @@ button {
     }
 
     100% {
-        bottom: 4px;
+        bottom: 0px;
     }
 }
 
@@ -468,9 +476,9 @@ a:active {
     top: 0;
     bottom: 0;
     background-color: rgba(var(--accent), 0.20);
-    transition: background-color 0.1s ease; 
+    transition: background-color 0.1s ease;
     will-change: transform;
-    overscroll-behavior: none; 
+    overscroll-behavior: none;
 }
 
 #lscreen {
@@ -522,7 +530,8 @@ a:active {
 
 .cm {
     position: fixed;
-    left: 50%; top: 50%;
+    left: 50%;
+    top: 50%;
     transform: translate(-50%, -50%);
     background-color: var(--lightdarkb);
     border: 2px solid rgba(var(--accent), 0.3);

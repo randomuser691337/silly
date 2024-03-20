@@ -26,10 +26,10 @@
         }, { passive: false });
         async function panic(cont) {
             if (crashed === false) {
-                delvar('bootload');
-                writevar('panic', cont, 'r');
+                await delvar('bootload');
+                await send(`Crash: ${cont}`);
+                await writevar('panic', cont, 'r');
                 crashed = true;
-                send(`Crash: ${cont}`);
             } else {
                 console.log('<!> Already panicking!');
             }
@@ -44,153 +44,75 @@
 </head>
 
 <body>
-    <div class="fullbg">
-        <div id="nest">
-            <p class="h2 hide" style="margin-top: 12px;" id="sandwarn">Sandbox Desktop</p>
-            <div id="setup" class="window" style="width: 350px;">
-                <div class="title-bar"
-                    style="border-bottom: 0px !important; background-color: rgba(var(--accent), 0.07) !important;">
-                    <div class="content" style="margin-bottom: 0px !important; border-radius: var(--rad2);">
-                        <div id="setup1" style="display: none;">
-                            <p class="h2">Welcome to WebDesk!</p>
-                            <p>In just a few steps, you'll be ready to go.</p>
-                            <p class="smt">- Select "Migrate" if you want to copy data</p>
-                            <p class="smt">- Select "Let's Go" to get started (normal)</p>
-                            <p class="smt">- Select "Guest" to skip setup or debug</p>
-                            <button class="b1" onclick="guestmode();">Guest</button><button class="b1"
-                                onclick="fesw('setup1', 'mig');initializePeerConnection();">Migrate</button><button
-                                class="b1" onclick="fesw('setup1', 'setupnew');">Let's go!</button>
-                        </div>
-                        <div id="yowetrapped" style="display: none;">
-                            <p class="h2">Sandbox</p>
-                            <p>Enter any password, NOT A USED ONE, to secure Sandbox with.</p>
-                            <input type="password" id="oobepin2" class="i1" placeholder="Enter a password"
-                                autocomplete="off">
-                            <button class="b1" onclick="sth('end');">Exit Sandbox</button><button
-                                onclick="passtime('oobepin2');desktop('User');writepb('setupdone', 'fuckingkillme');"
-                                class="b1">Set password, next</button>
-                        </div>
-                        <div id="setupnew" style="display: none;">
-                            <p class="h2">Password Setup</p>
-                            <p>Enter a strong password. The stronger the password, the better the security (WebDesk is
-                                encrypted.)</p>
-                            <input type="password" id="oobepin" class="i1" placeholder="Enter a password"
-                                autocomplete="off">
-                            <button class="b1" onclick="fesw('setupnew', 'setup1');">Back</button><button
-                                onclick="holyfuck();" class="b1">Set password, next</button>
-                        </div>
-                        <div id="setup2" style="display: none;">
-                            <p class="h2">User Setup</p>
-                            <p>Enter a username and select your preferences.</p>
-                            <input type="text" id="username" class="i1" placeholder="Enter a new username"
-                                autocomplete="off">
-                            <p style="cursor: pointer;"
-                                onclick="doc('./assets/other/data.txt', 'Data Collection', '350px', 'auto');">Data
-                                collection
-                                (Select to learn more)</p>
-                            <button class="b3 green" onclick="forceondata();">Allow (default)</button><button
-                                class="b3 red" onclick="forceoffdata();">Disable</button>
-                            <p><button class="b1" onclick="holyshit();">Done!</button></p>
-                        </div>
-                        <div id="setup3" style="display: none;">
-                            <p class="h2">Personalize</p>
-                            <p>Accent color</p>
-                            <button class="acb" style="background: rgb(210, 30, 30);"
-                                onclick="chacc('210, 30, 30');"></button>
-                            <button class="acb" style="background: rgb(210, 120, 30);"
-                                onclick="chacc('210, 120, 30');"></button>
-                            <button class="acb" style="background: rgb(210, 180, 20);"
-                                onclick="chacc('210, 180, 20');"></button>
-                            <button class="acb" style="background: rgb(50, 160, 20);"
-                                onclick="chacc('50, 160, 20');"></button>
-                            <button class="acb" style="background: rgb(40, 70, 235);"
-                                onclick="chacc('40, 70, 235');"></button>
-                            <button class="acb" style="background: rgb(120, 60, 235);"
-                                onclick="chacc('120, 60, 235');"></button>
-                            <button class="acb" style="background: rgb(180, 180, 180);"
-                                onclick="chacc('200, 200, 200');"></button>
-                            <p>Appearance</p>
-                            <button class="b1 b2 light" onclick="appear('l');">Light</button><button class="b1 b2 dark"
-                                onclick="appear();">Dark</button>
-                            <p><button class="b1" onclick="finishsetup();">Done!</button></p>
-                        </div>
-                        <div id="mig" style="display: none;">
-                            <p class="h2" id="lobotomy">Migration Assistant</p>
-                            <p>Close all other WebDesk tabs before continuing.</p>
-                            <p class="smt">- Go to your Everything Menu and open Migration Assistant on the other
-                                WebDesk.
-                            </p>
-                            <p class="smt">- Enter the code "<span id="codemig" style="color: #fff;"></span>" into the
-                                Assistant.
-                            </p>
-                            <button class="b1" onclick="fesw('mig', 'setup1');">Back</button>
-                        </div>
-                        <div id="load">
-                            <p class="h2">Loading...</p>
-                            <p>If this gets stuck or takes too long, reload.</p>
-                            <div class="line-wobble center"></div>
-                            <button class="b1" onclick="recovery();">Recovery</button><button class="b1"
-                                onclick="reboot();">Reload</button>
-                        </div>
-                        <div id="mdone" style="display: none;">
-                            <p class="h2">Migration Assistant</p>
-                            <p>Migration complete.</p>
-                            <p>Click "Done" to reboot into your WebDesk.</p>
-                            <button class="b1" onclick="reboot();">Done</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--Migration Assistant-->
-            <div class="window" id="migration" style="width: 350px;">
-                <div class="title-bar">Migration Assistant <button class="winb wc"
-                        onclick="hidef('migration');">Close</button></div>
-                <div class="content">
-                    <p>Enter the ID of the other WebDesk.</p>
-                    <p>Do not enter any other person's ID, as your data will go to them!</p>
-                    <input type="text" id="peerIdInput" class="i1" placeholder="Other peer's ID">
-                    <button
-                        onclick="mkw(`<p>If migration won't start</p><p>- Try reloading this WebDesk, then reopen Migration Assistant and try again.</p><p>- Make sure you're on the same network as the other WebDesk.</p>`, 'Migration Assistant', '350px');"
-                        class="b1">Not working?</button><button id="connectButton" class="b1">Connect</button>
-                </div>
-                <div class="content" style="display: none" id="migrationdontclose">
-                    <p>Sending data to other WebDesk...</p>
-                    <p>The other WebDesk will let you know when migration is done.</p>
-                    <p>When it's done, close this window.</p>
-                </div>
-            </div>
-            <!--End of Migration Assistant-->
-            <!--Settings-->
-            <script>
-                function imsosilly() {
-                    fesw('settingsmain', 'settingsuser');
+    <div class="fullbg" id="lockthing"></div>
+    <script>
+        document.addEventListener("click", function (e) {
+            let t = e.target;
+            if (t.id === "lockthing") {
+                t.clickCount = (t.clickCount || 0) + 1;
+                if (t.clickCount === 1) {
+                    t.timeoutID = setTimeout(() => {
+                        t.clickCount = 0;
+                    }, 1500);
                 }
-            </script>
-            <div class="window" id="settings" style="width: 300px;">
-                <div class="title-bar" id="titleBar">Settings <button class="winb wc"
-                        onclick="hidef('settings');">Close</button>
-                </div>
-                <div class="content">
-                    <div id="settingsmain">
-                        <button class="b1 b2 guestno"
-                            onclick="passp('Enter password to access menu', 'imsosilly()');">Username &
-                            Password</button><button class="b1 b2"
-                            onclick="fesw('settingsmain', 'settingsappear');">Appearance</button><button class="b1 b2"
-                            onclick="fesw('settingsmain', 'settingspriv');">Data & Privacy</button><button class="b1 b2"
-                            onclick="fesw('settingsmain', 'settingsgen');">General</button><button class="b1 b2"
-                            onclick="fesw('settingsmain', 'settingsdesk');">WebDesk System</button>
+                if (t.clickCount === 2) {
+                    clearTimeout(t.timeoutID);
+                    lock();
+                    t.clickCount = 0;
+                }
+            }
+        });
+    </script>
+    <div id="nest">
+        <p class="h2 hide" style="margin-top: 12px;" id="sandwarn">Sandbox Desktop</p>
+        <div id="setup" class="window" style="width: 350px;">
+            <div class="title-bar"
+                style="border-bottom: 0px !important; background-color: rgba(var(--accent), 0.07) !important;">
+                <div class="content" style="margin-bottom: 0px !important; border-radius: var(--rad2);">
+                    <div id="setup1" style="display: none;">
+                        <p class="h2">Welcome to WebDesk!</p>
+                        <p>In just a few steps, you'll be ready to go.</p>
+                        <p class="smt">- Select "Migrate" if you want to copy data</p>
+                        <p class="smt">- Select "Let's Go" to get started (normal)</p>
+                        <p class="smt">- Select "Guest" to skip setup or debug</p>
+                        <button class="b1" onclick="guestmode();">Guest</button><button class="b1"
+                            onclick="fesw('setup1', 'mig');initializePeerConnection();">Migrate</button><button
+                            class="b1" onclick="fesw('setup1', 'setupnew');">Let's go!</button>
                     </div>
-                    <div id="settingsuser" style="display: none;">
-                        <p style="margin: 0px !important;" class="bold">Username / Password</p>
-                        <button class="b1 b2" onclick="nameutil(`<p>Enter new username</p>`);">Change
-                            username</button><button class="b1 b2"
-                            onclick="passutil('<p>Enter new password, WebDesk may freeze for a bit.</p><p>Do not reload WebDesk until it unfreezes, or you will lose all data.</p>');">Change
-                            pass</button>
-                        <p>Other</p>
-                        <p><button class="winb" onclick="fesw('settingsuser', 'settingsmain');">Back</button></p>
+                    <div id="yowetrapped" style="display: none;">
+                        <p class="h2">Sandbox</p>
+                        <p>Enter any password, NOT A USED ONE, to secure Sandbox with.</p>
+                        <input type="password" id="oobepin2" class="i1" placeholder="Enter a password"
+                            autocomplete="off">
+                        <button class="b1" onclick="sth('end');">Exit Sandbox</button><button
+                            onclick="passtime('oobepin2');desktop('User');writepb('setupdone', 'fuckingkillme');"
+                            class="b1">Set password, next</button>
                     </div>
-                    <div id="settingsappear" style="display: none;">
-                        <p class="bold" style="margin: 0px !important;">Accent / Appearance</p>
+                    <div id="setupnew" style="display: none;">
+                        <p class="h2">Password Setup</p>
+                        <p>Enter a strong password. The stronger the password, the better the security (WebDesk is
+                            encrypted.)</p>
+                        <input type="password" id="oobepin" class="i1" placeholder="Enter a password"
+                            autocomplete="off">
+                        <button class="b1" onclick="fesw('setupnew', 'setup1');">Back</button><button
+                            onclick="holyfuck();" class="b1">Set password, next</button>
+                    </div>
+                    <div id="setup2" style="display: none;">
+                        <p class="h2">User Setup</p>
+                        <p>Enter a username and select your preferences.</p>
+                        <input type="text" id="username" class="i1" placeholder="Enter a new username"
+                            autocomplete="off">
+                        <p style="cursor: pointer;"
+                            onclick="doc('./assets/other/data.txt', 'Data Collection', '350px', 'auto');">Data
+                            collection
+                            (Select to learn more)</p>
+                        <button class="b3 green" onclick="forceondata();">Allow (default)</button><button class="b3 red"
+                            onclick="forceoffdata();">Disable</button>
+                        <p><button class="b1" onclick="holyshit();">Done!</button></p>
+                    </div>
+                    <div id="setup3" style="display: none;">
+                        <p class="h2">Personalize</p>
+                        <p>Accent color</p>
                         <button class="acb" style="background: rgb(210, 30, 30);"
                             onclick="chacc('210, 30, 30');"></button>
                         <button class="acb" style="background: rgb(210, 120, 30);"
@@ -205,510 +127,605 @@
                             onclick="chacc('120, 60, 235');"></button>
                         <button class="acb" style="background: rgb(180, 180, 180);"
                             onclick="chacc('200, 200, 200');"></button>
-                        <p><button class="b1 light" onclick="appear('l');">Light</button><button
-                                style="margin-left: 3px;" class="b1 dark" onclick="appear();">Dark</button></p>
-                        <p>Other</p>
-                        <p><button class="winb" onclick="customacc();">Custom accent...</button><button class="winb"
-                                onclick="fesw('settingsappear', 'settingsmain');">Back</button></p>
+                        <p>Appearance</p>
+                        <button class="b1 b2 light" onclick="appear('l');">Light</button><button class="b1 b2 dark"
+                            onclick="appear();">Dark</button>
+                        <p><button class="b1" onclick="finishsetup();">Done!</button></p>
                     </div>
-                    <div id="settingspriv" style="display: none;">
-                        <p class="bold">Data & Privacy</p>
-                        <button class="b1"
-                            onclick="mkw(`<p>Warning: Erasing WebDesk will delete all of it's data. Select 'Close' to stop, or 'Erase' to continue.</p><button class='b1 b2' onclick='burnitall();'>Erase</button>`, 'Erase Assistant', '330px');">Erase
-                            This WebDesk</button>
-                        <p style="cursor: pointer;"
-                            onclick="doc('./assets/other/data.txt', 'Data Collection', '350px', 'auto');">Data
-                            collection
-                            (Select to learn more)</p>
-                        <button class="b3 green" onclick="forceondata();">Allow (default)</button><button class="b3 red"
-                            onclick="forceoffdata();">Disable</button>
-                        <p><button class="winb" onclick="fesw('settingspriv', 'settingsmain');">Back</button></p>
-                    </div>
-                    <div id="settingsgen" style="display: none;">
-                        <p class="bold">General</p>
-                        <button class="b1 b2" onclick="fesw('settingsgen', 'settingsui');">Change UI settings</button>
-                        <button class="b1 b2 guestno" onclick="fesw('settingsgen', 'settingslock');">Lock
-                            timeout</button>
-                        <p><button class="winb" onclick="fesw('settingsgen', 'settingsmain');">Back</button></p>
-                    </div>
-                    <div id="settingsui" style="display: none;">
-                        <p class="bold">UI settings</p>
-                        <p>Button sound effects</p>
-                        <p class="smt">Sound effects when using a button. Disable on Safari.</p>
-                        <button class="b3 green"
-                            onclick="writepb('b','t');abs=true;snack('Saved button settings.', '2500');">Enable
-                            (default)</button><button class="b3 red"
-                            onclick="writepb('b','f');abs=false;snack('Saved button settings.', '2500');">Disable</button>
-                        <p class="guestno">Button hover effect</p>
-                        <p class="smt guestno">Buttons interact with the cursor. Disable on low-end devices.</p>
-                        <button class="b3 green guestno"
-                            onclick="writepb('l','t');wal('<p>Reboot to apply changes.</p>', 'reboot()');">Enable
-                            (default)</button><button class="b3 red guestno"
-                            onclick="writepb('l','f');wal('<p>Reboot to apply changes.</p>', 'reboot()');">Disable</button>
-                        <p class="guestno">WebDesk Cursor</p>
-                        <p class="smt guestno">WebDesk's circular cursor. Disable to use normal cursor.</p>
-                        <button class="b3 green guestno"
-                            onclick="writepb('c','t');wal('<p>Reboot to apply changes.</p>', 'reboot()');">Enable
-                            (default)</button><button class="b3 red guestno"
-                            onclick="writepb('c','f');wal('<p>Reboot to apply changes.</p>', 'reboot()');">Disable</button>
-                        <p>Window tinting</p>
-                        <p class="smt">Adds a slight accent to windows. Disable on low-end devices.</p>
-                        <button class="b3 green"
-                            onclick="writepb('wb','t');cv('winc', 'rgba(var(--accent), 0.08)');snack('Saved window settings.', '2500');">Enable
-                            (default)</button><button class="b3 red"
-                            onclick="writepb('wb','f');cv('winc', 'transparent');snack('Saved window settings.', '2500');">Disable</button>
-                        <p>Window shadows</p>
-                        <p class="smt">Disable on low-end devices, or for better window dragging.</p>
-                        <button class="b3 green"
-                            onclick="writepb('ws','t');cv('wins', '0 0 34px rgba(0, 0, 0, 0.22)');snack('Saved window settings.', '2500');">Enable
-                            (default)</button><button class="b3 red"
-                            onclick="writepb('ws','f');cv('wins', 'none');snack('Saved window settings.', '2500');">Disable</button>
-                        <p><button class="winb" onclick="fesw('settingsui', 'settingsgen');">Back</button></p>
-                    </div>
-                    <div id="settingslock" style="display: none;">
-                        <p class="bold">Lock Timeout</p>
-                        <p class="smt">The amount of time before WebDesk auto-locks.</p>
-                        <button class="b1 b2" onclick="timeoutChange(20000)">20 seconds</button><button class="b1 b2"
-                            onclick="timeoutChange(60000)">1 minute</button><button class="b1 b2"
-                            onclick="timeoutChange(300000)">5 minutes</button><button class="b1 b2"
-                            onclick="timeoutChange(600000)">10 minutes</button><button class="b1 b2"
-                            onclick="timeoutChange(900000)">15 minutes</button><button class="b1 b2"
-                            onclick="timeoutChange(1200000)">20 minutes</button>
-                        <p><button class="winb" onclick="fesw('settingslock', 'settingsgen');">Back</button></p>
-                    </div>
-                    <div id="settingsdesk" style="display: none;">
-                        <p class="bold">WebDesk System</p>
-                        <p>Troubleshooting</p>
-                        <button class="b1 b2" onclick="repop();">Enter recovery (Ctrl+Shift+F)</button>
-                        <p>Allow file uploads above 15mb</p>
-                        <p class="smt">Disabled to stop slowdowns on low-end devices. Doesn't affect current files.</p>
-                        <button class="b3 green"
-                            onclick="writevar('allowbu', 'y');snack('Enabled large uploads successfully.', '3500');">Allow</button><button
-                            class="b3 red"
-                            onclick="writevar('allowbu', 'n');snack('Disabled large upload successfully.', '3500');">Disable
-                            (default)</button>
-                        <p><button class="winb" onclick="fesw('settingsdesk', 'settingsmain');">Back</button></p>
-                    </div>
-                </div>
-            </div>
-            <!--End of settings-->
-            <!--Camera-->
-            <div class="window" id="camera" style="width: 280px;" ver="1.0">
-                <div class="title-bar" id="titleBar"><span class="camtime" style="pointer-events: none;">Camera</span>
-                    <button class="winb wc"
-                        onclick="hidef('camera');nocam();fesw('cameraitself', 'enablecam');hidef('snapper');">Close</button>
-                </div>
-                <div class="content">
-                    <div id="enablecam">
-                        <p>WebDesk needs camera permission to open this app.</p>
-                        <p>Note: iOS has (seemingly) unfixable issues.</p>
-                        <button class="b1" onclick="stcam();fesw('enablecam', 'cameraitself');">Grant</button>
-                    </div>
-                    <div id="cameraitself" style="display: none;">
-                        <video autoplay="true" id="videl"></video>
-                        <button class="b1" onclick="nocam();fesw('cameraitself', 'enablecam');">Back</button><button
-                            class="b1" onclick="snap();">Take Picture</button><button class="b1"
-                            onclick="fesw('cameraitself', 'snapper');">Timer</button>
-                    </div>
-                    <div id="snapper" style="display: none;">
-                        <p>Timer</p>
-                        <p>Click one of the options below to start a photo timer</p>
-                        <button class="b1" onclick="tsnap(3000, 3);">3s</button><button class="b1"
-                            onclick="tsnap(6000, 6);">6s</button><button class="b1"
-                            onclick="tsnap(9000, 9);">9s</button><button class="b1"
-                            onclick="tsnap(12000, 12);">12s</button>
-                        <p><button class="b1" onclick="fesw('snapper', 'cameraitself');">Back</button></p>
-                    </div>
-                    <div id="savewherecam" style="display: none;">
-                        <p>Picture taken! Save to:</p>
-                        <button class="b1" onclick="savetodev();">Device</button><button class="b1"
-                            onclick="savetofiles();">WebDesk Files</button>
-                        <p><button class="b1" onclick="fesw('savewherecam', 'cameraitself');">Back</button></p>
-                    </div>
-                </div>
-                <script src="./assets/apps/camera.js"></script>
-            </div>
-            <!--End of camera-->
-            <!--Terminal-->
-            <div id="terminal" class="window resizeh" name="Terminal" style="width: 300px;">
-                <div class="title-bar">Terminal <button class="winb wc"
-                        onclick="hidef('terminal');">Close</button><button class="winb" id="run"
-                        onclick="document.getElementById('terminalbox').value = '';">Clear</button>
-                </div>
-                <div class="content">
-                    <div id="term1">
-                        <p>Do not paste anything here, as doing so may allow anyone full access to this WebDesk.</p>
-                        <p>If you want to run something that might be harmful, <a onclick="sandbox();">use Sandbox
-                                instead.</a></p>
-                        <button class="b1" onclick="hidef('terminal');">Back</button><button class="b1"
-                            onclick="showf('sandbox');">Sandbox</button><button class="b1"
-                            onclick="fesw('term1', 'term2');">Got it!</button>
-                    </div>
-                    <div id="term2" class="hide">
-                        <input id="terminalbox" placeholder="Type some JS here" class="i1">
-                        <button class="b1" onclick="showf('sandbox');" style="margin-bottom: 1px;">Open
-                            sandbox</button><button class="b1" onclick="executeCode();"
-                            style="margin-bottom: 1px;">Execute</button>
-                        <script>
-                            function executeCode() {
-                                var code = document.getElementById("terminalbox").value;
-                                eval(code);
-                            }
-                        </script>
-                    </div>
-                </div>
-            </div>
-            <!--End of terminal-->
-            <!--Weather-->
-            <div id="weather" class="window resizeh" name="Weather" style="width: 360px;">
-                <div class="title-bar">Weather <button class="winb wc" onclick="hidef('weather');">Close</button><button
-                        class="winb" onclick="reboot();">Restart</button>
-                </div>
-                <div class="content" id="weathers1">
-                    <p>1. Input your city first.</p>
-                    <input id="weathercity" placeholder="Enter a city here" class="i1">
-                    <p>2. Select the unit you use.</p>
-                    <button class="b1" onclick="getWeather('weathercity', 'imperial');">Fahrenheit</button><button
-                        class="b1" onclick="getWeather('weathercity', 'metric');">Celsius</button>
-                    <script src="./assets/apps/weather.js"></script>
-                </div>
-                <div class="content" id="weathers2" style="display: none;">
-                    <p class="weathera"></p>
-                    <button class="b1" onclick="fesw('weathers2', 'weathers1');">Reconfigure</button>
-                </div>
-            </div>
-            <!--End of weather-->
-            <!--Uploader, basically unchanged since 0.0.6 except for slight UI changes-->
-            <div id="uploader" class="window resizeh" style="width: 380px;" name="Uploader">
-                <div class="title-bar">Catbox Uploader <button class="winb" onclick="hidef('uploader');">Close</button>
-                </div>
-                <div class="content">
-                    <p>Uploads up to 200 MB are allowed. Read Catbox's <button class="winb"
-                            onclick="redir('https://catbox.moe/faq.php');">FAQ.</button></p>
-                    <p>Note: After upload completes, you will be sent to a new tab with your file link.</p>
-                    <p class="bold">Note: Once uploaded, files cannot be deleted!</p>
-                    <form id="uploadForm" action="https://catbox.moe/user/api.php" method="post"
-                        enctype="multipart/form-data" target="_blank">
-                        <div class="flex">
-                            <input type="file" class="b1" name="fileToUpload" id="fileToUpload">
-                            <button onclick="document.getElementById('submitmedaddy').click();"
-                                class="b1">Upload</button>
-                        </div>
-                        <input type="hidden" name="reqtype" value="fileupload">
-                        <input type="hidden" name="userhash" value="">
-                        <input type="hidden" id="submitmedaddy" name="submit">
-                    </form>
-                </div>
-            </div>
-            <!--End of uploader-->
-            <!--Browser-->
-            <div id="browser" class="window resizeh" name="Browser" style="width: 80vw;">
-                <div id="border-root">
-                    <div id="border-titlebar" class="title-bar-ns">
-                        <div id="border-tab-menu">
-                            <div id="border-c-button" class="nodrag" onclick="hidef('browser');">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 20 20"
-                                    fill="none">
-                                    <path
-                                        d="M10 6.2963L3.7037 0L0 3.7037L6.2963 10L0 16.2963L3.7037 20L10 13.7037L16.2963 20L20 16.2963L13.7037 10L20 3.7037L16.2963 0L10 6.2963Z"
-                                        fill="rgba(var(--accent), 0.95)"></path>
-                                </svg>
-                            </div>
-                            <div id="border-tab-container">
-
-                            </div>
-                            <div id="border-add-button" class="nodrag">
-                                <svg width="10" height="10" viewBox="0 0 20 20" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M12.2727 7.72727V0H7.72727V7.72727H0V12.2727H7.72727V20H12.2727V12.2727H20V7.72727H12.2727Z"
-                                        fill="rgba(var(--accent), 0.95)" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="border-menu" class="nodrag">
-                        <div class="border-history-btn border-history-back">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 29 43"
-                                fill="none">
-                                <path class="border-svg-icon"
-                                    d="M0 21.2132L21.2131 42.4264L28.2842 35.3553L14.1421 21.2132L28.2842 7.07104L21.2131 0L0 21.2132Z"
-                                    fill="rgba(var(--accent), 0.6)" />
-                            </svg>
-                        </div>
-                        <div class="border-history-btn border-history-forward">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 29 43"
-                                fill="none">
-                                <path class="border-svg-icon"
-                                    d="M29 21.7868L7.78687 0.573607L0.715823 7.64468L14.8579 21.7868L0.715821 35.929L7.78687 43L29 21.7868Z"
-                                    fill="rgba(var(--accent), 0.6)" />
-                            </svg>
-                        </div>
-                        <div class="border-history-btn border-history-refresh">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 45 45"
-                                fill="none">
-                                <path class="border-svg-icon"
-                                    d="M45 20V0L38.4099 6.59011C35.2632 3.44343 31.2541 1.30051 26.8895 0.432343C22.525 -0.435825 18.001 0.00975001 13.8896 1.71272C9.77828 3.41569 6.26427 6.29957 3.79193 9.99968C1.3196 13.6998 0 18.0499 0 22.5C0 26.9501 1.3196 31.3002 3.79193 35.0003C6.26427 38.7004 9.77828 41.5843 13.8896 43.2873C18.001 44.9903 22.525 45.4358 26.8895 44.5677C31.2541 43.6995 35.2632 41.5566 38.4099 38.4099L31.3388 31.3388C29.5907 33.087 27.3634 34.2775 24.9386 34.7598C22.5139 35.2421 20.0005 34.9946 17.7165 34.0485C15.4324 33.1024 13.4801 31.5003 12.1066 29.4446C10.7331 27.389 10 24.9723 10 22.5C10 20.0277 10.7331 17.611 12.1066 15.5554C13.4801 13.4998 15.4324 11.8976 17.7165 10.9515C20.0005 10.0054 22.5139 9.75788 24.9386 10.2402C27.3634 10.7225 29.5907 11.913 31.3388 13.6612L25 20H45Z"
-                                    fill="rgba(var(--accent), 0.95)" />
-                            </svg>
-                        </div>
-                        <input id="border-searchbar" class="i1" placeholder="Enter an URL..."></input>
-                        <div id="border-search-button">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 40 43"
-                                fill="none">
-                                <path class="border-svg-icon"
-                                    d="M18.071 0L39.2842 21.2132L18.071 42.4264L11 35.3553L20.3552 26H0V16H19.929L11 7.07108L18.071 0Z"
-                                    fill="rgba(var(--accent), 0.95)" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="appbar"></div>
-                    <div id="border-view-container" class="nodrag" style="border: 6px solid transparent;">
-                    </div>
-                </div>
-            </div>
-            <script defer src="./assets/border.js"></script>
-            <!--End of browser-->
-            <!--Calculator-->
-            <div id="calculator" class="window">
-                <div class="title-bar">Calculator
-                    <button class="winb wc" onclick="hidef('calculator');">Close</button><button class="winb"
-                        id="clrcmd" onclick="clr();">Clear</button>
-                </div>
-                <div class="content">
-                    <div id="calculator2" style="text-align: center;">
-                        <script type="text/javascript">
-                            function dis(val) {
-                                document.getElementById("result").value += val;
-                            }
-
-                            function solve() {
-                                let x = document.getElementById("result").value;
-                                let y = eval(x);
-                                document.getElementById("result").value = y;
-                            }
-
-                            function clr() {
-                                document.getElementById("result").value = "";
-                            }
-                        </script>
-                        <style>
-                            input[type="button"] {
-                                color: var(--font);
-                                width: 55px;
-                                height: 55px;
-                                transition: .1s;
-                                font-size: 16px;
-                                font-family: 'Poppins', sans-serif;
-                                background-color: transparent;
-                                border-radius: 6px;
-                                cursor: pointer;
-                                border: none;
-                            }
-
-                            input[type="button"]:hover {
-                                color: rgba(var(--accent));
-                                border-radius: 7px;
-                            }
-
-                            input[type="button"]:active {
-                                color: rgba(var(--accent), .60);
-                                border-radius: 7px;
-                            }
-
-                            #result,
-                            #result2 {
-                                box-sizing: border-box;
-                                font-size: 16px;
-                                font-family: 'Poppins', sans-serif;
-                                border: none;
-                                background-color: transparent;
-                                border-radius: 6px;
-                                outline: none;
-                                color: var(--font);
-                                text-align: center;
-                                width: 210px;
-                            }
-
-                            .whar {
-                                display: none;
-                            }
-                        </style>
-                        <p><input class="calctext txttop txtbtm" type="text" id="result"
-                                placeholder="Type an equation..." onfocus="this.blur();"></p>
-                        <p><input type="button" value="1" onclick="dis('1')">
-                            <input type="button" value="2" onclick="dis('2')">
-                            <input type="button" value="3" onclick="dis('3')">
-                            <input type="button" value=":|:" onclick="dis('/')">
+                    <div id="mig" style="display: none;">
+                        <p class="h2" id="lobotomy">Migration Assistant</p>
+                        <p>Close all other WebDesk tabs before continuing.</p>
+                        <p class="smt">- Go to your Everything Menu and open Migration Assistant on the other
+                            WebDesk.
                         </p>
-                        <p><input type="button" value="4" onclick="dis('4')">
-                            <input type="button" value="5" onclick="dis('5')">
-                            <input type="button" value="6" onclick="dis('6')">
-                            <input type="button" value="-" onclick="dis('-')">
+                        <p class="smt">- Enter the code "<span id="codemig" style="color: #fff;"></span>" into the
+                            Assistant.
                         </p>
-                        <p><input type="button" value="7" onclick="dis('7')">
-                            <input type="button" value="8" onclick="dis('8')">
-                            <input type="button" value="9" onclick="dis('9')">
-                            <input type="button" value="+" onclick="dis('+')">
-                        </p>
-                        <p><input type="button" value="." onclick="dis('.')">
-                            <input type="button" value="0" onclick="dis('0')">
-                            <input type="button" value="=" onclick="solve()">
-                            <input type="button" value="x" onclick="dis('*')">
-                        </p>
+                        <button class="b1" onclick="fesw('mig', 'setup1');">Back</button>
+                    </div>
+                    <div id="load">
+                        <p class="h2">Loading...</p>
+                        <p>If this gets stuck or takes too long, reload.</p>
+                        <div class="line-wobble center"></div>
+                        <button class="b1" onclick="recovery();">Recovery</button><button class="b1"
+                            onclick="reboot();">Reload</button>
+                    </div>
+                    <div id="mdone" style="display: none;">
+                        <p class="h2">Migration Assistant</p>
+                        <p>Migration complete.</p>
+                        <p>Click "Done" to reboot into your WebDesk.</p>
+                        <button class="b1" onclick="reboot();">Done</button>
                     </div>
                 </div>
             </div>
-            <!--End of calculator-->
-            <!--Desktop nav-->
-            <div style="position: fixed; bottom: 0px; left: 0px; right: 0px; animation: mainbtn 1s; display: none; background-color: rgba(var(--accent), 0.12); padding: 5px;"
-                id="mainbtn">
-                <button class="mainbtn n" style="left: 4px; position: fixed;" onclick="showf('mainmenu');fesw('mainmenulock', 'mainmenuapp');">Apps</button><button
-                    class="mainbtn n" style="margin-left: 2px;" onclick="lock();">Lock</button><button class="time mainbtn n" style="right: 4px; position: fixed;" onclick="showf('mainmenu');fesw('mainmenuapp', 'mainmenulock');">Time</button>
-            </div>
-            <div id="mainmenu">
-                <div class="content" id="mainmenuapp"
-                    style="padding: 6px; border-radius: var(--rad2); background-color: rgba(var(--accent), 0.12);">
-                    <p class="h3 sandnoapp"><span class="greet">Welcome to WebDesk</span>, <span class="user"></span>!
-                    </p>
-                    <p class="h3 dwarn">WebDesk Sandbox</p>
-                    <p class="smt weather sandnoapp" onclick="opapp('weather');" style="cursor: pointer;">Select to set
-                        up
-                        weather</p>
-                    <p class="h2">Apps</p>
-                    <div class="padmenu">
-                        <button class="b1 sandnoapp" onclick="opapp('migration');initializePeerConnection();">Migration
-                            Assistant</button><button class="b1" onclick="opapp('settings');">Settings</button><button
-                            class="b1 sandnoapp" onclick="opapp('camera');">Camera</button><button class="b1"
-                            onclick="opapp('terminal');">Terminal</button><button class="b1 sandnoapp"
-                            onclick="opapp('weather');">Weather</button><button class="b1 sandnoapp"
-                            onclick="opapp('browser');">Browser</button><button class="b1"
-                            onclick="opapp('calculator');">Calculator</button><button class="b1"
-                            onclick="doc('./assets/other/trusted.txt', 'App Installer', '270px');">App Installer
-                            (BETA)</button><button class="b1" onclick="opapp('uploader');">Uploader</button>
-                    </div>
-                    <p class="h2">WebDesk</p>
-                    <div class="padmenu" id="mainwebact">
-                        <button class="b1 b2" onclick="about();hidef('mainmenu');">About This WebDesk
-                        </button><button class="b1 b2" onclick="lock();">Lock</button><button class="b1"
-                            onclick="reboot();">Reboot</button><button class="b1 fucku" onclick="cleantop();">Close
-                            All</button><button class="b1 fucku" onclick="sandbox();">Sandbox</button><button class="b1"
-                            onclick="fesw('mainmenuapp', 'mainmenulock');">Files</button><button class="b1 fucku"
-                            onclick="hidef('mainmenu');">Close</button>
-                    </div>
-                    <div class="padmenu hide" id="mainsandact">
-                        <button class="b1" onclick="exsand();">Exit Sandbox</button><button class="b1"
-                            onclick="sth('hide');">Suspend Sandbox</button><button class="b1"
-                            onclick="fesw('mainmenuapp', 'mainmenulock');">Files</button><button class="b1"
-                            onclick="hidef('mainmenu');">Close</button>
-                    </div>
-                </div>
-                <div class="padmenu hide" id="mainmenulock">
-                    <p class="h2">Files</p>
-                    <p class="dwarn">Note: Anything stored in files will be deleted!</p>
-                    <div id="files-list">
-                    </div>
-                    <p class="fucku"><button class="b1"
-                            onclick="fesw('mainmenulock', 'mainmenuapp');">Back</button><button class="b1"
-                            onclick="hidef('mainmenu');fesw('mainmenulock', 'mainmenuapp');">Close</button><button
-                            class="b1" onclick="upload();">Upload</button><button class="b1"
-                            onclick="window.fuckfiles();">Erase all</button></p>
-                </div>
-            </div>
-            <div id="sandbox"
-                style="position: fixed; left: 0px; right: 0px; top: 0px; bottom: 0px; z-index: 9997; background-color: var(--background);"
-                class="hide">
-                <embed style="width: 100%; height: 100%; box-sizing: border-box; border: none; z-index: 1;"
-                    src="./assets/sandbox.html" id="sandboxframe">Sandbox is
-                booting...</embed>
-            </div>
-            <div class="fullbg hide" style="background-color: var(--lightdark); z-index: 9998;"></div>
-            <audio id="lock">
-                <source src="./assets/other/lock.mp3" type="audio/mpeg">
-                Your browser does not support the audio element, if you're actually seeing this PLEASE use a different
-                browser.
-            </audio>
-            <audio id="unlock">
-                <source src="./assets/other/unlock.mp3" type="audio/mpeg">
-                Your browser does not support the audio element, if you're actually seeing this PLEASE use a different
-                browser.
-            </audio>
-            <audio id="hSound">
-                <source src="./assets/other/h.mp3" type="audio/mpeg">
-                Your browser does not support the audio element, if you're actually seeing this PLEASE use a different
-                browser.
-            </audio>
-            <audio id="cSound">
-                <source src="./assets/other/c.mp3" type="audio/mpeg">
-                Your browser does not support the audio element, if you're actually seeing this PLEASE use a different
-                browser.
-            </audio>
-            <!--End of desktop nav-->
         </div>
-        <!--auth-->
-        <div id="auth" class="window" style="width: 370px; z-index: 9999; animation: none !important;">
-            <div class="title-bar">WebDesk Security
-                <button class="winb wc whar2 hide" onclick="lock();">Close</button><button class="winb wc whar"
-                    onclick="hidef('auth');">Close</button><button class="winb"
-                    onclick="doc('./assets/other/logon.txt', 'WebDesk Security', '270px');">I forgot</button>
+        <!--Migration Assistant-->
+        <div class="window" id="migration" style="width: 350px;" name="Migration Assistant">
+            <div class="title-bar">Migration Assistant <button class="winb wc"
+                    onclick="clapp('migration');">Close</button></div>
+            <div class="content">
+                <p>Enter the ID of the other WebDesk.</p>
+                <p>Do not enter any other person's ID, as your data will go to them!</p>
+                <input type="text" id="peerIdInput" class="i1" placeholder="Other peer's ID">
+                <button
+                    onclick="mkw(`<p>If migration won't start</p><p>- Try reloading this WebDesk, then reopen Migration Assistant and try again.</p><p>- Make sure you're on the same network as the other WebDesk.</p>`, 'Migration Assistant', '350px');"
+                    class="b1">Not working?</button><button id="connectButton" class="b1">Connect</button>
+            </div>
+            <div class="content" style="display: none" id="migrationdontclose">
+                <p>Sending data to other WebDesk...</p>
+                <p>The other WebDesk will let you know when migration is done.</p>
+                <p>When it's done, close this window.</p>
+            </div>
+        </div>
+        <!--End of Migration Assistant-->
+        <!--Settings-->
+        <script>
+            function imsosilly() {
+                fesw('settingsmain', 'settingsuser');
+            }
+        </script>
+        <div class="window" id="settings" style="width: 300px;" name="Settings">
+            <div class="title-bar" id="titleBar">Settings <button class="winb wc"
+                    onclick="clapp('settings');">Close</button>
             </div>
             <div class="content">
-                <p class="passtxt">Enter your password</p>
-                <input class="i1" id="passboxauth" placeholder="Enter password" type="password" />
-                <button class="b1" onclick="clr2();">Clear</button><button onclick="checkpass();" class="b1"
-                    id="authgo">OK</button>
+                <div id="settingsmain">
+                    <button class="b1 b2 guestno"
+                        onclick="passp('Enter password to access menu', 'imsosilly()');">Username &
+                        Password</button><button class="b1 b2"
+                        onclick="fesw('settingsmain', 'settingsappear');">Appearance</button><button class="b1 b2"
+                        onclick="fesw('settingsmain', 'settingspriv');">Data & Privacy</button><button class="b1 b2"
+                        onclick="fesw('settingsmain', 'settingsgen');">General</button><button class="b1 b2"
+                        onclick="fesw('settingsmain', 'settingsdesk');">WebDesk System</button>
+                </div>
+                <div id="settingsuser" style="display: none;">
+                    <p style="margin: 0px !important;" class="bold">Username / Password</p>
+                    <button class="b1 b2" onclick="nameutil(`<p>Enter new username</p>`);">Change
+                        username</button><button class="b1 b2"
+                        onclick="passutil('<p>Enter new password, WebDesk may freeze for a bit.</p><p>Do not reload WebDesk until it unfreezes, or you will lose all data.</p>');">Change
+                        pass</button>
+                    <p>Other</p>
+                    <p><button class="winb" onclick="fesw('settingsuser', 'settingsmain');">Back</button></p>
+                </div>
+                <div id="settingsappear" style="display: none;">
+                    <p class="bold" style="margin: 0px !important;">Accent / Appearance</p>
+                    <button class="acb" style="background: rgb(210, 30, 30);" onclick="chacc('210, 30, 30');"></button>
+                    <button class="acb" style="background: rgb(210, 120, 30);"
+                        onclick="chacc('210, 120, 30');"></button>
+                    <button class="acb" style="background: rgb(210, 180, 20);"
+                        onclick="chacc('210, 180, 20');"></button>
+                    <button class="acb" style="background: rgb(50, 160, 20);" onclick="chacc('50, 160, 20');"></button>
+                    <button class="acb" style="background: rgb(40, 70, 235);" onclick="chacc('40, 70, 235');"></button>
+                    <button class="acb" style="background: rgb(120, 60, 235);"
+                        onclick="chacc('120, 60, 235');"></button>
+                    <button class="acb" style="background: rgb(180, 180, 180);"
+                        onclick="chacc('200, 200, 200');"></button>
+                    <p><button class="b1 light" onclick="appear('l');">Light</button><button style="margin-left: 3px;"
+                            class="b1 dark" onclick="appear();">Dark</button></p>
+                    <p>Other</p>
+                    <p><button class="winb" onclick="fesw('settingsappear', 'settingsui');opapp('settings');">UI settings</button><button
+                            class="winb" onclick="customacc();">Custom accent</button><button class="winb"
+                            onclick="fesw('settingsappear', 'settingsmain');">Back</button></p>
+                </div>
+                <div id="settingspriv" style="display: none;">
+                    <p class="bold">Data & Privacy</p>
+                    <button class="b1"
+                        onclick="mkw(`<p>Warning: Erasing WebDesk will delete all of it's data. Select 'Close' to stop, or 'Erase' to continue.</p><button class='b1 b2' onclick='burnitall();'>Erase</button>`, 'Erase Assistant', '330px');">Erase
+                        This WebDesk</button>
+                    <p style="cursor: pointer;"
+                        onclick="doc('./assets/other/data.txt', 'Data Collection', '350px', 'auto');">Data
+                        collection
+                        (Select to learn more)</p>
+                    <button class="b3 green" onclick="forceondata();">Allow (default)</button><button class="b3 red"
+                        onclick="forceoffdata();">Disable</button>
+                    <p><button class="winb" onclick="fesw('settingspriv', 'settingsmain');">Back</button></p>
+                </div>
+                <div id="settingsgen" style="display: none;">
+                    <p class="bold">General</p>
+                    <button class="b1 b2" onclick="fesw('settingsgen', 'settingsui');opapp('settings');">Change UI settings</button>
+                    <button class="b1 b2 guestno" onclick="fesw('settingsgen', 'settingslock');">Lock
+                        timeout</button>
+                    <p><button class="winb" onclick="fesw('settingsgen', 'settingsmain');">Back</button></p>
+                </div>
+                <div id="settingsui" style="display: none;">
+                    <p class="bold">UI settings</p>
+                    <p>Button sound effects</p>
+                    <p class="smt">Sound effects when using a button. Disable on Safari.</p>
+                    <button class="b3 green"
+                        onclick="writepb('b','t');abs=true;snack('Saved button settings.', '2500');">Enable
+                        (default)</button><button class="b3 red"
+                        onclick="writepb('b','f');abs=false;snack('Saved button settings.', '2500');">Disable</button>
+                    <p>Taskbar app buttons</p>
+                    <p class="smt">Shows open windows in the Taskbar. Disable if you need room.</p>
+                    <button class="b3 green"
+                        onclick="writepb('tba','t');showf('appspace');snack('Saved taskbar settings.', '2500');">Enable
+                        (default)</button><button class="b3 red"
+                        onclick="writepb('tba','f');hidef('appspace');snack('Saved taskbar settings.', '2500');">Disable</button>
+                    <p class="guestno">Button hover effect</p>
+                    <p class="smt guestno">Buttons interact with the cursor. Disable on low-end devices.</p>
+                    <button class="b3 green guestno"
+                        onclick="writepb('l','t');wal('<p>Reboot to apply changes.</p>', 'reboot()');">Enable
+                        (default)</button><button class="b3 red guestno"
+                        onclick="writepb('l','f');wal('<p>Reboot to apply changes.</p>', 'reboot()');">Disable</button>
+                    <p class="guestno">WebDesk Cursor</p>
+                    <p class="smt guestno">WebDesk's circular cursor. Disable to use normal cursor.</p>
+                    <button class="b3 green guestno"
+                        onclick="writepb('c','t');wal('<p>Reboot to apply changes.</p>', 'reboot()');">Enable
+                        (default)</button><button class="b3 red guestno"
+                        onclick="writepb('c','f');wal('<p>Reboot to apply changes.</p>', 'reboot()');">Disable</button>
+                    <p>Window tinting</p>
+                    <p class="smt">Adds a slight accent to windows. Disable on low-end devices.</p>
+                    <button class="b3 green"
+                        onclick="writepb('wb','t');cv('winc', 'rgba(var(--accent), 0.08)');snack('Saved window settings.', '2500');">Enable
+                        (default)</button><button class="b3 red"
+                        onclick="writepb('wb','f');cv('winc', 'transparent');snack('Saved window settings.', '2500');">Disable</button>
+                    <p>Window shadows</p>
+                    <p class="smt">Disable on low-end devices, or for better window dragging.</p>
+                    <button class="b3 green"
+                        onclick="writepb('ws','t');cv('wins', '0 0 34px rgba(0, 0, 0, 0.22)');snack('Saved window settings.', '2500');">Enable
+                        (default)</button><button class="b3 red"
+                        onclick="writepb('ws','f');cv('wins', 'none');snack('Saved window settings.', '2500');">Disable</button>
+                    <p><button class="winb" onclick="fesw('settingsui', 'settingsgen');">Back</button></p>
+                </div>
+                <div id="settingslock" style="display: none;">
+                    <p class="bold">Lock Timeout</p>
+                    <p class="smt">The amount of time before WebDesk auto-locks.</p>
+                    <button class="b1 b2" onclick="timeoutChange(20000)">20 seconds</button><button class="b1 b2"
+                        onclick="timeoutChange(60000)">1 minute</button><button class="b1 b2"
+                        onclick="timeoutChange(300000)">5 minutes</button><button class="b1 b2"
+                        onclick="timeoutChange(600000)">10 minutes</button><button class="b1 b2"
+                        onclick="timeoutChange(900000)">15 minutes</button><button class="b1 b2"
+                        onclick="timeoutChange(1200000)">20 minutes</button>
+                    <p><button class="winb" onclick="fesw('settingslock', 'settingsgen');">Back</button></p>
+                </div>
+                <div id="settingsdesk" style="display: none;">
+                    <p class="bold">WebDesk System</p>
+                    <p>Troubleshooting</p>
+                    <button class="b1 b2" onclick="repop();">Enter recovery (Ctrl+Shift+F)</button>
+                    <p>Allow file uploads above 15mb</p>
+                    <p class="smt">Disabled to stop slowdowns on low-end devices. Doesn't affect current files.</p>
+                    <button class="b3 green"
+                        onclick="writevar('allowbu', 'y');snack('Enabled large uploads successfully.', '3500');">Allow</button><button
+                        class="b3 red"
+                        onclick="writevar('allowbu', 'n');snack('Disabled large upload successfully.', '3500');">Disable
+                        (default)</button>
+                    <p><button class="winb" onclick="fesw('settingsdesk', 'settingsmain');">Back</button></p>
+                </div>
             </div>
-            <script>
-                var alright = "mkw('<p>Nothing is defined, but password was correct.</p>', 'WebDesk Security');"
-                async function checkpass() {
-                    const oldpass = pass;
-                    passtime('passboxauth');
-                    const check = await readvar('check');
-                    if (check === "passed") {
-                        locked = false;
-                        clr2();
-                        try {
-                            eval(alright);
-                        } catch (error) {
-                            console.log('<!> ' + error);
-                        }
-                        hidef('auth');
-                    } else {
-                        pass = oldpass;
-                        clr2();
-                        snack('Incorrect password.', '3000');
-                    }
-                }
-
-                function clr2() {
-                    document.getElementById("passboxauth").value = "";
-                }
-
-                async function passp(passt, func) {
-                    if (pass === "43fsj329t151afjds") {
-                        eval(func);
-                    } else {
-                        alright = func;
-                        masschange('passtxt', passt);
-                        opapp('auth');
-                    }
-                }
-
-                const inputField = document.getElementById('passboxauth');
-                const submitButton = document.getElementById('authgo');
-                inputField.addEventListener('keyup', function (event) {
-                    if (event.keyCode === 13) {
-                        submitButton.click();
-                    }
-                });
-            </script>
         </div>
-        <!--End of auth-->
-        <div class="fullbg hide" id="lscreen" onmousedown="unlock();">
-            <div style="top: 50%; left: 50%; position: fixed; transform: translate(-50%, -50%);">
-                <img style="width: 100px; height: 100px; border: none;" src="./assets/img/lock.svg">
-                <p class="h2 time" style="color: #fff !important;"></p>
+        <!--End of settings-->
+        <!--Camera-->
+        <div class="window" id="camera" style="width: 280px;" name="Camera">
+            <div class="title-bar" id="titleBar"><span class="camtime" style="pointer-events: none;">Camera</span>
+                <button class="winb wc"
+                    onclick="hidef('camera');nocam();fesw('cameraitself', 'enablecam');hidef('snapper');">Close</button>
             </div>
+            <div class="content">
+                <div id="enablecam">
+                    <p>WebDesk needs camera permission to open this app.</p>
+                    <p>Note: iOS has (seemingly) unfixable issues.</p>
+                    <button class="b1" onclick="stcam();fesw('enablecam', 'cameraitself');">Grant</button>
+                </div>
+                <div id="cameraitself" style="display: none;">
+                    <video autoplay="true" id="videl"></video>
+                    <button class="b1" onclick="nocam();fesw('cameraitself', 'enablecam');">Back</button><button
+                        class="b1" onclick="snap();">Take Picture</button><button class="b1"
+                        onclick="fesw('cameraitself', 'snapper');">Timer</button>
+                </div>
+                <div id="snapper" style="display: none;">
+                    <p>Timer</p>
+                    <p>Click one of the options below to start a photo timer</p>
+                    <button class="b1" onclick="tsnap(3000, 3);">3s</button><button class="b1"
+                        onclick="tsnap(6000, 6);">6s</button><button class="b1"
+                        onclick="tsnap(9000, 9);">9s</button><button class="b1" onclick="tsnap(12000, 12);">12s</button>
+                    <p><button class="b1" onclick="fesw('snapper', 'cameraitself');">Back</button></p>
+                </div>
+                <div id="savewherecam" style="display: none;">
+                    <p>Picture taken! Save to:</p>
+                    <button class="b1" onclick="savetodev();">Device</button><button class="b1"
+                        onclick="savetofiles();">WebDesk Files</button>
+                    <p><button class="b1" onclick="fesw('savewherecam', 'cameraitself');">Back</button></p>
+                </div>
+            </div>
+            <script src="./assets/apps/camera.js"></script>
+        </div>
+        <!--End of camera-->
+        <!--Terminal-->
+        <div id="terminal" class="window resizeh" name="Terminal" style="width: 300px;">
+            <div class="title-bar">Terminal <button class="winb wc" onclick="clapp('terminal');">Close</button><button
+                    class="winb" id="run" onclick="document.getElementById('terminalbox').value = '';">Clear</button>
+            </div>
+            <div class="content">
+                <div id="term1">
+                    <p>Do not paste anything here, as doing so may allow anyone full access to this WebDesk.</p>
+                    <p>If you want to run something that might be harmful, <a onclick="sandbox();">use Sandbox
+                            instead.</a></p>
+                    <button class="b1" onclick="hidef('terminal');">Back</button><button class="b1"
+                        onclick="showf('sandbox');">Sandbox</button><button class="b1"
+                        onclick="fesw('term1', 'term2');">Got it!</button>
+                </div>
+                <div id="term2" class="hide">
+                    <input id="terminalbox" placeholder="Type some JS here" class="i1">
+                    <button class="b1" onclick="showf('sandbox');" style="margin-bottom: 1px;">Open
+                        sandbox</button><button class="b1" onclick="executeCode();"
+                        style="margin-bottom: 1px;">Execute</button>
+                    <script>
+                        function executeCode() {
+                            var code = document.getElementById("terminalbox").value;
+                            eval(code);
+                        }
+                    </script>
+                </div>
+            </div>
+        </div>
+        <!--End of terminal-->
+        <!--Weather-->
+        <div id="weather" class="window resizeh" name="Weather" style="width: 360px;">
+            <div class="title-bar">Weather <button class="winb wc" onclick="clapp('weather');">Close</button><button
+                    class="winb" onclick="reboot();">Restart</button>
+            </div>
+            <div class="content" id="weathers1">
+                <p>1. Input your city first.</p>
+                <input id="weathercity" placeholder="Enter a city here" class="i1">
+                <p>2. Select the unit you use.</p>
+                <button class="b1" onclick="getWeather('weathercity', 'imperial');">Fahrenheit</button><button
+                    class="b1" onclick="getWeather('weathercity', 'metric');">Celsius</button>
+                <script src="./assets/apps/weather.js"></script>
+            </div>
+            <div class="content" id="weathers2" style="display: none;">
+                <p class="weathera"></p>
+                <button class="b1" onclick="fesw('weathers2', 'weathers1');">Reconfigure</button>
+            </div>
+        </div>
+        <!--End of weather-->
+        <!--Uploader, basically unchanged since 0.0.6 except for slight UI changes-->
+        <div id="uploader" class="window resizeh" style="width: 380px;" name="Uploader">
+            <div class="title-bar">Catbox Uploader <button class="winb wc" onclick="clapp('uploader');">Close</button>
+            </div>
+            <div class="content">
+                <p>Uploads up to 200 MB are allowed. Read Catbox's <button class="winb"
+                        onclick="redir('https://catbox.moe/faq.php');">FAQ.</button></p>
+                <p>Note: After upload completes, you will be sent to a new tab with your file link.</p>
+                <p class="bold">Note: Once uploaded, files cannot be deleted!</p>
+                <form id="uploadForm" action="https://catbox.moe/user/api.php" method="post"
+                    enctype="multipart/form-data" target="_blank">
+                    <div class="flex">
+                        <input type="file" class="b1" name="fileToUpload" id="fileToUpload">
+                        <button onclick="document.getElementById('submitmedaddy').click();" class="b1">Upload</button>
+                    </div>
+                    <input type="hidden" name="reqtype" value="fileupload">
+                    <input type="hidden" name="userhash" value="">
+                    <input type="hidden" id="submitmedaddy" name="submit">
+                </form>
+            </div>
+        </div>
+        <!--End of uploader-->
+        <!--Browser-->
+        <div id="browser" class="window resizeh" name="Browser" style="width: 80vw;">
+            <div id="border-root">
+                <div id="border-titlebar" class="title-bar-ns">
+                    <div id="border-tab-menu">
+                        <div id="border-c-button" class="nodrag" onclick="clapp('browser');">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 20 20"
+                                fill="none">
+                                <path
+                                    d="M10 6.2963L3.7037 0L0 3.7037L6.2963 10L0 16.2963L3.7037 20L10 13.7037L16.2963 20L20 16.2963L13.7037 10L20 3.7037L16.2963 0L10 6.2963Z"
+                                    fill="rgba(var(--accent), 0.95)"></path>
+                            </svg>
+                        </div>
+                        <div id="border-tab-container">
+
+                        </div>
+                        <div id="border-add-button" class="nodrag">
+                            <svg width="10" height="10" viewBox="0 0 20 20" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M12.2727 7.72727V0H7.72727V7.72727H0V12.2727H7.72727V20H12.2727V12.2727H20V7.72727H12.2727Z"
+                                    fill="rgba(var(--accent), 0.95)" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div id="border-menu" class="nodrag">
+                    <div class="border-history-btn border-history-back">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 29 43" fill="none">
+                            <path class="border-svg-icon"
+                                d="M0 21.2132L21.2131 42.4264L28.2842 35.3553L14.1421 21.2132L28.2842 7.07104L21.2131 0L0 21.2132Z"
+                                fill="rgba(var(--accent), 0.6)" />
+                        </svg>
+                    </div>
+                    <div class="border-history-btn border-history-forward">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 29 43" fill="none">
+                            <path class="border-svg-icon"
+                                d="M29 21.7868L7.78687 0.573607L0.715823 7.64468L14.8579 21.7868L0.715821 35.929L7.78687 43L29 21.7868Z"
+                                fill="rgba(var(--accent), 0.6)" />
+                        </svg>
+                    </div>
+                    <div class="border-history-btn border-history-refresh">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 45 45" fill="none">
+                            <path class="border-svg-icon"
+                                d="M45 20V0L38.4099 6.59011C35.2632 3.44343 31.2541 1.30051 26.8895 0.432343C22.525 -0.435825 18.001 0.00975001 13.8896 1.71272C9.77828 3.41569 6.26427 6.29957 3.79193 9.99968C1.3196 13.6998 0 18.0499 0 22.5C0 26.9501 1.3196 31.3002 3.79193 35.0003C6.26427 38.7004 9.77828 41.5843 13.8896 43.2873C18.001 44.9903 22.525 45.4358 26.8895 44.5677C31.2541 43.6995 35.2632 41.5566 38.4099 38.4099L31.3388 31.3388C29.5907 33.087 27.3634 34.2775 24.9386 34.7598C22.5139 35.2421 20.0005 34.9946 17.7165 34.0485C15.4324 33.1024 13.4801 31.5003 12.1066 29.4446C10.7331 27.389 10 24.9723 10 22.5C10 20.0277 10.7331 17.611 12.1066 15.5554C13.4801 13.4998 15.4324 11.8976 17.7165 10.9515C20.0005 10.0054 22.5139 9.75788 24.9386 10.2402C27.3634 10.7225 29.5907 11.913 31.3388 13.6612L25 20H45Z"
+                                fill="rgba(var(--accent), 0.95)" />
+                        </svg>
+                    </div>
+                    <input id="border-searchbar" class="i1" placeholder="Enter an URL..."></input>
+                    <div id="border-search-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 40 43" fill="none">
+                            <path class="border-svg-icon"
+                                d="M18.071 0L39.2842 21.2132L18.071 42.4264L11 35.3553L20.3552 26H0V16H19.929L11 7.07108L18.071 0Z"
+                                fill="rgba(var(--accent), 0.95)" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="appbar"></div>
+                <div id="border-view-container" class="nodrag" style="border: 6px solid transparent;">
+                </div>
+            </div>
+        </div>
+        <script defer src="./assets/border.js"></script>
+        <!--End of browser-->
+        <!--Calculator-->
+        <div id="calculator" class="window" name="Calculator">
+            <div class="title-bar">Calculator
+                <button class="winb wc" onclick="clapp('calculator');">Close</button><button class="winb" id="clrcmd"
+                    onclick="clr();">Clear</button>
+            </div>
+            <div class="content">
+                <div id="calculator2" style="text-align: center;">
+                    <script type="text/javascript">
+                        function dis(val) {
+                            document.getElementById("result").value += val;
+                        }
+
+                        function solve() {
+                            let x = document.getElementById("result").value;
+                            let y = eval(x);
+                            document.getElementById("result").value = y;
+                        }
+
+                        function clr() {
+                            document.getElementById("result").value = "";
+                        }
+                    </script>
+                    <style>
+                        input[type="button"] {
+                            color: var(--font);
+                            width: 55px;
+                            height: 55px;
+                            transition: .1s;
+                            font-size: 16px;
+                            font-family: 'Poppins', sans-serif;
+                            background-color: transparent;
+                            border-radius: 6px;
+                            cursor: pointer;
+                            border: none;
+                        }
+
+                        input[type="button"]:hover {
+                            color: rgba(var(--accent));
+                            border-radius: 7px;
+                        }
+
+                        input[type="button"]:active {
+                            color: rgba(var(--accent), .60);
+                            border-radius: 7px;
+                        }
+
+                        #result,
+                        #result2 {
+                            box-sizing: border-box;
+                            font-size: 16px;
+                            font-family: 'Poppins', sans-serif;
+                            border: none;
+                            background-color: transparent;
+                            border-radius: 6px;
+                            outline: none;
+                            color: var(--font);
+                            text-align: center;
+                            width: 210px;
+                        }
+
+                        .whar {
+                            display: none;
+                        }
+                    </style>
+                    <p><input class="calctext txttop txtbtm" type="text" id="result" placeholder="Type an equation..."
+                            onfocus="this.blur();"></p>
+                    <p><input type="button" value="1" onclick="dis('1')">
+                        <input type="button" value="2" onclick="dis('2')">
+                        <input type="button" value="3" onclick="dis('3')">
+                        <input type="button" value=":|:" onclick="dis('/')">
+                    </p>
+                    <p><input type="button" value="4" onclick="dis('4')">
+                        <input type="button" value="5" onclick="dis('5')">
+                        <input type="button" value="6" onclick="dis('6')">
+                        <input type="button" value="-" onclick="dis('-')">
+                    </p>
+                    <p><input type="button" value="7" onclick="dis('7')">
+                        <input type="button" value="8" onclick="dis('8')">
+                        <input type="button" value="9" onclick="dis('9')">
+                        <input type="button" value="+" onclick="dis('+')">
+                    </p>
+                    <p><input type="button" value="." onclick="dis('.')">
+                        <input type="button" value="0" onclick="dis('0')">
+                        <input type="button" value="=" onclick="solve()">
+                        <input type="button" value="x" onclick="dis('*')">
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!--End of calculator-->
+        <!--Desktop nav-->
+        <div style="position: fixed; bottom: 0px; left: 0px; right: 0px; animation: mainbtn 1s; display: none; padding: 2px;"
+            id="mainbtn">
+            <button class="mainbtn n special"
+                onclick="showf('mainmenu');fesw('mainmenulock', 'mainmenuapp');">Apps</button><span
+                id="appspace"></span><button class="time mainbtn n special"
+                onclick="showf('mainmenu');fesw('mainmenuapp', 'mainmenulock');">Time</button>
+        </div>
+
+        <div id="mainmenu">
+            <div class="content" id="mainmenuapp"
+                style="padding: 6px; border-radius: var(--rad2); background-color: rgba(var(--accent), 0.12);">
+                <p class="h3 sandnoapp"><span class="greet">Welcome to WebDesk</span>, <span class="user"></span>!
+                </p>
+                <p class="h3 dwarn">WebDesk Sandbox</p>
+                <p class="smt weather sandnoapp" onclick="opapp('weather');" style="cursor: pointer;">Select to set
+                    up
+                    weather</p>
+                <p class="h2">Apps</p>
+                <div class="padmenu">
+                    <button class="b1 sandnoapp" onclick="opapp('migration');initializePeerConnection();">Migration
+                        Assistant</button><button class="b1" onclick="opapp('settings');">Settings</button><button
+                        class="b1 sandnoapp" onclick="opapp('camera');">Camera</button><button class="b1"
+                        onclick="opapp('terminal');">Terminal</button><button class="b1 sandnoapp"
+                        onclick="opapp('weather');">Weather</button><button class="b1 sandnoapp"
+                        onclick="opapp('browser');">Browser</button><button class="b1"
+                        onclick="opapp('calculator');">Calculator</button><button class="b1"
+                        onclick="doc('./assets/other/trusted.txt', 'App Installer', '270px');">App Installer
+                        (BETA)</button><button class="b1" onclick="opapp('uploader');">Uploader</button>
+                </div>
+                <p class="h2">WebDesk</p>
+                <div class="padmenu" id="mainwebact">
+                    <button class="b1 b2" onclick="about();hidef('mainmenu');">About This WebDesk
+                    </button><button class="b1 b2" onclick="lock();">Lock</button><button class="b1"
+                        onclick="reboot();">Reboot</button><button class="b1 fucku" onclick="cleantop();">Close
+                        All</button><button class="b1 fucku" onclick="sandbox();">Sandbox</button><button class="b1"
+                        onclick="fesw('mainmenuapp', 'mainmenulock');">Files</button><button class="b1 fucku"
+                        onclick="hidef('mainmenu');">Close</button>
+                </div>
+                <div class="padmenu hide" id="mainsandact">
+                    <button class="b1" onclick="exsand();">Exit Sandbox</button><button class="b1"
+                        onclick="sth('hide');">Suspend Sandbox</button><button class="b1"
+                        onclick="fesw('mainmenuapp', 'mainmenulock');">Files</button><button class="b1"
+                        onclick="hidef('mainmenu');">Close</button>
+                </div>
+            </div>
+            <div class="padmenu hide" id="mainmenulock">
+                <p class="h2">Files</p>
+                <p class="dwarn">Note: Anything stored in files will be deleted!</p>
+                <div id="files-list">
+                </div>
+                <p class="fucku"><button class="b1" onclick="fesw('mainmenulock', 'mainmenuapp');">Back</button><button
+                        class="b1"
+                        onclick="hidef('mainmenu');fesw('mainmenulock', 'mainmenuapp');">Close</button><button
+                        class="b1" onclick="upload();">Upload</button><button class="b1"
+                        onclick="window.fuckfiles();">Erase all</button></p>
+            </div>
+        </div>
+        <div id="sandbox"
+            style="position: fixed; left: 0px; right: 0px; top: 0px; bottom: 0px; z-index: 9997; background-color: var(--background);"
+            class="hide">
+            <embed style="width: 100%; height: 100%; box-sizing: border-box; border: none; z-index: 1;"
+                src="./assets/sandbox.html" id="sandboxframe">Sandbox is
+            booting...</embed>
+        </div>
+        <div class="fullbg hide" style="background-color: var(--lightdark); z-index: 9998;"></div>
+        <audio id="lock">
+            <source src="./assets/other/lock.mp3" type="audio/mpeg">
+            Your browser does not support the audio element, if you're actually seeing this PLEASE use a different
+            browser.
+        </audio>
+        <audio id="unlock">
+            <source src="./assets/other/unlock.mp3" type="audio/mpeg">
+            Your browser does not support the audio element, if you're actually seeing this PLEASE use a different
+            browser.
+        </audio>
+        <audio id="hSound">
+            <source src="./assets/other/h.mp3" type="audio/mpeg">
+            Your browser does not support the audio element, if you're actually seeing this PLEASE use a different
+            browser.
+        </audio>
+        <audio id="cSound">
+            <source src="./assets/other/c.mp3" type="audio/mpeg">
+            Your browser does not support the audio element, if you're actually seeing this PLEASE use a different
+            browser.
+        </audio>
+        <!--End of desktop nav-->
+    </div>
+    <!--auth-->
+    <div id="auth" class="window" style="width: 370px; z-index: 9999; animation: none !important;" name="Security">
+        <div class="title-bar">WebDesk Security
+            <button class="winb whar2 hide" onclick="lock();">Close</button><button class="winb wc whar"
+                onclick="clapp('auth');">Close</button><button class="winb"
+                onclick="doc('./assets/other/logon.txt', 'WebDesk Security', '270px');">I forgot</button>
+        </div>
+        <div class="content">
+            <p class="passtxt">Enter your password</p>
+            <input class="i1" id="passboxauth" placeholder="Enter password" type="password" />
+            <button class="b1" onclick="clr2();">Clear</button><button onclick="checkpass();" class="b1"
+                id="authgo">OK</button>
+        </div>
+        <script>
+            var alright = "mkw('<p>Nothing is defined, but password was correct.</p>', 'WebDesk Security');"
+            async function checkpass() {
+                const oldpass = pass;
+                passtime('passboxauth');
+                const check = await readvar('check');
+                if (check === "passed") {
+                    locked = false;
+                    clr2();
+                    try {
+                        eval(alright);
+                    } catch (error) {
+                        console.log('<!> ' + error);
+                    }
+                    clapp('auth');
+                } else {
+                    pass = oldpass;
+                    clr2();
+                    snack('Incorrect password.', '3000');
+                }
+            }
+
+            function clr2() {
+                document.getElementById("passboxauth").value = "";
+            }
+
+            async function passp(passt, func) {
+                if (pass === "43fsj329t151afjds") {
+                    eval(func);
+                } else {
+                    alright = func;
+                    masschange('passtxt', passt);
+                    opapp('auth');
+                }
+            }
+
+            const inputField = document.getElementById('passboxauth');
+            const submitButton = document.getElementById('authgo');
+            inputField.addEventListener('keyup', function (event) {
+                if (event.keyCode === 13) {
+                    submitButton.click();
+                }
+            });
+        </script>
+    </div>
+    <!--End of auth-->
+    <div class="fullbg hide" id="lscreen" onmousedown="unlock();">
+        <div style="top: 50%; left: 50%; position: fixed; transform: translate(-50%, -50%);">
+            <img style="width: 100px; height: 100px; border: none;" src="./assets/img/lock.svg">
+            <p class="h2 time" style="color: #fff !important;"></p>
         </div>
     </div>
     <script src="./assets/code/jq.js"></script>

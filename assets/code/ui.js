@@ -44,7 +44,7 @@ function wal(content, btn1, n) {
     titleBar.style.border = "none";
     titleBar.style.borderRadius = "12px";
     if (!n) {
-       n = "Okay"
+        n = "Okay"
     }
     titleBar.innerHTML = content + `<p><button class="b1 wc" onclick="dest('${windowId}');">Close</button><button class="b1 wc" onclick="dest('${windowId}');${btn1}">${n}</button></p>`;
     windowContainer.appendChild(titleBar);
@@ -55,9 +55,34 @@ function wal(content, btn1, n) {
 
 function opapp(d1) {
     const dr1 = document.getElementById(d1);
+    const name = dr1.getAttribute("name");
+    const fucker = document.createElement('button');
+    const nid = `${d1}cb`;
+    const check = document.getElementById(nid);
+    if (check) {
+        console.log(`<!> WOAHHHH that alr exists nvm`);
+        fucker.remove();
+    } else {
+        fucker.id = nid;
+        fucker.className = "mainbtn n";
+        fucker.innerText = name;
+        fucker.onclick = function() {
+           opapp(d1);
+        }
+        const one = document.getElementById('appspace');
+        one.appendChild(fucker);
+    }
     $(dr1).fadeIn(150); centerel(d1);
-    dr1.style.zIndex = 2;
     hidef('mainmenu');
+}
+function clapp(d1, destr) {
+    if (destr) {
+        dest(d1);
+    } else {
+        hidef(d1);
+    }
+    const fucker = d1 + "cb";
+    dest(fucker);
 }
 function fesw(d1, d2) {
     const dr1 = document.getElementById(d1);
@@ -93,7 +118,7 @@ function changevar(varName, varValue) {
 }
 // A smaller remap for say, onclicks where you want to keep your code small
 function cv(name, val) {
-   changevar(name, val);
+    changevar(name, val);
 }
 function chacc(clr1) {
     changevar('accent', clr1);
@@ -218,7 +243,7 @@ function cm(cont) {
     snackElement.innerHTML = cont;
     document.body.appendChild(snackElement);
     snackElement.onclick = function () {
-        setTimeout(function () {dest(fuckyou);}, 100);
+        setTimeout(function () { dest(fuckyou); }, 100);
     }
 }
 function sall(className) {
@@ -273,6 +298,10 @@ async function allthatsillyshit() {
     const btn = await readpb('b');
     if (btn === "f") {
         abs = false;
+    }
+    const tba = await readpb('tba');
+    if (tba === "f") {
+        hidef('appspace');
     }
     const btn2 = await readpb('l');
     if (btn2 === "f") {
