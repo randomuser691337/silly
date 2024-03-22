@@ -205,6 +205,10 @@ function getstr() {
     }
 }
 
+function setupbg() {
+    showf('setupbg');
+}
+
 setInterval(getstr, 2000);
 
 function about(value) {

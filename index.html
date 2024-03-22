@@ -69,7 +69,7 @@
            
         </div>
         <p class="h2 hide" style="margin-top: 12px;" id="sandwarn">Sandbox Desktop</p>
-        <div id="setupbg" onclick="unlock('setupbg');">
+        <div id="setupbg" onmousedown="unlock('setupbg');">
             <div id="sorryapple">
                 <svg id="hellosvg" viewBox="0 0 1230.94 414.57">
                     <path
@@ -77,7 +77,7 @@
                         transform="translate(311.08 476.02)"
                         style="fill:none;stroke:#fff;stroke-linecap:round;stroke-miterlimit:10;stroke-width:35px" />
                 </svg>
-                <p class="med" style="font-size: 14px; margin-top: 8px; color: #fff; animation: fucker 4.3s;">Select to open</p>
+                <p class="med" style="font-size: 15px; margin-top: 8px; color: #fff; animation: fucker 4.3s;">Press to open</p>
             </div>
         </div>
         <div id="setup" class="window" style="width: 350px; border: 2px solid var(--lightdark);">
@@ -800,10 +800,11 @@
                     } else if (setup == "fuckingkillme") {
                         burnitall('justreload');
                     } else {
+                        setupbg();
                         eraseall();
                         fesw('load', 'setup1');
                         opapp('setup');
-                        hidef('loading', '1500');showf('setupbg');
+                        hidef('loading', '1500');
                     }
                     localStorage.openpages = Date.now();
                     var onLocalStorageEvent = function (e) {

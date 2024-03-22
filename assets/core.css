@@ -729,7 +729,7 @@ body {
     stroke-width: 48px;
     stroke-dasharray: 5800px;
     stroke-dashoffset: 5800px;
-    animation: anim__hello linear 3s forwards;
+    animation: anim__hello linear 12s forwards infinite;
     width: 220px;
     max-width: 60%;
     display: flex;
@@ -744,17 +744,25 @@ body {
         stroke-dashoffset: 5800;
     }
 
-    25% {
+    6.25% {
         stroke-dashoffset: 5800;
     }
 
-    100% {
+    25% {
         stroke-dashoffset: 0;
+    }
+
+    80% {
+        stroke-dashoffset: 0;
+    }
+    
+    100% {
+        stroke-dashoffset: 5800;
     }
 }
 
 @keyframes fucker {
     0% {opacity: 0%; display: none;}
     85% {opacity: 0%; display: none; font-size: 0px; margin-top: 0px;}
-    100% {opacity: 100%; font-size: 14px; margin-top: 8px;}
+    100% {opacity: 100%; font-size: 15px; margin-top: 8px;}
 }
