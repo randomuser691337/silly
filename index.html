@@ -5,8 +5,10 @@
     <title>WebDesk</title>
     <link rel="shortcut icon" href="./assets/img/favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="./assets/core.css">
     <link rel="stylesheet" href="./assets/browser.css">
+    <link rel="apple-touch-icon" href="./assets/img/favicon.png">
     <script src="./assets/code/enc.js"></script>
     <script>
         var ver = "0.0.9";
@@ -64,10 +66,24 @@
         });
     </script>
     <div id="nest">
+        <div id="loading" style="position: fixed; left: 0px; right: 0px; top: 0px; bottom: 0px; z-index: 9999; background-color: #000;">
+           
+        </div>
         <p class="h2 hide" style="margin-top: 12px;" id="sandwarn">Sandbox Desktop</p>
-        <div id="setup" class="window" style="width: 350px;">
+        <div id="setupbg" onclick="unlock('setupbg');">
+            <div id="sorryapple">
+                <svg id="hellosvg" viewBox="0 0 1230.94 414.57">
+                    <path
+                        d="M-293.58-104.62S-103.61-205.49-60-366.25c9.13-32.45,9-58.31,0-74-10.72-18.82-49.69-33.21-75.55,31.94-27.82,70.11-52.22,377.24-44.11,322.48s34-176.24,99.89-183.19c37.66-4,49.55,23.58,52.83,47.92a117.06,117.06,0,0,1-3,45.32c-7.17,27.28-20.47,97.67,33.51,96.86,66.93-1,131.91-53.89,159.55-84.49,31.1-36.17,31.1-70.64,19.27-90.25-16.74-29.92-69.47-33-92.79,16.73C62.78-179.86,98.7-93.8,159-81.63S302.7-99.55,393.3-269.92c29.86-58.16,52.85-114.71,46.14-150.08-7.44-39.21-59.74-54.5-92.87-8.7-47,65-61.78,266.62-34.74,308.53S416.62-58,481.52-130.31s133.2-188.56,146.54-256.23c14-71.15-56.94-94.64-88.4-47.32C500.53-375,467.58-229.49,503.3-127a73.73,73.73,0,0,0,23.43,33.67c25.49,20.23,55.1,16,77.46,6.32a111.25,111.25,0,0,0,30.44-19.87c37.73-34.23,29-36.71,64.58-127.53C724-284.3,785-298.63,821-259.13a71,71,0,0,1,13.69,22.56c17.68,46,6.81,80-6.81,107.89-12,24.62-34.56,42.72-61.45,47.91-23.06,4.45-48.37-.35-66.48-24.27a78.88,78.88,0,0,1-12.66-25.8c-14.75-51,4.14-88.76,11-101.41,6.18-11.39,37.26-69.61,103.42-42.24,55.71,23.05,100.66-23.31,100.66-23.31"
+                        transform="translate(311.08 476.02)"
+                        style="fill:none;stroke:#fff;stroke-linecap:round;stroke-miterlimit:10;stroke-width:35px" />
+                </svg>
+                <p class="med" style="font-size: 14px; margin-top: 8px; color: #fff; animation: fucker 4.3s;">Select to open</p>
+            </div>
+        </div>
+        <div id="setup" class="window" style="width: 350px; border: 2px solid var(--lightdark);">
             <div class="title-bar"
-                style="border-bottom: 0px !important; background-color: rgba(var(--accent), 0.07) !important;">
+                style="border-bottom: 0px !important; background-color: rgba(var(--accent), 0.07) !important; padding: 0px !important;">
                 <div class="content" style="margin-bottom: 0px !important; border-radius: var(--rad2);">
                     <div id="setup1" style="display: none;">
                         <p class="h2">Welcome to WebDesk!</p>
@@ -77,7 +93,7 @@
                         <p class="smt">- Select "Guest" to skip setup or debug</p>
                         <button class="b1" onclick="guestmode();">Guest</button><button class="b1"
                             onclick="fesw('setup1', 'mig');initializePeerConnection();">Migrate</button><button
-                            class="b1" onclick="fesw('setup1', 'setupnew');">Let's go!</button>
+                            class="b1" onclick="fesw('setup1', 'setupterms');">Let's go!</button>
                     </div>
                     <div id="yowetrapped" style="display: none;">
                         <p class="h2">Sandbox</p>
@@ -87,6 +103,15 @@
                         <button class="b1" onclick="sth('end');">Exit Sandbox</button><button
                             onclick="passtime('oobepin2');desktop('User');writepb('setupdone', 'fuckingkillme');"
                             class="b1">Set password, next</button>
+                    </div>
+                    <div id="setupterms" style="display: none;">
+                        <p class="h2">WebDesk Notes</p>
+                        <div style="width: 100%; box-sizing: border-box; padding: 10px; border-radius: var(--rad2); background-color: rgba(var(--accent), 0.07); margin-bottom: 4px;">
+                            <p class="smt">WebDesk is encrypted, meaning that if you forget your password, you lose your data.</p>
+                            <p class="smt">WebDesk may have severe bugs that I do not know about.</p>
+                        </div>
+                        <button class="b1" onclick="fesw('setupterms', 'setup1');showf('setupbg');">Back</button><button
+                            class="b1" onclick="fesw('setupterms', 'setupnew');">Next</button>
                     </div>
                     <div id="setupnew" style="display: none;">
                         <p class="h2">Password Setup</p>
@@ -146,7 +171,7 @@
                     <div id="load">
                         <p class="h2">Loading...</p>
                         <p>If this gets stuck or takes too long, reload.</p>
-                        <div class="line-wobble center"></div>
+                        <div class="line-wobble cent"></div>
                         <button class="b1" onclick="recovery();">Recovery</button><button class="b1"
                             onclick="reboot();">Reload</button>
                     </div>
@@ -223,9 +248,9 @@
                     <p><button class="b1 light" onclick="appear('l');">Light</button><button style="margin-left: 3px;"
                             class="b1 dark" onclick="appear();">Dark</button></p>
                     <p>Other</p>
-                    <p><button class="winb" onclick="fesw('settingsappear', 'settingsui');opapp('settings');">UI settings</button><button
-                            class="winb" onclick="customacc();">Custom accent</button><button class="winb"
-                            onclick="fesw('settingsappear', 'settingsmain');">Back</button></p>
+                    <p><button class="winb" onclick="fesw('settingsappear', 'settingsui');opapp('settings');">UI
+                            settings</button><button class="winb" onclick="customacc();">Custom accent</button><button
+                            class="winb" onclick="fesw('settingsappear', 'settingsmain');">Back</button></p>
                 </div>
                 <div id="settingspriv" style="display: none;">
                     <p class="bold">Data & Privacy</p>
@@ -242,7 +267,8 @@
                 </div>
                 <div id="settingsgen" style="display: none;">
                     <p class="bold">General</p>
-                    <button class="b1 b2" onclick="fesw('settingsgen', 'settingsui');opapp('settings');">Change UI settings</button>
+                    <button class="b1 b2" onclick="fesw('settingsgen', 'settingsui');opapp('settings');">Change UI
+                        settings</button>
                     <button class="b1 b2 guestno" onclick="fesw('settingsgen', 'settingslock');">Lock
                         timeout</button>
                     <p><button class="winb" onclick="fesw('settingsgen', 'settingsmain');">Back</button></p>
@@ -587,14 +613,13 @@
         <div id="mainmenu">
             <div class="content" id="mainmenuapp"
                 style="padding: 6px; border-radius: var(--rad2); background-color: rgba(var(--accent), 0.12);">
-                <p class="h3 sandnoapp"><span class="greet">Welcome to WebDesk</span>, <span class="user"></span>!
-                </p>
-                <p class="h3 dwarn">WebDesk Sandbox</p>
+                <p class="h3 sandnoapp"><span class="greet">Welcome to WebDesk</span>, <span class="user"></span>!</p>
+                <p class="h3 sandapp">WebDesk Sandbox</p>
                 <p class="smt weather sandnoapp" onclick="opapp('weather');" style="cursor: pointer;">Select to set
                     up
                     weather</p>
                 <p class="h2">Apps</p>
-                <div class="padmenu">
+                <div class="padmenu" id="appmenu">
                     <button class="b1 sandnoapp" onclick="opapp('migration');initializePeerConnection();">Migration
                         Assistant</button><button class="b1" onclick="opapp('settings');">Settings</button><button
                         class="b1 sandnoapp" onclick="opapp('camera');">Camera</button><button class="b1"
@@ -664,7 +689,7 @@
         <!--End of desktop nav-->
     </div>
     <!--auth-->
-    <div id="auth" class="window" style="width: 370px; z-index: 9999; animation: none !important;" name="Security">
+    <div id="auth" class="window" style="width: 370px; z-index: 9998; animation: none !important;" name="Security">
         <div class="title-bar">WebDesk Security
             <button class="winb whar2 hide" onclick="lock();">Close</button><button class="winb wc whar"
                 onclick="clapp('auth');">Close</button><button class="winb"
@@ -722,7 +747,7 @@
         </script>
     </div>
     <!--End of auth-->
-    <div class="fullbg hide" id="lscreen" onmousedown="unlock();">
+    <div class="fullbg hide" id="lscreen" onmousedown="unlock('lscreen');">
         <div style="top: 50%; left: 50%; position: fixed; transform: translate(-50%, -50%);">
             <img style="width: 100px; height: 100px; border: none;" src="./assets/img/lock.svg">
             <p class="h2 time" style="color: #fff !important;"></p>
@@ -738,6 +763,7 @@
     <script src="./assets/code/rec.js"></script>
     <script src="./assets/code/opfile.js"></script>
     <script src="./assets/code/files.js"></script>
+    <script src="./assets/apps/installer.js"></script>
     <script>
         let started = false;
         var customCursor = document.createElement("div");
@@ -768,14 +794,17 @@
                     if (setup == "y") {
                         passp('Enter your password to continue.', 'boots2()');
                         dest('setup');
+                        hidef('loading', '1500');
                     } else if (setup == "guest") {
                         burnitall('Guest Mode');
+                        hidef('loading', '1500');
                     } else if (setup == "fuckingkillme") {
                         burnitall('justreload');
                     } else {
                         eraseall();
                         fesw('load', 'setup1');
                         opapp('setup');
+                        hidef('loading', '1500');showf('setupbg');
                     }
                     localStorage.openpages = Date.now();
                     var onLocalStorageEvent = function (e) {
@@ -896,7 +925,7 @@
         });
         if (sandParam) {
             fesw('setup1', 'yowetrapped');
-            fesw('mainwebact', 'mainsandact'); showf('dwarn');
+            fesw('mainwebact', 'mainsandact'); showcls('sandapp');  
             document.getElementById('sandbox').innerHTML = `<p class="h3">You can't run Sandbox in Sandbox!</p><button class="b1" onclick="hidef('sandbox');">Back</button>`;
             hidecls('sandnoapp'); showcls('dwarn');
             customCursor.style.opacity = "0%";

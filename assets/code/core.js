@@ -217,8 +217,8 @@ async function lock() {
     }
 }
 
-async function unlock() {
-    const fullBg = document.getElementById('lscreen');
+async function unlock(yeah) {
+    const fullBg = document.getElementById(yeah);
     const windowHeight = window.innerHeight;
     const transitionEndPromise = new Promise(resolve => {
         fullBg.addEventListener('transitionend', function transitionEndHandler() {
@@ -366,12 +366,6 @@ function exec(url) {
         scriptElement.src = url;
         document.head.appendChild(scriptElement);
     }
-}
-
-function appin(url, name) {
-    const silly = `<button class="b1 b2" onclick="exec('${url}');">${name}</button>`
-    document.getElementById('appgrid').innerHTML + silly;
-    writevar(`app_${name}`, silly);
 }
 
 async function send(cont) {

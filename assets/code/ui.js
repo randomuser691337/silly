@@ -12,7 +12,7 @@ function mkw(content, title, width, m, height, btnid) {
     const titleBar = document.createElement('div');
     titleBar.className = 'title-bar';
     if (btnid) {
-        titleBar.innerHTML = title + ` <button class="winb wc" onclick="dest('${windowId}');" id="${btnid}">Close</button>`;
+        titleBar.innerHTML = title + ` <button class="winb wc" onclick="showf('fucker');dest('${windowId}');" id="${btnid}">Close</button>`;
     } else {
         titleBar.innerHTML = title + ` <button class="winb wc" onclick="showf('fucker');dest('${windowId}');">Close</button>`;
     }
@@ -89,10 +89,14 @@ function fesw(d1, d2) {
     const dr2 = document.getElementById(d2);
     $(dr1).fadeOut(140, function () { $(dr2).fadeIn(140); });
 }
-function hidef(d1) {
+function hidef(d1, anim) {
     const dr1 = document.getElementById(d1);
     if (dr1) {
-        $(dr1).fadeOut(170);
+        if (anim) {
+            $(dr1).fadeOut(anim);
+        } else {
+            $(dr1).fadeOut(170);
+        }
     }
 }
 function showf(d1) {

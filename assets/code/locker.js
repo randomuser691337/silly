@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function upload() {
     const input = document.createElement('input');
     input.type = 'file';
-    input.accept = 'image/*'; // Adjust file types as needed
+    input.accept = '*/*';
     input.onchange = async (event) => {
         const files = event.target.files;
         for (let i = 0; i < files.length; i++) {

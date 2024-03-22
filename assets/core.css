@@ -1,16 +1,16 @@
 :root {
-    --background: #000;
+    --background: #fff;
     --accent: 40, 70, 235;
-    --lightdark: #1a1a1a;
-    --lightdarkb: #2a2a2a;
-    --bordercolor: #3a3a3a;
+    --lightdark: #fff;
+    --lightdarkb: #e7e7e7;
+    --bordercolor: #dfdfdf;
     --rad1: 14px;
     --rad2: 9px;
     --fz1: 16px;
     --fz2: 14px;
     --fz3: 12px;
-    --fontc: #fff;
-    --fontc2: #aaa;
+    --fontc: #000;
+    --fontc2: #333;
     --slbl: blur(4px);
     --mdbl: blur(8px);
     --winc: rgba(var(--accent), 0.08);
@@ -397,6 +397,7 @@ button {
 }
 
 .cent {
+    position: fixed;
     left: 50%;
     transform: translate(-50%);
 }
@@ -667,4 +668,93 @@ a:active {
 .info {
     margin-left: 8px;
     max-width: calc(100% - 80px - 8px);
+}
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+#setupbg {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 9999;
+    width: 100%;
+    height: 100vh;
+    display: none;
+    background: linear-gradient(217deg, rgba(255, 0, 0), rgba(0, 0, 255), rgba(0, 255, 0)),
+        linear-gradient(127deg, rgba(0, 255, 0), rgba(255, 0, 0), rgba(0, 0, 255)),
+        linear-gradient(336deg, rgba(255, 255, 0), rgba(0, 255, 0), rgba(255, 0, 0));
+    background-size: 600% 600%;
+    animation: gradientShift 10s infinite alternate;
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    25% {
+        background-position: 0% 100%;
+    }
+
+    50% {
+        background-position: 100% 100%;
+    }
+
+    75% {
+        background-position: 100% 0%;
+    }
+
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+#sorryapple {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#hellosvg {
+    fill: none;
+    stroke: #fff;
+    stroke-linecap: round;
+    stroke-miterlimit: 10;
+    stroke-width: 48px;
+    stroke-dasharray: 5800px;
+    stroke-dashoffset: 5800px;
+    animation: anim__hello linear 3s forwards;
+    width: 220px;
+    max-width: 60%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: 0 auto;
+    text-align: center;
+}
+
+@keyframes anim__hello {
+    0% {
+        stroke-dashoffset: 5800;
+    }
+
+    25% {
+        stroke-dashoffset: 5800;
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes fucker {
+    0% {opacity: 0%; display: none;}
+    85% {opacity: 0%; display: none; font-size: 0px; margin-top: 0px;}
+    100% {opacity: 100%; font-size: 14px; margin-top: 8px;}
 }
