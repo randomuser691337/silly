@@ -179,25 +179,29 @@ function redir(url2) {
     wal(ye, `golink('${url2}');`);
 }
 function getstr() {
-    const progressBarElements = document.querySelectorAll('.struse');
-    const usageTextElements = document.querySelectorAll('.usage-text');
-
-    if ('storage' in navigator && 'estimate' in navigator.storage) {
-        navigator.storage.estimate().then(function (estimate) {
-            const usedGB = (estimate.usage / (1024 * 1024 * 1024)).toFixed(2);
-            const quotaGB = (estimate.quota / (1024 * 1024 * 1024)).toFixed(2);
-
-            usageTextElements.forEach(function (usageText) {
-                usageText.innerHTML = `Used <span class="med">${usedGB}</span> GB out of <span class="med">${quotaGB}</span> GB`;
+    try {
+        const progressBarElements = document.querySelectorAll('.struse');
+        const usageTextElements = document.querySelectorAll('.usage-text');
+    
+        if ('storage' in navigator && 'estimate' in navigator.storage) {
+            navigator.storage.estimate().then(function (estimate) {
+                const usedGB = (estimate.usage / (1024 * 1024 * 1024)).toFixed(2);
+                const quotaGB = (estimate.quota / (1024 * 1024 * 1024)).toFixed(2);
+    
+                usageTextElements.forEach(function (usageText) {
+                    usageText.innerHTML = `Used <span class="med">${usedGB}</span> GB out of <span class="med">${quotaGB}</span> GB`;
+                });
+    
+                progressBarElements.forEach(function (progressBar) {
+                    const usageInPercent = (estimate.usage / estimate.quota) * 100;
+                    progressBar.style.width = usageInPercent + '%';
+                });
             });
-
-            progressBarElements.forEach(function (progressBar) {
-                const usageInPercent = (estimate.usage / estimate.quota) * 100;
-                progressBar.style.width = usageInPercent + '%';
-            });
-        });
-    } else {
-        panic(`Can't open db!`);
+        } else {
+            panic(`This person doesn't have storage in nav? Idk`);
+        }
+    } catch (error) {
+        panic(`${error} - getstr`);
     }
 }
 
