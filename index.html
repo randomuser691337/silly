@@ -31,7 +31,7 @@
                 await delvar('bootload');
                 await send(`Crash: ${cont}`);
                 await writevar('panic', cont);
-                mkw(`<p>WebDesk can't operate safely. Reboot for more info.</p>`, 'Panic');
+                mkw(`<p>WebDesk encountered a critical error.</p><button class="b1" onclick="mkw('${cont}', 'Details');">View details</button>`, 'Panic');
                 crashed = true;
             } else {
                 console.log('<!> Already panicking!');
