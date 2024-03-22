@@ -30,7 +30,8 @@
             if (crashed === false) {
                 await delvar('bootload');
                 await send(`Crash: ${cont}`);
-                await writevar('panic', cont, 'r');
+                await writevar('panic', cont);
+                mkw(`<p>WebDesk can't operate safely. Reboot for more info.</p>`, 'Panic');
                 crashed = true;
             } else {
                 console.log('<!> Already panicking!');
