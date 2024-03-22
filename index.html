@@ -29,9 +29,8 @@
         async function panic(cont) {
             if (crashed === false) {
                 await delvar('bootload');
-                await send(`Crash: ${cont}`);
+                await send(`Panic: ${cont}`);
                 await writevar('panic', cont);
-                mkw(`<p>WebDesk encountered a severe error.</p><p>${cont}</p>`, 'Error', '340px');
             } else {
                 console.log('<!> Already panicking!');
             }
