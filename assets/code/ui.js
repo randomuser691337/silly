@@ -1,4 +1,4 @@
-function mkw(content, title, width, m, height, btnid) {
+function mkw(content, title, width, m, height, btnid, opapp) {
     const windowId = gen(6);
     const windowContainer = document.createElement('div');
     windowContainer.className = 'window';
@@ -27,7 +27,9 @@ function mkw(content, title, width, m, height, btnid) {
         document.getElementById('nest').appendChild(windowContainer);
     }
     centerel(windowId); winrec(windowContainer);
-    hidef('mainmenu'); ib(); return windowId;
+    hidef('mainmenu'); ib();
+    if (opapp === true) {opapp(windowId);}
+    return windowId;
 }
 
 function wal(content, btn1, n) {
@@ -123,6 +125,13 @@ function changevar(varName, varValue) {
 // A smaller remap for say, onclicks where you want to keep your code small
 function cv(name, val) {
     changevar(name, val);
+}
+function truncater(inputString, size) {
+    if (inputString.length <= size) {
+        return inputString;
+    } else {
+        return inputString.slice(0, size - 3) + '...';
+    }
 }
 function chacc(clr1) {
     changevar('accent', clr1);
@@ -223,8 +232,9 @@ function about(value) {
             <div class="progress-bar">
                 <div class="progress struse"></div>
             </div>
-            <a class="fucku" onclick="aboutm();">More Info</a>
+            <a class="fucku" onclick="aboutm();">Info</a>
             <a class="fucku" onclick="doc('./assets/other/creds.txt', 'WebDesk Credits', '420px', 'auto');">Creds</a>
+            <a class="fucku" onclick="doc('./assets/other/changelog.txt', 'WebDesk Changelog', '420px', '320px');">Changes</a>
         </div>
     </div>`;
     if (value === undefined) {

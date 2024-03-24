@@ -489,6 +489,20 @@ document.addEventListener("keydown", function (event) {
     }
 });
 
+function sendtoall(con) {
+    var embeds = window.parent.document.getElementsByTagName('embed');
+    for (var i = 0; i < embeds.length; i++) {
+        var embed = embeds[i];
+        try {
+            if (embed && embed.contentWindow) {
+                embed.contentWindow.postMessage(con, "*");
+            }
+        } catch (error) {
+            console.error("<!> Error sending message to embed:", error);
+        }
+    }
+}
+
 
 function ib() {
     const abuttons2 = document.querySelectorAll("button");

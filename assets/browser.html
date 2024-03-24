@@ -5,6 +5,7 @@
     <title>WebDesk</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="stylesheet" href="./core.css">
+    <script src="./code/frame.js"></script>
     <style>
         body {
             padding: 12px;
@@ -13,9 +14,13 @@
 </head>
 
 <body>
-   <p class="h2">WebDesk Browser - v1.0 beta</p>
-   <p>Welcome! If you encounter pages that don't load/error out, click "Page Error" in the window titlebar.</p>
-   <p>Note: Some things might not work - this browser is in beta.</p>
+    <p class="h2">WebDesk Browser - v1.0 beta</p>
+    <p>Welcome! If you encounter pages that don't load/error out, click "Page Error" in the window titlebar.</p>
+    <p>Note: Some things might not work - this browser is in beta.</p>
+    <script>
+        recievewait('dark', 'appmode();console.log(`woah`);');
+        recievewait('light', 'appmode(`l`);');
+    </script>
 </body>
 
 </html>

@@ -1,0 +1,6 @@
+<p class="h2">Changelog</p>
+<p class="med">3/24/2024</p>
+<p>- Improved media player</p>
+<p>- Improved setup screen</p>
+<p>- More API functionality</p>
+<p>- And more improvements</p>

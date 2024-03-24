@@ -50,64 +50,98 @@ function playaud(base64Content, contentType) {
     }
 
     const blob = new Blob([arrayBuffer], { type: mimeType });
-    const url = URL.createObjectURL(blob);
-    const audio = new Audio();
-    audio.src = url;
-    audio.type = contentType; 
-    audio.play();
-    const e1 = gen(7);
-    const e2 = gen(7);
-    const e3 = gen(7);
-    const e4 = gen(7);
-    const e5 = gen(7);
-    const e6 = gen(7);
-    const audPlayer = `
-        <p><button id="${e1}" class="winb">Play</button><button id="${e2}" class="winb">Pause</button><button id="${e6}" class="winb">Loop: Off</button></p>
-        <p>Progress: <input type="range" id="${e5}" min="0" max="100" value="0"></p>
-        <p>Volume: <input type="range" id="${e3}" min="0" max="100" value="100"></p>
-    `;
-    mkw(audPlayer, 'Audio Player', 'auto', 'undefined', 'auto', e4)
-    const playBtn = document.getElementById(e1);
-    const pauseBtn = document.getElementById(e2);
-    const volumeSlider = document.getElementById(e3);
-    const closeBtn = document.getElementById(e4);
-    const scrubber = document.getElementById(e5);
-    const loopBtn = document.getElementById(e6);
 
-    playBtn.addEventListener('click', function () {
-        audio.play();
+    let base64String = '';
+
+    jsmediatags.read(blob, {
+        onSuccess: function (tag) {
+            const wint = truncater(tag.tags.title, 21);
+            const alb = truncater(tag.tags.album, 15);
+            const nm = truncater(tag.tags.artist, 21);
+            const yr = tag.tags.year;
+            const albumImg = tag.tags.picture;
+            if (albumImg) {
+                base64String = "data:" + albumImg.format + ";base64," + arrayBufferToBase64(albumImg.data);
+            }
+            const e1 = gen(7);
+            const e2 = gen(7);
+            const e3 = gen(7);
+            const e4 = gen(7);
+            const e5 = gen(7);
+            const e6 = gen(7);
+            const audPlayer = `
+                <div style="display: flex; align-items: center; margin-bottom: 6px;">
+                    <img src="${base64String}" style="box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); width: 80px; height: auto; border: none; border-radius: 8px; margin-right: 10px;">
+                    <div style="width: calc(100% - 90px);">
+                        <p class="smt">${wint}</p>
+                        <p class="smt">${nm}</p>
+                        <p class="smt">${alb} - ${yr}</p>
+                    </div>
+                </div>        
+                <p><button id="${e1}" class="winb">Play</button><button id="${e2}" class="winb">Pause</button><button id="${e6}" class="winb">Loop: Off</button></p>
+                <p>Progress: <input type="range" id="${e5}" min="0" max="100" value="0"></p>
+                <p>Volume: <input type="range" id="${e3}" min="0" max="100" value="100"></p>
+            `;
+            mkw(audPlayer, wint, 'auto', 'undefined', 'auto', e4);
+            const audio = new Audio();
+            audio.src = URL.createObjectURL(blob);
+            audio.type = contentType;
+            audio.play();
+            const playBtn = document.getElementById(e1);
+            const pauseBtn = document.getElementById(e2);
+            const volumeSlider = document.getElementById(e3);
+            const closeBtn = document.getElementById(e4);
+            const scrubber = document.getElementById(e5);
+            const loopBtn = document.getElementById(e6);
+
+            playBtn.addEventListener('click', function () {
+                audio.play();
+            });
+
+            pauseBtn.addEventListener('click', function () {
+                audio.pause();
+            });
+
+            volumeSlider.addEventListener('input', function () {
+                audio.volume = parseFloat(this.value) / 100;
+            });
+
+            closeBtn.addEventListener('click', function () {
+                audio.pause();
+                URL.revokeObjectURL(blob);
+                blob = null;
+            });
+
+            scrubber.addEventListener('input', function () {
+                const seekTo = audio.duration * (parseFloat(this.value) / 100);
+                audio.currentTime = seekTo;
+            });
+
+            audio.addEventListener('timeupdate', function () {
+                const progress = (audio.currentTime / audio.duration) * 100;
+                scrubber.value = progress;
+            });
+
+            loopBtn.textContent = 'Loop: Off';
+            let loopEnabled = false;
+
+            loopBtn.addEventListener('click', function () {
+                loopEnabled = !loopEnabled;
+                audio.loop = loopEnabled;
+                loopBtn.textContent = `Loop: ${loopEnabled ? 'On' : 'Off'}`;
+            });
+        },
+        onError: function (error) {
+            console.error("Error reading metadata:", error);
+        }
     });
-
-    pauseBtn.addEventListener('click', function () {
-        audio.pause();
-    });
-
-    volumeSlider.addEventListener('input', function () {
-        audio.volume = parseFloat(this.value) / 100;
-    });
-
-    closeBtn.addEventListener('click', function () {
-        audio.pause();
-        URL.revokeObjectURL(blob);
-        blob = null;
-    });
-
-    scrubber.addEventListener('input', function () {
-        const seekTo = audio.duration * (parseFloat(this.value) / 100);
-        audio.currentTime = seekTo;
-    });
-
-    audio.addEventListener('timeupdate', function () {
-        const progress = (audio.currentTime / audio.duration) * 100;
-        scrubber.value = progress;
-    });
-
-    loopBtn.textContent = 'Loop: Off';
-    let loopEnabled = false;
-
-    loopBtn.addEventListener('click', function () {
-        loopEnabled = !loopEnabled;
-        audio.loop = loopEnabled;
-        loopBtn.textContent = `Loop: ${loopEnabled ? 'On' : 'Off'}`;
-    });
+}
+function arrayBufferToBase64(buffer) {
+    let binary = '';
+    const bytes = new Uint8Array(buffer);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+        binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
 }

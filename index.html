@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="./assets/core.css">
     <link rel="stylesheet" href="./assets/browser.css">
     <link rel="apple-touch-icon" href="./assets/img/favicon.png">
-    <script src="./assets/code/enc.js"></script>
+    <script src="./assets/lib/enc.js"></script>
     <script>
         var ver = "0.0.9";
         var lastedit = "Mar 18, 2024";
@@ -77,7 +77,7 @@
                         transform="translate(311.08 476.02)"
                         style="fill:none;stroke:#fff;stroke-linecap:round;stroke-miterlimit:10;stroke-width:35px" />
                 </svg>
-                <p class="med" style="font-size: 15px; margin-top: 8px; color: #fff; animation: fucker 4.3s;">Press to open</p>
+                <p class="med" style="font-size: 15px; margin-top: 8px; color: #fff; margin-top: 8px; animation: fucker 4.3s;">Press to open</p>
             </div>
         </div>
         <div id="setup" class="window" style="width: 350px; border: 2px solid var(--lightdark);">
@@ -752,12 +752,13 @@
             <p class="h2 time" style="color: #fff !important;"></p>
         </div>
     </div>
-    <script src="./assets/code/jq.js"></script>
+    <script src="./assets/lib/jq.js"></script>
     <script src="./assets/apps/loosecode.js"></script>
+    <script src="./assets/lib/tagger.js"></script>
     <script src="./assets/code/idb.js"></script>
     <script src="./assets/code/core.js"></script>
     <script src="./assets/code/ui.js"></script>
-    <script src="./assets/code/peer.js"></script>
+    <script src="./assets/lib/peer.js"></script>
     <script src="./assets/code/mico.js"></script>
     <script src="./assets/code/rec.js"></script>
     <script src="./assets/code/opfile.js"></script>
@@ -868,8 +869,8 @@
                     const w2 = await readvar('unit');
                     getWeather(w1, w2);
                 }
-                if (appear2 === "l") {
-                    appear('l');
+                if (appear2 === "d") {
+                    appear();
                 }
                 if (ao) {
                     opapp(ao);
