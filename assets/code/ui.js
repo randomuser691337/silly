@@ -28,7 +28,7 @@ function mkw(content, title, width, m, height, btnid, opapp) {
     }
     centerel(windowId); winrec(windowContainer);
     hidef('mainmenu'); ib();
-    if (opapp === true) {opapp(windowId);}
+    if (opapp === true) { opapp(windowId); }
     return windowId;
 }
 
@@ -68,8 +68,8 @@ function opapp(d1) {
         fucker.id = nid;
         fucker.className = "mainbtn n";
         fucker.innerText = name;
-        fucker.onclick = function() {
-           opapp(d1);
+        fucker.onclick = function () {
+            opapp(d1);
         }
         const one = document.getElementById('appspace');
         one.appendChild(fucker);
@@ -141,6 +141,7 @@ function dest(d1) {
     $(dr1).fadeOut(170, function () { dr1.remove(); });
 }
 function snack(cont, t) {
+    if (!t) {t = 2500}
     var snackElement = document.createElement("div");
     snackElement.className = "snack";
     const fuckyou = gen(7);
@@ -188,28 +189,24 @@ function redir(url2) {
     wal(ye, `golink('${url2}');`);
 }
 function getstr() {
+    const progressBarElements = document.querySelectorAll('.struse');
+    const usageTextElements = document.querySelectorAll('.usage-text');
     try {
-        const progressBarElements = document.querySelectorAll('.struse');
-        const usageTextElements = document.querySelectorAll('.usage-text');
-    
-        if ('storage' in navigator && 'estimate' in navigator.storage) {
-            navigator.storage.estimate().then(function (estimate) {
-                const usedGB = (estimate.usage / (1024 * 1024 * 1024)).toFixed(2);
-                const quotaGB = (estimate.quota / (1024 * 1024 * 1024)).toFixed(2);
-    
-                usageTextElements.forEach(function (usageText) {
-                    usageText.innerHTML = `Used <span class="med">${usedGB}</span> GB out of <span class="med">${quotaGB}</span> GB`;
-                });
-    
-                progressBarElements.forEach(function (progressBar) {
-                    const usageInPercent = (estimate.usage / estimate.quota) * 100;
-                    progressBar.style.width = usageInPercent + '%';
-                });
+        navigator.storage.estimate().then(function (estimate) {
+            const usedGB = (estimate.usage / (1024 * 1024 * 1024)).toFixed(2);
+            const quotaGB = (estimate.quota / (1024 * 1024 * 1024)).toFixed(2);
+
+            usageTextElements.forEach(function (usageText) {
+                usageText.innerHTML = `Used <span class="med">${usedGB}</span> GB out of <span class="med">${quotaGB}</span> GB`;
             });
-        } else {
-            panic(`This person doesn't have storage in nav? Idk`);
-        }
+
+            progressBarElements.forEach(function (progressBar) {
+                const usageInPercent = (estimate.usage / estimate.quota) * 100;
+                progressBar.style.width = usageInPercent + '%';
+            });
+        });
     } catch (error) {
+        usageText.innerHTML = `Error getting storage info. Try updating your browser.`;
         panic(`${error} - getstr`);
     }
 }
@@ -234,7 +231,7 @@ function about(value) {
             </div>
             <a class="fucku" onclick="aboutm();">Info</a>
             <a class="fucku" onclick="doc('./assets/other/creds.txt', 'WebDesk Credits', '420px', 'auto');">Creds</a>
-            <a class="fucku" onclick="doc('./assets/other/changelog.txt', 'WebDesk Changelog', '420px', '320px');">Changes</a>
+            <a class="fucku" onclick="doc('./assets/other/changelog.txt', 'WebDesk Changelog', '420px', 'auto');">Changes</a>
         </div>
     </div>`;
     if (value === undefined) {

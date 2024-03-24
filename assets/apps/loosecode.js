@@ -3,6 +3,17 @@ var DoNotModifyUnlessYouKnowWhatYoureDoing = ["whatever"];
 var promptreboot = false;
 var urlParams = new URLSearchParams(window.location.search);
 var sandParam = urlParams.get("sand");
+function isIOSafari() {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream && /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+}
+
+function isIOSafari() {
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+    return isIOS && isSafari && !isStandalone;
+}
+
 async function forceoffdata() {
     await writevar('forcedata', 'off');
     send(`This WebDesk's final cry: someone's disabled data collection. `);

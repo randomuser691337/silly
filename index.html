@@ -8,11 +8,11 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="./assets/core.css">
     <link rel="stylesheet" href="./assets/browser.css">
-    <link rel="apple-touch-icon" href="./assets/img/favicon.png">
+    <link rel="apple-touch-icon" href="./assets/img/noround.png">
     <script src="./assets/lib/enc.js"></script>
     <script>
         var ver = "0.0.9";
-        var lastedit = "Mar 18, 2024";
+        var lastedit = "Mar 24, 2024";
         var crashed = false;
         var mostrecerr = "No history."
         var forcedatac = true;
@@ -21,11 +21,16 @@
         var gfx = true;
         var wcur = true;
         var dispo = false;
+        var sa = "System app. Can't modify."
         document.addEventListener('touchstart', function (event) {
             if (event.touches.length > 1) {
                 event.preventDefault();
             }
         }, { passive: false });
+        var clickCount = 0;
+        document.addEventListener('contextmenu', function (event) {
+            event.preventDefault();
+        });
         async function panic(cont) {
             if (crashed === false) {
                 await delvar('bootload');
@@ -65,8 +70,11 @@
         });
     </script>
     <div id="nest">
-        <div id="loading" style="position: fixed; left: 0px; right: 0px; top: 0px; bottom: 0px; z-index: 9999; background-color: #000;">
-           
+        <div id="loading"
+            style="position: fixed; left: 0px; right: 0px; top: 0px; bottom: 0px; z-index: 9999; background-color: #000;">
+        </div>
+        <div
+            style="position: fixed; left: 0px; right: 0px; top: 0px; bottom: 0px; z-index: -10; transition: background-color 0.1s ease; background-color: var(--background);">
         </div>
         <p class="h2 hide" style="margin-top: 12px;" id="sandwarn">Sandbox Desktop</p>
         <div id="setupbg" onmousedown="unlock('setupbg');">
@@ -77,7 +85,9 @@
                         transform="translate(311.08 476.02)"
                         style="fill:none;stroke:#fff;stroke-linecap:round;stroke-miterlimit:10;stroke-width:35px" />
                 </svg>
-                <p class="med" style="font-size: 15px; margin-top: 8px; color: #fff; margin-top: 8px; animation: fucker 4.3s;">Press to open</p>
+                <p class="med"
+                    style="font-size: 15px; margin-top: 8px; color: #fff; margin-top: 8px; animation: fucker 4.3s;">
+                    Press to open</p>
             </div>
         </div>
         <div id="setup" class="window" style="width: 350px; border: 2px solid var(--lightdark);">
@@ -92,7 +102,9 @@
                         <p class="smt">- Select "Guest" to skip setup or debug</p>
                         <button class="b1" onclick="guestmode();">Guest</button><button class="b1"
                             onclick="fesw('setup1', 'mig');initializePeerConnection();">Migrate</button><button
-                            class="b1" onclick="fesw('setup1', 'setupterms');">Let's go!</button>
+                            class="b1"
+                            onclick="if(isIOSafari()){fesw('setup1','pwasetup');}else{fesw('setup1','setupterms');}">Let's
+                            go!</button>
                     </div>
                     <div id="yowetrapped" style="display: none;">
                         <p class="h2">Sandbox</p>
@@ -103,10 +115,22 @@
                             onclick="passtime('oobepin2');desktop('User');writepb('setupdone', 'fuckingkillme');"
                             class="b1">Set password, next</button>
                     </div>
+                    <div id="pwasetup" style="display: none;">
+                        <p class="h2">WebDesk Web App</p>
+                        <div style="width: 100%; box-sizing: border-box; padding: 10px; border-radius: var(--rad2); background-color: rgba(var(--accent), 0.07); margin-bottom: 4px;">
+                            <p class="smt">You're able to install WebDesk as a web app on your device.</p>
+                            <p class="smt">Benefits include: More space, more integration, and quicker access.</p>
+                            <p class="smt">To install: click the Share icon, and click "Add to Home Screen". Then click "I installed".</p>
+                        </div>
+                        <button class="b1" onclick="fesw('setupterms', 'setup1');showf('setupbg');">Back</button><button class="b1" onclick="window.location.href = 'https://betawebdesk.vercel.app';document.getElementById('nest').innerHTML = `<p style='margin-top: 10px;'>Please close this tab.</p>`">I installed</button><button
+                            class="b1" onclick="wal(`<p>Are you sure?</p><p>Installing the web app improves WebDesk's functionality.</p>`, 'fesw(`pwasetup`, `setupterms`);', `Yes, I'm sure`);">No thanks!</button>
+                    </div>
                     <div id="setupterms" style="display: none;">
                         <p class="h2">WebDesk Notes</p>
-                        <div style="width: 100%; box-sizing: border-box; padding: 10px; border-radius: var(--rad2); background-color: rgba(var(--accent), 0.07); margin-bottom: 4px;">
-                            <p class="smt">WebDesk is encrypted, meaning that if you forget your password, you lose your data.</p>
+                        <div
+                            style="width: 100%; box-sizing: border-box; padding: 10px; border-radius: var(--rad2); background-color: rgba(var(--accent), 0.07); margin-bottom: 4px;">
+                            <p class="smt">WebDesk is encrypted, meaning that if you forget your password, you lose your
+                                data.</p>
                             <p class="smt">WebDesk may have severe bugs that I do not know about.</p>
                         </div>
                         <button class="b1" onclick="fesw('setupterms', 'setup1');showf('setupbg');">Back</button><button
@@ -619,15 +643,20 @@
                     weather</p>
                 <p class="h2">Apps</p>
                 <div class="padmenu" id="appmenu">
-                    <button class="b1 sandnoapp" onclick="opapp('migration');initializePeerConnection();">Migration
-                        Assistant</button><button class="b1" onclick="opapp('settings');">Settings</button><button
-                        class="b1 sandnoapp" onclick="opapp('camera');">Camera</button><button class="b1"
-                        onclick="opapp('terminal');">Terminal</button><button class="b1 sandnoapp"
-                        onclick="opapp('weather');">Weather</button><button class="b1 sandnoapp"
-                        onclick="opapp('browser');">Browser</button><button class="b1"
-                        onclick="opapp('calculator');">Calculator</button><button class="b1"
+                    <button class="b1 sandnoapp" oncontextmenu="snack(sa);"
+                        onclick="opapp('migration');initializePeerConnection();">Migration
+                        Assistant</button><button class="b1" oncontextmenu="snack(sa);"
+                        onclick="opapp('settings');">Settings</button><button class="b1 sandnoapp"
+                        oncontextmenu="snack(sa);" onclick="opapp('camera');">Camera</button><button class="b1"
+                        onclick="opapp('terminal');" oncontextmenu="snack(sa);">Terminal</button><button
+                        oncontextmenu="snack(sa);" class="b1 sandnoapp"
+                        onclick="opapp('weather');">Weather</button><button oncontextmenu="snack(sa);"
+                        class="b1 sandnoapp" onclick="opapp('browser');">Browser</button><button
+                        oncontextmenu="snack(sa);" class="b1" onclick="opapp('calculator');">Calculator</button><button
+                        oncontextmenu="snack(sa);" class="b1"
                         onclick="doc('./assets/other/trusted.txt', 'App Installer', '270px');">App Installer
-                        (BETA)</button><button class="b1" onclick="opapp('uploader');">Uploader</button>
+                        (BETA)</button><button class="b1" oncontextmenu="snack(sa);"
+                        onclick="opapp('uploader');">Uploader</button>
                 </div>
                 <p class="h2">WebDesk</p>
                 <div class="padmenu" id="mainwebact">
@@ -926,7 +955,7 @@
         });
         if (sandParam) {
             fesw('setup1', 'yowetrapped');
-            fesw('mainwebact', 'mainsandact'); showcls('sandapp');  
+            fesw('mainwebact', 'mainsandact'); showcls('sandapp');
             document.getElementById('sandbox').innerHTML = `<p class="h3">You can't run Sandbox in Sandbox!</p><button class="b1" onclick="hidef('sandbox');">Back</button>`;
             hidecls('sandnoapp'); showcls('dwarn');
             customCursor.style.opacity = "0%";
