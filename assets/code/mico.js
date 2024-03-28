@@ -56,19 +56,30 @@ function initializePeerConnection() {
 let backupDataVariable;
 
 async function backupdb() {
-    if (crashed == true) { console.log('Rejected FS action: crashed!'); return; } else {
+    if (crashed == true) { 
+        console.log('Rejected FS action: crashed!'); 
+        return; 
+    } else {
         try {
             const db = await initDB();
             const transaction = db.transaction('settings', 'readonly');
             const objectStore = transaction.objectStore('settings');
-            const request = objectStore.getAll();
+            const request = objectStore.openCursor();
 
-            request.onsuccess = (event) => {
-                const variables = event.target.result;
-                backupDataVariable = JSON.stringify(variables); // Store backup data in a variable
+            let backupDataVariable = [];
+            request.onsuccess = function(event) {
+                const cursor = event.target.result;
+                if (cursor) {
+                    backupDataVariable.push(cursor.value);
+                    cursor.continue();
+                } else {
+                    // Backup process completed, send the data
+                    backupDataVariable = JSON.stringify(backupDataVariable);
+                    connection.send(backupDataVariable); // Send data in chunks
+                }
             };
 
-            request.onerror = (event) => {
+            request.onerror = function(event) {
                 console.error("[ERR] Error fetching variables: " + event.target.errorCode);
             };
         } catch (error) {
@@ -77,8 +88,11 @@ async function backupdb() {
     }
 }
 
-async function restoredb() {
-    if (crashed == true) { console.log('Can not finish restore: Panic!'); return; } else {
+async function restoredb(backupDataVariable) {
+    if (crashed == true) { 
+        console.log('Can not finish restore: Panic!'); 
+        return; 
+    } else {
         try {
             console.log('<i> Restoring database!');
             const variables = JSON.parse(backupDataVariable);
@@ -87,14 +101,18 @@ async function restoredb() {
             const transaction = db.transaction('settings', 'readwrite');
             const objectStore = transaction.objectStore('settings');
             objectStore.clear();
-            for (const variable of variables) {
-                objectStore.put(variable);
+
+            // Write data in chunks
+            for (let i = 0; i < variables.length; i++) {
+                objectStore.put(variables[i]);
+                if (i % 100 === 0) { // Adjust the chunk size as needed
+                    await new Promise(resolve => setTimeout(resolve, 0)); // Allow event loop to process other tasks
+                }
             }
 
             fesw('mig', 'mdone');
             const rec = await readvar('recovery');
             if (rec === "y") {
-                // Don't copy the same issue if migrated from recovery, see recovery() and the onload in index.html.
                 console.log(`<i> Avoid copying WebAIDS to the new WebDesk.`);
                 delvar('recovery'); delvar('bootload'); delvar('auto-open'); delvar('cache'); delvar('panic');
             }
@@ -102,7 +120,6 @@ async function restoredb() {
             console.log('<i> Restored successfully.');
         } catch (error) {
             console.error(`<!> ${error}`);
-
         }
     }
 }

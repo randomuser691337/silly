@@ -180,7 +180,7 @@ function passtimedesk(el) {
 
 async function unlock2() {
     console.log(`<i> Password correct. Unlocking...`);
-    showcls('whar'); hidecls('whar2'); showf('nest');
+    showcls('whar'); hidecls('whar2'); hidef('lockbg1');
     const audio = document.getElementById("unlock");
     audio.currentTime = 0;
     audio.volume = 1.0;
@@ -205,6 +205,7 @@ async function lock() {
         audio.currentTime = 0;
         audio.volume = 1.0;
         audio.play();
+        key = null;
         pass = "def";
         locked = true;
         document.getElementById('lscreen').style.display = "block";
@@ -212,7 +213,7 @@ async function lock() {
             opapp('auth');
             passp('Enter pass to unlock WebDesk', 'unlock2()');
             showcls('whar2'); hidecls('whar');
-            document.getElementById('nest').style.display = "none";
+            document.getElementById('lockbg1').style.display = "block";
         }, 300);
     }
 }
@@ -308,17 +309,6 @@ function centerel(el) {
 async function sandbox() {
     showf('sandbox');
     customCursor.style.opacity = "0%";
-}
-
-function doc(path, title, width, height) {
-    fetch(path)
-        .then(response => response.text())
-        .then(data => {
-            mkw(data, title, width, undefined, height)
-        })
-        .catch(error => {
-            mkw(`<p>Couldn't load doc; check console.</p>`, 'Document Error', '270px');
-        });
 }
 
 function updateClock() {

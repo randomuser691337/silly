@@ -25,6 +25,18 @@ function framecon(cont) {
     mkw(iframe, 'Files - Website', '600px');
 }
 
+
+function doc(path, title, width, height) {
+    fetch(path)
+        .then(response => response.text())
+        .then(data => {
+            mkw(data, title, width, undefined, height)
+        })
+        .catch(error => {
+            mkw(`<p>Couldn't load doc; check console.</p>`, 'Document Error', '270px');
+        });
+}
+
 function playaud(base64Content, contentType) {
     const binaryContent = atob(base64Content.split(',')[1]);
     const arrayBuffer = new ArrayBuffer(binaryContent.length);
@@ -65,7 +77,6 @@ function playaud(base64Content, contentType) {
             }
             const e1 = gen(7);
             const e2 = gen(7);
-            const e3 = gen(7);
             const e4 = gen(7);
             const e5 = gen(7);
             const e6 = gen(7);
@@ -78,9 +89,8 @@ function playaud(base64Content, contentType) {
                         <p class="smt">${alb} - ${yr}</p>
                     </div>
                 </div>        
+                <p><input type="range" id="${e5}" min="0" max="100" value="0"></p>
                 <p><button id="${e1}" class="winb">Play</button><button id="${e2}" class="winb">Pause</button><button id="${e6}" class="winb">Loop: Off</button></p>
-                <p>Progress: <input type="range" id="${e5}" min="0" max="100" value="0"></p>
-                <p>Volume: <input type="range" id="${e3}" min="0" max="100" value="100"></p>
             `;
             mkw(audPlayer, wint, 'auto', 'undefined', 'auto', e4);
             const audio = new Audio();
@@ -89,7 +99,6 @@ function playaud(base64Content, contentType) {
             audio.play();
             const playBtn = document.getElementById(e1);
             const pauseBtn = document.getElementById(e2);
-            const volumeSlider = document.getElementById(e3);
             const closeBtn = document.getElementById(e4);
             const scrubber = document.getElementById(e5);
             const loopBtn = document.getElementById(e6);
@@ -100,10 +109,6 @@ function playaud(base64Content, contentType) {
 
             pauseBtn.addEventListener('click', function () {
                 audio.pause();
-            });
-
-            volumeSlider.addEventListener('input', function () {
-                audio.volume = parseFloat(this.value) / 100;
             });
 
             closeBtn.addEventListener('click', function () {

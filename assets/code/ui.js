@@ -45,9 +45,7 @@ function wal(content, btn1, n) {
     titleBar.className = 'title-bar';
     titleBar.style.border = "none";
     titleBar.style.borderRadius = "12px";
-    if (!n) {
-        n = "Okay"
-    }
+    if (!n) { n = "Okay" }
     titleBar.innerHTML = content + `<p><button class="b1 wc" onclick="dest('${windowId}');">Close</button><button class="b1 wc" onclick="dest('${windowId}');${btn1}">${n}</button></p>`;
     windowContainer.appendChild(titleBar);
     document.getElementById('nest').appendChild(windowContainer);

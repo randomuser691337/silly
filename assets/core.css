@@ -247,7 +247,8 @@ input:placeholder {
     box-shadow: rgba(0, 0, 0, 0.25) 0px 12px 36px 0px, rgba(0, 0, 0, 0.25) 0px 0px 0px 1px;
 }
 
-.window {
+.window, 
+.window2 {
     width: auto;
     height: auto;
     max-width: 85%;
@@ -506,6 +507,41 @@ a:active {
     max-height: 75%;
 }
 
+input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 95%;
+    box-sizing: border-box;
+    height: 10px;
+    background: var(--lightdark);
+    border-radius: 20px;
+}
+
+input[type=range]::-moz-range-progress {
+    background: rgba(var(--accent), 0.7);
+}
+
+input[type=range]::-webkit-progress-value {
+    background: rgba(var(--accent), 0.7);
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    background-color: rgba(var(--accent), 0.7);
+    border-radius: 50%;
+}
+
+input[type=range]::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    background-color: rgba(var(--accent), 0.7);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
 
 .b2 {
     width: 100% !important;
