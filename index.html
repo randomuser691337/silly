@@ -12,7 +12,7 @@
     <script src="./assets/lib/enc.js"></script>
     <script>
         var ver = "0.0.9";
-        var lastedit = "Mar 28, 2024";
+        var lastedit = "Apr 3, 2024";
         var crashed = false;
         var mostrecerr = "No history."
         var forcedatac = true;
@@ -90,7 +90,7 @@
                     Press to open</p>
             </div>
         </div>
-        <div id="setup" class="window" style="width: 350px;">
+        <div id="setup" class="window" style="width: 380px;">
             <div class="title-bar"
                 style="border-bottom: 0px !important; background-color: rgba(var(--accent), 0.07) !important;">
                 <div class="content" style="margin-bottom: 0px !important; border-radius: var(--rad2);">
@@ -132,12 +132,23 @@
                         <p class="h2">WebDesk Notes</p>
                         <div
                             style="width: 100%; box-sizing: border-box; padding: 10px; border-radius: var(--rad2); background-color: rgba(var(--accent), 0.07); margin-bottom: 4px;">
-                            <p class="smt">WebDesk is encrypted, meaning that if you forget your password, you lose your
-                                data.</p>
+                            <p class="smt">If you encrypt WebDesk, and if you forget your password, you lose your
+                                data forever.</p>
                             <p class="smt">WebDesk may have severe bugs that I do not know about.</p>
                         </div>
                         <button class="b1" onclick="fesw('setupterms', 'setup1');showf('setupbg');">Back</button><button
-                            class="b1" onclick="fesw('setupterms', 'setupnew');">Next</button>
+                            class="b1" onclick="fesw('setupterms', 'setupenc');">Next</button>
+                    </div>
+                    <div id="setupenc" style="display: none;">
+                        <p class="h2">Encryption</p>
+                        <p>WebDesk offers encryption, which secures all files with a password but slows down writing horribly.</p>
+                        <p>Removing encryption lessens security but makes writing speeds much faster (~40x), and allows huge
+                            files.</p>
+                        <p class="smt">If you don't know what to choose, and you're not storing personal files, select "Don't Encrypt". Security mainly depends on your browser and device security.</p>
+                        <button class="b1 b2" onclick="fesw('setupenc', 'setup2');writepb('enc', 'no');">Don't
+                            Encrypt</button><button class="b1 b2"
+                            onclick="fesw('setupenc', 'setupnew');">Encrypt</button>
+                        <button class="b1" onclick="fesw('setupenc', 'setupterms');">Back</button>
                     </div>
                     <div id="setupnew" style="display: none;">
                         <p class="h2">Password Setup</p>
@@ -189,7 +200,7 @@
                         <p class="smt">- Go to your Everything Menu and open Migration Assistant on the other
                             WebDesk.
                         </p>
-                        <p class="smt">- Enter the code "<span id="codemig" style="color: #fff;"></span>" into the
+                        <p class="smt">- Enter the code "<span id="codemig" style="color: #000;"></span>" into the
                             Assistant.
                         </p>
                         <button class="b1" onclick="fesw('mig', 'setup1');">Back</button>
@@ -252,7 +263,7 @@
                 <div id="settingsuser" style="display: none;">
                     <p style="margin: 0px !important;" class="bold">Username / Password</p>
                     <button class="b1 b2" onclick="nameutil(`<p>Enter new username</p>`);">Change
-                        username</button><button class="b1 b2"
+                        username</button><button class="b1 b2 passreq"
                         onclick="passutil('<p>Enter new password, WebDesk may freeze for a bit.</p><p>Do not reload WebDesk until it unfreezes, or you will lose all data.</p>');">Change
                         pass</button>
                     <p>Other</p>
@@ -295,7 +306,7 @@
                     <p class="bold">General</p>
                     <button class="b1 b2" onclick="fesw('settingsgen', 'settingsui');opapp('settings');">Change UI
                         settings</button>
-                    <button class="b1 b2 guestno" onclick="fesw('settingsgen', 'settingslock');">Lock
+                    <button class="b1 b2 passreq guestno" onclick="fesw('settingsgen', 'settingslock');">Lock
                         timeout</button>
                     <p><button class="winb" onclick="fesw('settingsgen', 'settingsmain');">Back</button></p>
                 </div>
@@ -353,13 +364,13 @@
                         onclick="writepb('ws','t');cv('wins', '0 0 34px rgba(0, 0, 0, 0.22)');snack('Saved window settings.', '2500');">Enable
                         (default)</button><button class="b3 red"
                         onclick="writepb('ws','f');cv('wins', 'none');snack('Saved window settings.', '2500');">Disable</button>
-                        <p><button class="winb" onclick="fesw('settingswindow', 'settingsui');">Back</button></p>
+                    <p><button class="winb" onclick="fesw('settingswindow', 'settingsui');">Back</button></p>
                 </div>
                 <div id="settingslock" style="display: none;">
                     <p class="bold">Lock Timeout</p>
                     <p class="smt">The amount of time before WebDesk auto-locks.</p>
                     <button class="b1 b2" onclick="timeoutChange(20000)">20 seconds</button><button class="b1 b2"
-                        onclick="timeoutChange(60000)";>1 minute</button><button class="b1 b2"
+                        onclick="timeoutChange(60000)" ;>1 minute</button><button class="b1 b2"
                         onclick="timeoutChange(300000);">5 minutes</button><button class="b1 b2"
                         onclick="timeoutChange(600000);">10 minutes</button><button class="b1 b2"
                         onclick="timeoutChange(900000);">15 minutes</button><button class="b1 b2"
@@ -680,7 +691,7 @@
                 <p class="h2">WebDesk</p>
                 <div class="padmenu" id="mainwebact">
                     <button class="b1 b2" onclick="about();hidef('mainmenu');">About This WebDesk
-                    </button><button class="b1 b2" onclick="lock();">Lock</button><button class="b1"
+                    </button><button class="b1 b2 passreq" onclick="lock();">Lock</button><button class="b1"
                         onclick="reboot();">Reboot</button><button class="b1 fucku" onclick="cleantop();">Close
                         All</button><button class="b1 fucku" onclick="sandbox();">Sandbox</button><button class="b1"
                         onclick="fesw('mainmenuapp', 'mainmenulock');">Files</button><button class="b1 fucku"
@@ -803,8 +814,15 @@
                     allthatsillyshit();
                     const setup = await readpb('setupdone');
                     if (setup == "y") {
-                        passp('Enter your password to continue.', 'boots2()');
-                        dest('setup');
+                        const enc = await readpb('enc');
+                        if (enc === "no") {
+                            locked = false;
+                            boots2();
+                            hidecls('passreq');
+                        } else {
+                            passp('Enter your password to continue.', 'boots2()');
+                            dest('setup');
+                        }
                         hidef('loading', '1500');
                     } else if (setup == "guest") {
                         burnitall('Guest Mode');
@@ -896,39 +914,6 @@
             }
         }
 
-        async function recovery() {
-            console.log(`<!> Recovery opened! Initializing...`);
-            promptreboot = false;
-            await writevar('recovery', 'y');
-            document.getElementById('nest').innerHTML = `
-            <div class="window" id="recovery" style="width: 340px;">
-                <div class="title-bar">Recovery <button class="winb" onclick="reboot();">Exit</button></div>
-                <div class="content">
-                    <p class="h2">Recovery</p>
-                    <p>You can erase to fix all issues, or wipe the cache/bootload variables to attempt a fix.</p>
-                    <button class="b1" onclick="wal('<p>Warning: Erasing WebDesk will delete all of it's data. Select 'Close' to stop, or 'Erase' to continue.</p>', 'burnitall()');">Erase</button><button class="b1" onclick="wipeboot();">Delete cache</button><button class="b1 hidden" onclick="opapp('migration');">Migrate</button>
-                </div>
-            </div>
-            <!--Migration Assistant-->
-            <div class="window" id="migration" style="width: 420px;">
-                <div class="title-bar" id="titleBar">Migration Assistant (Rescue) <button class="winb wc"
-                        onclick="hidef('migration');">Close</button></div>
-                <div class="content">
-                    <p>Enter the code you see on the other WebDesk.</p>
-                    <p>Note that no cache/onload vars will copy, to prevent copying the same issue to the other WebDesk.</p> 
-                    <input type="text" id="peerIdInput" class="i1" placeholder="Other peer's ID">
-                    <button id="connectButton" class="b1">Connect</button>
-                </div>
-            </div>
-            <!--End of Migration Assistant-->`;
-            console.log('<i> Starting recovery apps...');
-            const recoveryWindow = document.getElementById('recovery');
-            const migrationWindow = document.getElementById('migration');
-            winrec(recoveryWindow);
-            winrec(migrationWindow);
-            initializePeerConnection();
-            opapp('recovery');
-        }
         document.addEventListener('keydown', function (event) {
             if ((event.ctrlKey || event.metaKey) && event.shiftKey && event.key === 'F') {
                 event.preventDefault();

@@ -56,11 +56,17 @@ function erasepb() {
 // Write a variable to the database
 async function writevar(varName, value, op) {
     try {
+        const wr = await readpb('enc');
         const db = await initDB();
         const transaction = db.transaction('settings', 'readwrite');
         const objectStore = transaction.objectStore('settings');
-        const value2 = encrypt(value);
-        objectStore.put({ name: varName, value: value2 });
+        if (wr === "no") {
+            objectStore.put({ name: varName, value: value });
+            console.log('<i> mode = decryped!');
+        } else {
+            const value2 = encrypt(value);
+            objectStore.put({ name: varName, value: value2 });
+        }
 
         transaction.oncomplete = function () {
             if (op == "r") {
@@ -75,6 +81,7 @@ async function writevar(varName, value, op) {
 // Read a variable from the database
 async function readvar(varName) {
     try {
+        const wr = await readpb('enc');
         const db = await initDB();
         const transaction = db.transaction('settings', 'readonly');
         const objectStore = transaction.objectStore('settings');
@@ -89,8 +96,13 @@ async function readvar(varName) {
                 }
 
                 try {
-                    const decryptedData = decrypt(encryptedData);
-                    resolve(decryptedData);
+                    if (wr === "no") {
+                        resolve(encryptedData);
+                        console.log('<i> mode = decryped!');
+                    } else {
+                        const decryptedData = decrypt(encryptedData);
+                        resolve(decryptedData);
+                    }
                 } catch (error) {
                     reject("<!> Error decrypting variable: " + error.message);
                 }
@@ -145,6 +157,11 @@ function decrypt(value) {
 
 // Change password
 async function passchange(newpass) {
+    const en = await readpb('enc');
+    if (en === "no") {
+       wal(`<p>WebDesk is unencrypted, therefor you cannot set a password.</p>`, undefined, 'Okay');
+       return;
+    } 
     snack('Changing pass, DO NOT RELOAD!', '4000');
     try {
         const db = await initDB();

@@ -139,7 +139,7 @@ function dest(d1) {
     $(dr1).fadeOut(170, function () { dr1.remove(); });
 }
 function snack(cont, t) {
-    if (!t) {t = 2500}
+    if (!t) { t = 2500 }
     var snackElement = document.createElement("div");
     snackElement.className = "snack";
     const fuckyou = gen(7);
@@ -248,8 +248,22 @@ async function aboutm() {
     if (ve === null || ve === undefined) {
         ve = "Unknown";
     }
+    let en = readpb('enc');
+    if (en === "no") {
+        en = "no";
+    } else {
+        en = "yes";
+    }
+    let bl = readpb('bootload');
+    if (bl === null || bl === undefined) {
+        bl = "no";
+    } else {
+        bl = 'yes';
+    }
     const win = `<p><span class="med">Set up on: </span>${so}</p>
-    <p><span class="med">Original version: </span>${ve}</p>`
+    <p><span class="med">Original version: </span>${ve}</p>
+    <p onclick="" style="cursor: pointer;"><span class="med">Startup script: </span>${bl}</p>
+    <p><span class="med">Encrypting: </span>${en}</p>`
     mkw(win, 'About', '300px');
 }
 function cm(cont) {

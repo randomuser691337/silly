@@ -200,7 +200,8 @@ function cm(cont, t) {
 }
 
 async function lock() {
-    if (dispo === false && started === "full") {
+    const enc = await readpb('enc');
+    if (dispo === false && started === "full" && enc === undefined) {
         const audio = document.getElementById("lock");
         audio.currentTime = 0;
         audio.volume = 1.0;
@@ -240,15 +241,14 @@ async function finishsetup() {
     await writepb('setupdone', 'y');
     const hai = await readvar('name');
     desktop(hai, 'fuckoff');
-    mkw(`<p>It's recommended to reboot before using WebDesk for the first time.</p><button class="b1" onclick="reboot();">Reboot</button>`, 'Setup Assistant', '270px');
     await writevar('check', 'passed');
-    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const currentDate = new Date();
     const month = months[currentDate.getMonth()];
     const day = currentDate.getDate();
     const year = currentDate.getFullYear();
     await writevar('setupon', `${month} ${day}, ${year}`);
-    await writevar('ogver', ver);
+    await writevar('ogver', ver, 'r');
 }
 
 function reboot() {

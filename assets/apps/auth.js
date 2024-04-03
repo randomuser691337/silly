@@ -46,9 +46,16 @@ async function passp(passt, func) {
     if (pass === "43fsj329t151afjds") {
         eval(func);
     } else {
-        alright = func;
-        masschange('passtxt', passt);
-        opapp('auth');
+        const enc = await readpb('enc');
+        if (enc === "no") {
+            clapp('auth');
+            locked = false;
+            eval(func);
+        } else {
+            alright = func;
+            masschange('passtxt', passt);
+            opapp('auth');
+        }
     }
 }
 
