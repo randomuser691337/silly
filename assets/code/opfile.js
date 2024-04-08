@@ -25,7 +25,6 @@ function framecon(cont) {
     mkw(iframe, 'Files - Website', '600px');
 }
 
-
 function doc(path, title, width, height) {
     fetch(path)
         .then(response => response.text())

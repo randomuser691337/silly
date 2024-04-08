@@ -201,7 +201,7 @@ function cm(cont, t) {
 
 async function lock() {
     const enc = await readpb('enc');
-    if (dispo === false && started === "full" && enc === undefined) {
+    if (dispo === false && started === "full" && enc !== "no") {
         const audio = document.getElementById("lock");
         audio.currentTime = 0;
         audio.volume = 1.0;

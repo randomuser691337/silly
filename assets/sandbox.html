@@ -16,10 +16,21 @@
 <body>
     <p class="h2">Sandbox</p>
     <p>WebDesk Sandbox is a safe place to run anything, without any consequences.</p>
-    <p>Everything in Sandbox is temporary and will be destroyed on exit. WebDesk Security has been disabled in Sandbox as well.</p>
+    <p>Everything in Sandbox is temporary and will be destroyed on exit. WebDesk Security has been disabled in Sandbox
+        as well.</p>
     <p>To exit Sandbox: Open the Everything Menu in the sandbox and click "Exit Sandbox."</p>
     <p>To keep Sandbox running in the background but hidden: Open the Everything Menu and click "Suspend Sandbox."</p>
-    <p>Also note that Sandbox is also a variant of WebDesk Beta.</p>  
+    <p>Also note that Sandbox is also a variant of WebDesk Beta.</p>
     <button class="b1" onclick="sth('hide');">Back</button><button class="b1" onclick="lessgo();">Start Sandbox</button>
 </body>
+<script>
+    function sth(con) {
+        window.parent.postMessage(con, "*");
+    }
+
+    function lessgo() {
+        window.location.href = "https://webdesksand.vercel.app?sand=true";
+    }
+</script>
+
 </html>

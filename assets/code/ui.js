@@ -45,8 +45,9 @@ function wal(content, btn1, n) {
     titleBar.className = 'title-bar';
     titleBar.style.border = "none";
     titleBar.style.borderRadius = "12px";
+    titleBar.style.padding = "10px";
     if (!n) { n = "Okay" }
-    titleBar.innerHTML = content + `<p><button class="b1 wc" onclick="dest('${windowId}');">Close</button><button class="b1 wc" onclick="dest('${windowId}');${btn1}">${n}</button></p>`;
+    titleBar.innerHTML = content + `<p style="display: flex; justify-content: space-between;"><button class="b1 wc" style="flex: 1;" onclick="dest('${windowId}');">Close</button><button class="b1 wc" style="flex: 1; ${btn1 ? '' : 'display: none;'}" onclick="dest('${windowId}');${btn1}">${n}</button></p>`;
     windowContainer.appendChild(titleBar);
     document.getElementById('nest').appendChild(windowContainer);
     centerel(windowId); winrec(windowContainer);
@@ -118,7 +119,6 @@ function showcls(className) {
 function changevar(varName, varValue) {
     const root = document.documentElement;
     root.style.setProperty(`--${varName}`, `${varValue}`);
-    writevar(varName, varValue);
 }
 // A smaller remap for say, onclicks where you want to keep your code small
 function cv(name, val) {
@@ -133,6 +133,7 @@ function truncater(inputString, size) {
 }
 function chacc(clr1) {
     changevar('accent', clr1);
+    writevar('accent', clr1)
 }
 function dest(d1) {
     const dr1 = document.getElementById(d1);

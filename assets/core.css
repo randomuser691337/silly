@@ -52,6 +52,7 @@ body {
     font-size: var(--fz1);
     color: var(--fontc);
     text-align: center;
+    background-color: var(--background);
 }
 
 .custom-cursor {
@@ -132,7 +133,7 @@ input:placeholder {
     color: var(--fontc);
     font-family: 'PoppinsM', Arial;
     margin: 1px;
-    transition: 0.1s;
+    transition: 0.07s;
     cursor: pointer;
     border: 2px solid transparent;
 }
@@ -513,7 +514,7 @@ input[type=range] {
     width: 95%;
     box-sizing: border-box;
     height: 10px;
-    background: var(--lightdark);
+    background: var(--lightdarkb);
     border-radius: 20px;
 }
 
@@ -651,6 +652,7 @@ input[type=range]::-moz-range-thumb {
     animation: fade 0.7s;
     max-width: 70%;
     cursor: pointer;
+    border: 1px solid var(--lightdarkb);
 }
 
 .progress-bar {

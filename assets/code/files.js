@@ -70,7 +70,6 @@ function upload() {
     input.click();
 }
 
-
 // Function to update files list (accessible from anywhere)
 window.updatefilesList = async function () {
     const filesList = document.getElementById('files-list');

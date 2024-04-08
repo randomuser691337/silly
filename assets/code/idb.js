@@ -207,6 +207,87 @@ async function passchange(newpass) {
     }
 }
 
+async function enableenc() {
+    const gen1 = gen(8);
+    mkw(`<p>Enter an encryption password.</p><p>Note: This will take a while, depending on the size of files.</p><input class="i1" placeholder="Password" id="${gen1}"></input><button class="b1 b2" onclick="toencrypt(document.getElementById('${gen1}').value);">Encrypt!</button>`);
+}
+
+async function toencrypt(password) {
+    const en = await readpb('enc');
+    if (en !== "no" || password == "") {
+        wal(`<p>WebDesk is already encrypted, or your password field is empty.</p>`, undefined, 'Okay');
+        return;
+    } 
+    pass = password;
+    snack('Encrypting, DO NOT RELOAD!', '4000');
+    try {
+        const db = await initDB();
+        const transaction = db.transaction('settings', 'readwrite');
+        const objectStore = transaction.objectStore('settings');
+        const request = objectStore.getAll();
+
+        request.onsuccess = async (event) => {
+            const variables = event.target.result || [];
+
+            variables.forEach(async (variable) => {
+                const encryptedValue = encrypt(variable.value);
+                objectStore.put({ name: variable.name, value: encryptedValue });
+            });
+
+            writepb('enc', 'yes');
+
+            snack('Encryption completed successfully!', '3500');
+            console.log('Database encrypted successfully.');
+        };
+
+        request.onerror = (event) => {
+            console.error("[ERR] Error fetching variables: " + event.target.errorCode);
+        };
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function unenc() {
+    const en = await readpb('enc');
+    if (en === "no") {
+        wal(`<p>WebDesk is already unencrypted.</p>`, undefined, 'Okay');
+        return;
+    } else {
+        passp('Enter password to decrypt WebDesk, this might take a while.', 'unencrypt()');
+    }
+}
+
+async function unencrypt() {
+    snack('Decrypting, DO NOT RELOAD!', '4000');
+    try {
+        const db = await initDB();
+        const transaction = db.transaction('settings', 'readwrite');
+        const objectStore = transaction.objectStore('settings');
+        const request = objectStore.getAll();
+
+        request.onsuccess = async (event) => {
+            const variables = event.target.result || [];
+
+            variables.forEach(async (variable) => {
+                const decryptedValue = decrypt(variable.value);
+                objectStore.put({ name: variable.name, value: decryptedValue });
+            });
+
+            writepb('enc', 'no');
+
+            snack('Decryption completed successfully!', '3500');
+            console.log('Database decrypted successfully.');
+        };
+
+        request.onerror = (event) => {
+            console.error("[ERR] Error fetching variables: " + event.target.errorCode);
+        };
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 async function renvar(variable, newname) {
     try {
         const value = await readvar(variable);
