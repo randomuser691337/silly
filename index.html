@@ -12,7 +12,7 @@
     <script src="./assets/lib/enc.js"></script>
     <script>
         var ver = "0.0.9";
-        var lastedit = "May 16, 2024";
+        var lastedit = "July 9, 2024";
         var crashed = false;
         var mostrecerr = "No history."
         var forcedatac = true;
@@ -95,13 +95,13 @@
             <div class="title-bar"
                 style="border-bottom: 0px !important; background-color: rgba(var(--accent), 0.07) !important;">
                 <div class="content" style="margin-bottom: 0px !important; border-radius: var(--rad2);">
-                    <div id="setup1" style="display: none;">
+                    <div id="setupwhy">
                         <p class="h2">You're not on the latest beta anymore.</p>
                         <p>WebDesk's beta has moved to <a href="https://webdesk-beta.vercel.app">https://webdesk-beta.vercel.app</a>, because the filesystem and core has changed significantly.</p>
                         <p>You can continue, but it's not really worth it. You won't be able to migrate your data to the new WebDesk, so move now.</p>
-                        <button class="b1" onclick="fesw('setup1', 'setupwhy');">Setup anyways</button><button class="b1" onclick="window.location.href = 'https://webdesk-beta.vercel.app';">Go to new WebDesk</button>
+                        <button class="b1" onclick="fesw('setupwhy', 'setup1');">Setup anyways</button><button class="b1" onclick="window.location.href = 'https://webdesk-beta.vercel.app';">Go to new WebDesk</button>
                     </div>
-                    <div id="setupwhy" style="display: none;">
+                    <div id="setup1" style="display: none;">
                         <p class="h2">Welcome to WebDesk!</p>
                         <p>In just a few steps, you'll be ready to go.</p>
                         <p class="smt">- Select "Migrate" if you want to copy data</p>
@@ -926,6 +926,7 @@
                 }
                 masschange('lastedit', lastedit);
                 masschange('ver', ver);
+                wal('This version is no longer supported. Download your files and move to the latest beta.', "window.location.href = 'https://webdesk-beta.vercel.app'", "Move");
                 // applications here
                 console.log('<i> Successful boot, welcome to WebDesk!');
             } else {
