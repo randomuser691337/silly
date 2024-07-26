@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--I don't know what I'm doing, feel free to message me with bugfixes-->
+
+<head>
+    <link rel="stylesheet" href="./assets/style.css">
+    <link rel="stylesheet" href="./assets/stylep2.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>WebDesk</title>
+    <script>
+        var dbn = "WebDeskDB";
+        var ver = "0.0.9";
+        var lastedit = "May 31, 2024";
+        var locked = false;
+        var fname;
+        var fblob;
+        var nvol = 1.0;
+        var copied;
+        var copiedn;
+        var sdone = false;
+        var enc = "n";
+    </script>
+    <style>
+        :root {
+            --accent: 127, 127, 127 !important;
+        }
+        .yel {
+            pointer-events: none;
+            background-color: rgba(127, 127, 127, 0.5) !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="taskapp"
+        style="position: fixed; display: none; left: 50%; top: 50%; transform: translate(-50%, -50%); background-color: var(--lightdark2); padding: 6px; border-radius: var(--rad2); border: 1px solid var(--bordercolor); z-index: 9970; box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 75px 20px;"
+        onclick="hidef('taskapp', '140');">Application</div>
+    <div id="deathcurtain"
+        style="z-index: 9999; position: fixed; left: 0px; top: 0px; bottom: 0px; right: 0px; background-color: #000;">
+    </div>
+    <div style="position: fixed; left: 0px; right: 0px; bottom: 0px; top: 0px; z-index: -1; background: hsla(0, 0%, 34%, 1);
+    background: radial-gradient(circle, hsla(0, 0%, 34%, 1) 0%, hsla(0, 0%, 7%, 1) 100%);
+    background: -moz-radial-gradient(circle, hsla(0, 0%, 34%, 1) 0%, hsla(0, 0%, 7%, 1) 100%);
+    background: -webkit-radial-gradient(circle, hsla(0, 0%, 34%, 1) 0%, hsla(0, 0%, 7%, 1) 100%);"></div>
+    <div class="setup" style="width: 300px;">
+        <div class="setupp" id="setuprs">
+            <p class="h3">Recovery Assistant</p>
+            <button class="b1 b2" onclick="dfm('/');opapp('filem', 'Files');">Files</button>
+            <button class="b1 b2" onclick="opapp('term', 'Terminal');">Terminal</button>
+            <button class="b1 b2" onclick="opapp('recif', 'Recieve');">Restore</button>
+            <button class="b1 b2" onclick="opapp('settings', 'Settings');">Settings</button>
+            <button class="b1" onclick="reboot(400);">Exit Recovery</button>
+        </div>
+        <div class="setupp hide" id="setupf" style="width: 320px;">
+            <p class="h3">Migration complete!</p>
+            <p>You can now exit Recovery, and WebDesk should have restored correctly.</p>
+            <p>If you want, you can go back to Recovery Tools.</p>
+            <button class="b1" onclick="fesw('setupf', 'setuprs');">Back to Tools</button><button class="b1" onclick="reboot(400);">Exit Now</button>
+        </div>
+    </div>
+    <div class="window" id="term" style="width: 280px;">
+        <div class="d tb">
+            <div class="tnav">
+                <div class="winb red" onmousedown="clapp('term');"></div>
+                <div class="winb yel" onmousedown="mini('term');"></div>
+                <div class="winb gre" onmousedown="max('term');"></div>
+            </div>
+            <div class="title">Terminal</div>
+        </div>
+        <div class="content">
+            <p class="smt">*Only execute code you trust.</p>
+            <input class="i1" id="termbox" placeholder="Enter JS code here"></i1>
+            <button class="b1" onclick="document.getElementById('termbox').value = '';">Clear</button><button class="b1"
+                onclick="const t = document.getElementById('termbox').value;eval(t);snack('Executed.', 2500);">Execute!</button>
+        </div>
+    </div>
+    <div class="window" id="recif" style="width: 280px;">
+        <div class="d tb">
+            <div class="tnav">
+                <div class="winb red" onmousedown="clapp('recif');"></div>
+                <div class="winb yel" onmousedown="mini('recif');"></div>
+                <div class="winb gre" onmousedown="max('recif');"></div>
+            </div>
+            <div class="title">Restore</div>
+        </div>
+        <div class="content">
+            <p>Your RecoveryID is</p>
+            <p class="h2 mcode">----</p>
+            <p class="smt">You can use this to migrate from other WebDesks or to get files. <span style="color: #f99">Restoring or migrating will wipe this WebDesk.</span></p>
+            <p class="smt">You can also <button class="b4" onclick="filepick('.zip', function (file) {restorefs(file);});">restore a local backup.</button></p>
+        </div>
+    </div>
+    <div class="window" id="settings" style="width: 300px;">
+        <div class="d tb">
+            <div class="tnav">
+                <div class="winb red" onmousedown="clapp('settings');"></div>
+                <div class="winb yel" onmousedown="mini('settings');"></div>
+                <div class="winb gre" onmousedown="max('settings');"></div>
+            </div>
+            <div class="title">Settings</div>
+        </div>
+        <div class="content">
+            <div id="settmain">
+                <p>General</p>
+                <button class="b1 b2"
+                    onclick="wal(`<p>Are you sure you want to change your DeskID?</p><p>Anyone with your ID will need the new one to send files.</p>`, 'chid()', 'Change ID');">Change
+                    DeskID</button>
+                <button class="b1 b2" onclick="eprompt();">Erase WebDesk</button>
+            </div>
+        </div>
+    </div>
+    <div class="window" id="filem" style="width: 400px;">
+        <div class="d tb">
+            <div class="tnav">
+                <div class="winb red" onmousedown="clapp('filem');"></div>
+                <div class="winb yel" onmousedown="mini('filem');"></div>
+                <div class="winb gre" onmousedown="max('filem');"></div>
+            </div>
+            <div class="title">Files</div>
+        </div>
+        <div class="content">
+            <div id="breadcrumbs"></div>
+            <div id="directoryContents"></div>
+        </div>
+    </div>
+    <div id="menubar">
+        <div class="tnav">
+            <button class="mb bold" onclick="snack(`WebDesk menu doesn't work in Recovery.`, '3500');">WebDesk</button>
+        </div>
+        <div class="title">
+            <img src="./assets/img/no.svg" id="bi"></img>
+            <button class="mb time" onclick="opapp('recif');">--:--</button>
+        </div>
+    </div>
+    <script src="./assets/lib/jszip.js"></script>
+    <script src="./assets/lib/peer.js"></script>
+    <script src="./assets/lib/enc.js"></script>
+    <script src="./assets/lib/jq.js"></script>
+    <script src="./assets/code/misc.js"></script>
+    <script src="./assets/code/fs.js"></script>
+    <script src="./assets/code/wm.js"></script>
+    <script src="./assets/code/ui.js"></script>
+    <script src="./assets/code/core.js"></script>
+    <script src="./assets/code/send.js"></script>
+    <script src="./assets/apps/files.js"></script>
+    <script>
+        async function boots1() {
+            await initializeDB();
+            hidef('deathcurtain', '300');
+            appear(undefined, true);
+            dserv(gen(7));
+            const fuck = readpb('enc');
+            if (fuck === "y") {
+                hidef('filesb');
+                enc = "y";
+            }
+        }
+        $(document).ready(boots1);
+    </script>
+</body>
+
+</html>
